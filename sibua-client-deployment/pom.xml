@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.cyk.system.sibua.client</groupId>
+		<artifactId>sibua-client-_pom</artifactId>
+		<version>0.1.0</version>
+	</parent>
+
+	<name>Deployment</name>
+	
+	<groupId>org.cyk.system.sibua.client.deployment</groupId>
+	<artifactId>sibua-client-deployment</artifactId>
+	<packaging>war</packaging>
+	
+	<properties>
+		<microprofile.archive.name>sibua-client</microprofile.archive.name>
+		<jboss-web.context-root>sibua/client</jboss-web.context-root>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.cyk.system.sibua.client.controller.impl</groupId>
+			<artifactId>sibua-client-controller-impl</artifactId>
+			<version>0.1.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cyk.jee.utility.client.deployment</groupId>
+			<artifactId>jee-utility-client-deployment</artifactId>
+			<version>0.1.0</version>
+		</dependency>
+	</dependencies>		
+	
+	<profiles>
+		<profile>
+			<id>deployment.common</id>
+			<properties>
+				<cyk.variable.system.name>Module de rattachement des unités administratives aux activités</cyk.variable.system.name>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>deployment.atlantis</id>
+			<properties>
+				<cyk.variable.user.interface.theme.primefaces>atlantis-blue</cyk.variable.user.interface.theme.primefaces>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>deployment.adminfaces</id>
+			<properties>
+				<!--
+				<cyk.variable.user.interface.theme.menu.path>/private/__adminfaces__/menu.xhtml</cyk.variable.user.interface.theme.menu.path>
+				-->
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>deployment.wildfly.local</id>
+			<properties>
+				<cyk.variable.system.proxy.uniform.resource.identifier>http://localhost:8080/sibua/server/api</cyk.variable.system.proxy.uniform.resource.identifier>
+			</properties>
+		</profile>
+	</profiles>
+	
+</project>
