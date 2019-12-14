@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{administrativeUnitRattacherPage}">
+    	<ui:define name="centerCenter">
+    		.
+    		<div class="ui-g">
+    			<!--
+    			<div class="ui-g-12">  				
+    				<div class="ui-g-2">
+    					<p:outputLabel for="section" value="Section" />
+    				</div>
+    				<div class="ui-g-8">
+    					<p:selectOneMenu id="section" value="#{administrativeUnitRattacherPage.section}" converter="#{objectConverter}">
+    						<f:selectItem itemLabel="Veuillez sélectionner une section" />
+		    				<f:selectItems value="#{administrativeUnitRattacherPage.sections}" var="section" itemLabel="#{section}" itemValue="#{section}"/>
+		    			</p:selectOneMenu>
+    				</div>
+    				<div class="ui-g-2">
+    					<p:message for="section" />
+    				</div>
+    			</div>
+    			-->
+    	    	<div class="ui-g-12">
+    				<div class="ui-g-2">
+    					<p:outputLabel for="administrativeUnit" value="Unité administrative" />
+    				</div>
+    				<div class="ui-g-8">
+    					<p:selectOneMenu id="administrativeUnit" value="#{administrativeUnitRattacherPage.administrativeUnit.value}" converter="#{objectConverter}">
+    						<f:selectItem itemLabel="Veuillez sélectionner une unité administrative" />
+		    				<f:selectItems value="#{administrativeUnitRattacherPage.administrativeUnit.choices}" var="administrativeUnit" itemLabel="#{administrativeUnit}" itemValue="#{administrativeUnit}"/>
+		    			</p:selectOneMenu>
+    				</div>
+    				<div class="ui-g-2">
+    					<p:message for="administrativeUnit" />
+    				</div>
+    			</div>		
+    			
+    			<div class="ui-g-12">
+    				<p:pickList id="activites" value="#{administrativeUnitRattacherPage.activities}" var="activity" converter="#{objectConverter}" >
+    				
+    				</p:pickList>
+    			</div>		
+    		</div>
+    		
+    		<p:separator/>
+    		<cyk:commandable value="#{administrativeUnitRattacherPage.saveCommandable}" />   		
+    	</ui:define>
+    </cyk:page>
+</html>
