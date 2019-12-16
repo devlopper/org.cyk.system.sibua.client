@@ -8,12 +8,11 @@
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		
-		<!-- xxx -->
-		<!--navigation-case>
-			<from-outcome>xxxView</from-outcome>
-			<to-view-id></to-view-id>
+		<navigation-case>
+			<from-outcome>editactivities</from-outcome>
+			<to-view-id>/private/administrativeunit/editactivities.jsf</to-view-id>
 			<redirect />
-		</navigation-case-->
+		</navigation-case>
 		
 	</navigation-rule>
 

@@ -15,7 +15,11 @@ public class MenuBuilderMapInstantiatorImpl extends org.cyk.utility.client.contr
 	@Override
 	protected void __instantiateSessionMenuBuilderItems__(Object key, MenuBuilder sessionMenuBuilder, Object request,Principal principal) {
 		sessionMenuBuilder.addItems(
-				__inject__(MenuItemBuilder.class).setCommandableName("Parametrage").setCommandableIcon(Icon.GEARS)
+				__inject__(MenuItemBuilder.class).setCommandableName("Unité administrative").setCommandableIcon(Icon.TRUCK)
+					.addChild(
+							__inject__(MenuItemBuilder.class).setCommandableName("Rattacher les activités").setCommandableNavigationIdentifier("editactivities")
+							)
+				,__inject__(MenuItemBuilder.class).setCommandableName("Parametrage").setCommandableIcon(Icon.GEARS)
 					.list(PersistableClassesGetter.getInstance().get())
 				);	
 	}

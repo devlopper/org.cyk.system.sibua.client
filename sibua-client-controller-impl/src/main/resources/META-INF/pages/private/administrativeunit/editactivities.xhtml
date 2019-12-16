@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{administrativeUnitEditActivitiesPage}">
+    	<ui:define name="centerCenter">
+    		.
+    		<div class="ui-g">
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="section" value="Section" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<ui:decorate template="/input/select/one/menu.xhtml">
+			    			<ui:param name="selection" value="#{administrativeUnitEditActivitiesPage.section}"/>
+			    			<ui:param name="selectableInputId" value="section"/>
+			    			<ui:param name="ajaxUpdate" value="form:administrativeUnit,form:program,form:action,form:activities"/>			
+			    		</ui:decorate>
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="section" />
+    				</ui:define>
+    			</ui:decorate>
+    			
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="program" value="Programme" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<ui:decorate template="/input/select/one/menu.xhtml">
+			    			<ui:param name="selection" value="#{administrativeUnitEditActivitiesPage.program}"/>
+			    			<ui:param name="selectableInputId" value="program"/>
+			    			<ui:param name="ajaxUpdate" value="form:action,form:activities"/>			
+			    		</ui:decorate>
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="program" />
+    				</ui:define>
+    			</ui:decorate>
+    			
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="action" value="Action" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<ui:decorate template="/input/select/one/menu.xhtml">
+			    			<ui:param name="selection" value="#{administrativeUnitEditActivitiesPage.action}"/>
+			    			<ui:param name="selectableInputId" value="action"/>
+			    			<ui:param name="ajaxUpdate" value="form:activities"/>			
+			    		</ui:decorate>
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="action" />
+    				</ui:define>
+    			</ui:decorate>	
+    			
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="administrativeUnit" value="Unité administrative" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<ui:decorate template="/input/select/one/menu.xhtml">
+			    			<ui:param name="selection" value="#{administrativeUnitEditActivitiesPage.administrativeUnit}"/>
+			    			<ui:param name="selectableInputId" value="administrativeUnit"/>
+			    			<ui:param name="ajaxUpdate" value="form:activities"/>		
+			    		</ui:decorate>
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="administrativeUnit" />
+    				</ui:define>
+    			</ui:decorate>	
+    			
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="activities" value="Activités" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<p:pickList id="activities" value="#{administrativeUnitEditActivitiesPage.activities}" var="activity" converter="#{objectConverter}" 
+	    					itemValue="#{activity}" itemLabel="#{activity}"
+	    					showCheckbox="true" showSourceControls="true" showSourceFilter="true" showTargetControls="true" showTargetFilter="true"
+	    					filterMatchMode="contains"
+	    					responsive="true"  
+	    					>
+	    				
+	    				</p:pickList>
+    				</ui:define>
+    				<ui:define name="message">
+    					
+    				</ui:define>
+    			</ui:decorate>	
+    			  			
+    			<div class="ui-g-12">
+    				
+    			</div>		
+    		</div>
+    		
+    		<p:separator/>
+    		<cyk:commandable value="#{administrativeUnitEditActivitiesPage.saveCommandable}" />   		
+    	</ui:define>
+    </cyk:page>
+</html>
