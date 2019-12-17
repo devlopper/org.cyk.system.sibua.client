@@ -37,7 +37,7 @@
 		<profile>
 			<id>deployment.common</id>
 			<properties>
-				<cyk.variable.system.name>Module de rattachement des unités administratives aux activités</cyk.variable.system.name>
+				<cyk.variable.system.name>Module de gestion des unités administratives</cyk.variable.system.name>
 			</properties>
 		</profile>
 		
@@ -61,6 +61,13 @@
 			<id>deployment.wildfly.local</id>
 			<properties>
 				<cyk.variable.system.proxy.uniform.resource.identifier>http://localhost:8080/sibua/server/api</cyk.variable.system.proxy.uniform.resource.identifier>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>deployment.wildfly.remote.10.3.4.37</id>
+			<properties>
+				<cyk.variable.system.proxy.uniform.resource.identifier>http://10.3.4.37:8080/sibua/server/api</cyk.variable.system.proxy.uniform.resource.identifier>
 			</properties>
 		</profile>
 	</profiles>

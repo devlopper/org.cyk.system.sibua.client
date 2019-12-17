@@ -11,19 +11,24 @@ import org.cyk.system.sibua.client.controller.api.ActionController;
 import org.cyk.system.sibua.client.controller.api.ActivityController;
 import org.cyk.system.sibua.client.controller.api.AdministrativeUnitController;
 import org.cyk.system.sibua.client.controller.api.ProgramController;
+import org.cyk.system.sibua.client.controller.api.SectionController;
 import org.cyk.system.sibua.client.controller.entities.Action;
 import org.cyk.system.sibua.client.controller.entities.Activity;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
 import org.cyk.system.sibua.client.controller.entities.Program;
 import org.cyk.system.sibua.client.controller.entities.Section;
+import org.cyk.system.sibua.server.persistence.api.ActivityPersistence;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.properties.Properties;
+import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
 import org.cyk.utility.client.controller.component.command.Commandable;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
+import org.cyk.utility.client.controller.web.ComponentHelper;
 import org.cyk.utility.client.controller.web.jsf.primefaces.AbstractPageContainerManagedImpl;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.SelectionOne;
 import org.cyk.utility.server.persistence.query.filter.FilterDto;
+import org.omnifaces.util.Faces;
 import org.primefaces.model.DualListModel;
 
 import lombok.Getter;
@@ -45,34 +50,44 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 	@Override
 	protected void __listenPostConstruct__() {
 		super.__listenPostConstruct__();
+		try {
 		section = new SelectionOne<Section>(Section.class);
 		section.setListener(new SelectionOne.Listener<Section>() {
 			@Override
 			public void processOnSelect(Section section) {
 				administrativeUnit.setValue(null);
-				administrativeUnit.setChoices(__inject__(AdministrativeUnitController.class)
-						.read(new Properties().setFilters(new FilterDto().addField(AdministrativeUnit.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
-								.setIsPageable(Boolean.FALSE)));
-				
+				activities.setTarget(new ArrayList<Activity>());				
 				program.setValue(null);
-				program.setChoices( __inject__(ProgramController.class)
-						.read(new Properties().setFilters(new FilterDto().addField(Program.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
-								.setIsPageable(Boolean.FALSE)));
-				
-				action.setValue(null);
-				action.setChoices( __inject__(ActionController.class)
-						.read(new Properties().setFilters(new FilterDto().addField(Action.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
-								.setIsPageable(Boolean.FALSE)));
-				
-				CollectionHelper.clear(activities.getSource());
-				CollectionHelper.clear(activities.getTarget());				
-				activities.setSource((List<Activity>) __inject__(ActivityController.class)
-						.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
-								.setIsPageable(Boolean.FALSE)));
-				activities.setTarget(new ArrayList<Activity>());	
-				
+				action.setValue(null);				
+				if(section == null) {
+					administrativeUnit.setChoices(null);
+					program.setChoices(null);
+					action.setChoices(null);
+					activities.setSource(new ArrayList<Activity>());
+				}else {					
+					administrativeUnit.setChoices(__inject__(AdministrativeUnitController.class)
+							.read(new Properties().setFilters(new FilterDto().addField(AdministrativeUnit.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+									.setIsPageable(Boolean.FALSE)));										
+					program.setChoices( __inject__(ProgramController.class)
+							.read(new Properties().setFilters(new FilterDto().addField(Program.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+									.setIsPageable(Boolean.FALSE)));										
+					action.setChoices( __inject__(ActionController.class)
+							.read(new Properties().setFilters(new FilterDto().addField(Action.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+									.setIsPageable(Boolean.FALSE)));
+					activities.setSource((List<Activity>) __inject__(ActivityController.class)
+							.read(new Properties().setQueryIdentifier(ActivityPersistence.READ_WHERE_ADMINISTRATIVE_UNIT_DOES_NOT_EXIST_BY_SECTIONS_CODES)
+									.setFilters(new FilterDto().addField(Activity.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+									.setIsPageable(Boolean.FALSE)));
+					if(activities.getSource() == null)
+						activities.setSource(new ArrayList<>());
+				}				
 			}
 		});
+		if(StringHelper.isBlank(Faces.getRequestParameter("section"))) {
+			
+		}else {
+			section.setValue(__inject__(SectionController.class).readBySystemIdentifier(Faces.getRequestParameter("section")));
+		}
 		
 		program = new SelectionOne<Program>(Program.class);
 		program.setAreChoicesGettable(Boolean.FALSE);
@@ -80,16 +95,27 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 			@Override
 			public void processOnSelect(Program program) {
 				action.setValue(null);
-				action.setChoices(__inject__(ActionController.class)
-						.read(new Properties().setFilters(new FilterDto().addField(Action.FIELD_PROGRAM, CollectionHelper.listOf(program.getCode())))
-								.setIsPageable(Boolean.FALSE)));	
-				
-				CollectionHelper.clear(activities.getSource());
-				CollectionHelper.clear(activities.getTarget());				
-				activities.setSource((List<Activity>) __inject__(ActivityController.class)
-						.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_PROGRAM, CollectionHelper.listOf(program.getCode())))
-								.setIsPageable(Boolean.FALSE)));
-				activities.setTarget(new ArrayList<Activity>());	
+				if(program == null) {
+					action.setChoices(null);
+					if(section.getValue() == null) {
+						activities.setSource(new ArrayList<>());
+					}else {
+						activities.setSource((List<Activity>) __inject__(ActivityController.class)
+								.read(new Properties().setQueryIdentifier(ActivityPersistence.READ_WHERE_ADMINISTRATIVE_UNIT_DOES_NOT_EXIST_BY_SECTIONS_CODES)
+										.setFilters(new FilterDto().addField(Activity.FIELD_SECTION, CollectionHelper.listOf(section.getValue().getCode())))
+										.setIsPageable(Boolean.FALSE)));			
+					}						
+				}else {					
+					action.setChoices(__inject__(ActionController.class)
+							.read(new Properties().setFilters(new FilterDto().addField(Action.FIELD_PROGRAM, CollectionHelper.listOf(program.getCode())))
+									.setIsPageable(Boolean.FALSE)));						
+					activities.setSource((List<Activity>) __inject__(ActivityController.class)
+							.read(new Properties().setQueryIdentifier(ActivityPersistence.READ_WHERE_ADMINISTRATIVE_UNIT_DOES_NOT_EXIST_BY_PROGRAMS_CODES)
+									.setFilters(new FilterDto().addField(Activity.FIELD_PROGRAM, CollectionHelper.listOf(program.getCode())))
+									.setIsPageable(Boolean.FALSE)));
+				}
+				if(activities.getSource() == null)
+					activities.setSource(new ArrayList<>());
 			}
 		});
 		
@@ -98,12 +124,22 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 		action.setListener(new SelectionOne.Listener<Action>() {
 			@Override
 			public void processOnSelect(Action action) {
-				CollectionHelper.clear(activities.getSource());
-				CollectionHelper.clear(activities.getTarget());
-				activities.setSource((List<Activity>) __inject__(ActivityController.class)
-						.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_ACTION, CollectionHelper.listOf(action.getCode())))
-								.setIsPageable(Boolean.FALSE)));
-				activities.setTarget(new ArrayList<Activity>());					
+				if(action == null) {
+					if(program.getValue() == null) {
+						
+					}else {
+						activities.setSource((List<Activity>) __inject__(ActivityController.class)
+								.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_PROGRAM, CollectionHelper.listOf(program.getValue().getCode())))
+										.setIsPageable(Boolean.FALSE)));
+					}
+				}else {
+					activities.setSource((List<Activity>) __inject__(ActivityController.class)
+							.read(new Properties().setQueryIdentifier(ActivityPersistence.READ_WHERE_ADMINISTRATIVE_UNIT_DOES_NOT_EXIST_BY_ACTIONS_CODES)
+									.setFilters(new FilterDto().addField(Activity.FIELD_ACTION, CollectionHelper.listOf(action.getCode())))
+									.setIsPageable(Boolean.FALSE)));
+				}
+				if(activities.getSource() == null)
+					activities.setSource(new ArrayList<>());
 			}
 		});
 		
@@ -112,16 +148,50 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 		administrativeUnit.setListener(new SelectionOne.Listener<AdministrativeUnit>() {
 			@Override
 			public void processOnSelect(AdministrativeUnit administrativeUnit) {
-				//CollectionHelper.clear(activities.getSource());
-				//CollectionHelper.clear(activities.getTarget());
-				
 				activities.setTarget((List<Activity>) __inject__(ActivityController.class)
 						.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT, CollectionHelper.listOf(administrativeUnit.getCode())))
-								.setIsPageable(Boolean.FALSE)));				
+								.setIsPageable(Boolean.FALSE)));	
+				if(activities.getTarget() == null)
+					activities.setTarget(new ArrayList<Activity>());
 			}
 		});
 		
 		activities = new DualListModel<Activity>();
+		
+		if(StringHelper.isBlank(Faces.getRequestParameter("administrativeUnit"))) {
+			
+		}else {
+			administrativeUnit.setValue(__inject__(AdministrativeUnitController.class).readBySystemIdentifier(Faces.getRequestParameter("administrativeUnit")));
+			if(administrativeUnit.getValue() != null) {
+				section.setValue(administrativeUnit.getValue().getSection());
+				Section section = administrativeUnit.getValue().getSection();
+				administrativeUnit.setChoices(__inject__(AdministrativeUnitController.class)
+						.read(new Properties().setFilters(new FilterDto().addField(AdministrativeUnit.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+								.setIsPageable(Boolean.FALSE)));										
+				program.setChoices( __inject__(ProgramController.class)
+						.read(new Properties().setFilters(new FilterDto().addField(Program.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+								.setIsPageable(Boolean.FALSE)));										
+				action.setChoices( __inject__(ActionController.class)
+						.read(new Properties().setFilters(new FilterDto().addField(Action.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+								.setIsPageable(Boolean.FALSE)));
+				activities.setSource((List<Activity>) __inject__(ActivityController.class)
+						.read(new Properties().setQueryIdentifier(ActivityPersistence.READ_WHERE_ADMINISTRATIVE_UNIT_DOES_NOT_EXIST_BY_SECTIONS_CODES)
+								.setFilters(new FilterDto().addField(Activity.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+								.setIsPageable(Boolean.FALSE)));
+				if(activities.getSource() == null)
+					activities.setSource(new ArrayList<>());
+				
+				activities.setTarget((List<Activity>) __inject__(ActivityController.class)
+						.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT, CollectionHelper.listOf(administrativeUnit.getValue().getCode())))
+								.setIsPageable(Boolean.FALSE)));	
+				if(activities.getTarget() == null)
+					activities.setTarget(new ArrayList<Activity>());
+			}
+		}
+		
+		}catch(Exception exception) {
+			exception.printStackTrace();
+		}
 		
 		CommandableBuilder saveCommandableBuilder = __inject__(CommandableBuilder.class);
 		saveCommandableBuilder.setName("Enregistrer").setCommandFunctionActionClass(SystemActionCustom.class).addCommandFunctionTryRunRunnable(
@@ -132,6 +202,7 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 				}
 			}
 		);
+		saveCommandableBuilder.addUpdatables(__inject__(ComponentHelper.class).getGlobalMessagesTargetsIdentifiers(),"outputPanel");
 		saveCommandable = saveCommandableBuilder.execute().getOutput();
 	}
 	

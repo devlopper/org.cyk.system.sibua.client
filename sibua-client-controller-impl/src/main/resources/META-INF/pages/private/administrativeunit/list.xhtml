@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{administrativeUnitListPage}">
+    	<!-- Menu is removed -->
+    	<ui:define name="menuLeft"/>
+    	
+    	<ui:define name="centerCenter">.
+    		<p:outputPanel id="outputPanel" styleClass="ui-g">
+    			<ui:param name="labelDivWidthProportion" value="1"/>
+    			<ui:param name="inputDivWidthProportion" value="11"/>
+    			<ui:param name="messageDivWidthProportion" value="0"/>
+    		
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="section" value="Section" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<ui:decorate template="/input/select/one/menu.xhtml">
+			    			<ui:param name="selection" value="#{administrativeUnitListPage.section}"/>
+			    			<ui:param name="selectableInputId" value="section"/>
+			    			<ui:param name="ajaxUpdate" value="dataTable"/>			
+			    		</ui:decorate>
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="section" />
+    				</ui:define>
+    			</ui:decorate>
+    			
+    			<p:separator/>
+	    		
+	    		<p:dataTable
+	    			id="dataTable"
+	    			value="#{administrativeUnitListPage.administrativeUnits}"
+	    			var="administrativeUnit"
+		    		>	
+	    			<f:facet name="header">
+        				<p:toolbar>
+		    				<f:facet name="left">
+		    					<ui:param name="sectionIdentifier" value="#{empty administrativeUnitListPage.section.value.identifier ? '' : administrativeUnitListPage.section.value.identifier}"/>
+		    					<p:button value="Ajouter une unité administrative" icon="fa fa-plus" outcome="administrativeUnitEditView">
+		        					<f:param name="section" value="#{sectionIdentifier}" />
+		        				</p:button>
+		        				<p:button value="Rattacher les activités" icon="fa fa-link" outcome="administrativeUnitEditActivitiesView">
+		        					<f:param name="section" value="#{sectionIdentifier}" />
+		        				</p:button>
+		    				</f:facet>
+		    			</p:toolbar>
+    				</f:facet>
+	    			<p:column headerText="Code" width="170"><h:outputText value="#{administrativeUnit.code}" /></p:column>
+	    			<p:column headerText="Libelle"><h:outputText value="#{administrativeUnit.name}" /></p:column>
+	    			<p:column headerText="Groupe de service" width="120"><h:outputText value="#{administrativeUnit.serviceGroup.code}" /></p:column>
+	    			<p:column headerText="CFAP" width="100"><h:outputText value="#{administrativeUnit.functionalClassification.code}" /></p:column>
+	    			<p:column headerText="Localisation géographique" width="150"><h:outputText value="#{administrativeUnit.localisation.name}" /></p:column>
+	    			<p:column headerText="Actions" width="250">
+	    				<p:button value="Rattachement" icon="fa fa-link" outcome="administrativeUnitEditActivitiesView">
+		        			<f:param name="administrativeUnit" value="#{administrativeUnit.identifier}" />
+		        		</p:button>
+		        		
+		        		<p:button value="Modification" icon="fa fa-pencil" outcome="administrativeUnitEditView">
+	    					<f:param name="entityidentifier" value="#{administrativeUnit.identifier}" />
+	    				</p:button>
+	    			</p:column>
+	    		</p:dataTable>
+    		</p:outputPanel>
+	    	
+	    	<ui:include src="css.xhtml"/>
+	    		 		
+    	</ui:define>
+    </cyk:page>
+</html>
