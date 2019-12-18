@@ -27,6 +27,12 @@
 		</navigation-case>
 		
 		<navigation-case>
+			<from-outcome>administrativeUnitListDestinationView</from-outcome>
+			<to-view-id>/private/administrativeunit/listdestinations.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>programListView</from-outcome>
 			<to-view-id>/private/program/list.jsf</to-view-id>
 			<redirect />

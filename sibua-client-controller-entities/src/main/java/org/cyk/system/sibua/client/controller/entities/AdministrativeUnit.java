@@ -24,8 +24,12 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 	private FunctionalClassification functionalClassification;
 	private Localisation localisation;
 	private Integer orderNumber;
+	private AdministrativeUnit parent;
 	
+	private List<AdministrativeUnit> parents;
+	private List<AdministrativeUnit> children;
 	private List<Activity> activities;
+	private List<Destination> destinations;
 
 	@Override
 	public String toString() {
@@ -37,4 +41,7 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 	public static final String FIELD_FUNCTIONAL_CLASSIFICATION = "functionalClassification";
 	public static final String FIELD_LOCALISATION = "localisation";
 	public static final String FIELD_ACTIVITIES = "activities";
+	public static final String FIELD_PARENTS = "parents";
+	public static final String FIELD_CHILDREN = "children";
+	public static final String FIELD_DESTINATIONS = "destinations";
 }

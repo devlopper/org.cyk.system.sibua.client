@@ -81,27 +81,7 @@
     					<p:message for="administrativeUnit" />
     				</ui:define>
     			</ui:decorate>	
-    			<!--
-    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
-    				<ui:define name="label">
-    					<p:outputLabel for="activities" value="Activités" />
-    				</ui:define>
-    				<ui:define name="input">
-    					
-    				</ui:define>
-    				<ui:define name="message">
-    					<p:pickList id="activities" value="#{administrativeUnitEditActivitiesPage.activities}" var="activity" converter="#{objectConverter}" 
-	    					itemValue="#{activity}" itemLabel="#{activity}"
-	    					showCheckbox="true" showSourceFilter="true" showTargetFilter="true"
-	    					filterMatchMode="contains"
-	    					responsive="true"  
-	    					>
-	    					<f:facet name="sourceCaption">Liste des activités non rattachées</f:facet>
-        					<f:facet name="targetCaption">Liste des activités rattachées à l'unité administrative</f:facet>
-	    				</p:pickList>
-    				</ui:define>
-    			</ui:decorate>	
-    			 --> 			
+    			
     			<div class="ui-g-12">
     				<p:pickList id="activities" value="#{administrativeUnitEditActivitiesPage.activities}" var="activity" converter="#{objectConverter}" 
     					itemValue="#{activity}" itemLabel="#{activity}"
