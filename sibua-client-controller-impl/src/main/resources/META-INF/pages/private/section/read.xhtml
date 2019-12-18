@@ -8,16 +8,23 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
 	
-    <cyk:page value="#{administrativeUnitListPage}">
+    <cyk:page value="#{sectionReadPage}">
+    	<!-- Menu is removed -->
+    	<ui:define name="menuLeft"/>
+    	
     	<ui:define name="centerCenter">.
     		<p:outputPanel id="outputPanel" styleClass="ui-g">
+    			<ui:param name="labelDivWidthProportion" value="1"/>
+    			<ui:param name="inputDivWidthProportion" value="11"/>
+    			<ui:param name="messageDivWidthProportion" value="0"/>
+    		
     			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
     				<ui:define name="label">
     					<p:outputLabel for="section" value="Section" />
     				</ui:define>
     				<ui:define name="input">
     					<ui:decorate template="/input/select/one/menu.xhtml">
-			    			<ui:param name="selection" value="#{administrativeUnitListPage.section}"/>
+			    			<ui:param name="selection" value="#{sectionReadPage.section}"/>
 			    			<ui:param name="selectableInputId" value="section"/>
 			    			<ui:param name="ajaxUpdate" value="dataTable"/>			
 			    		</ui:decorate>
@@ -31,24 +38,24 @@
 	    		
 	    		<p:dataTable
 	    			id="dataTable"
-	    			value="#{administrativeUnitListPage.administrativeUnits}"
+	    			value="#{sectionReadPage.administrativeUnits}"
 	    			var="administrativeUnit"
-	    		>
-	    			<f:facet name="header">
-        				<p:button value="Ajouter" icon="fa fa-plus" outcome="administrativeUnitCreateView" />
-    				</f:facet>
-	    			<p:column headerText="Code"><h:outputText value="#{administrativeUnit.code}" /></p:column>
-	    			<p:column headerText="Libelle"><h:outputText value="#{administrativeUnit.name}" /></p:column>
-	    			<p:column headerText="Groupe de service"><h:outputText value="#{administrativeUnit.serviceGroup.code}" /></p:column>
-	    			<p:column headerText="CFAP"><h:outputText value="#{administrativeUnit.functionalClassification.code}" /></p:column>
-	    			<p:column headerText="Localisation géographique"><h:outputText value="#{administrativeUnit.localisation.name}" /></p:column>
-	    			<p:column headerText="Actions">
-	    				<p:button value="Modifier" icon="fa fa-pencil" outcome="administrativeUnitEditView">
-	    					<f:param name="entityidentifier" value="#{administrativeUnit.identifier}" />
-	    				</p:button>
-	    			</p:column>
+		    		>	
+	    			
+	    			<ui:include src="../administrativeunit/__dataTableColumns__.xhtml"/>
 	    		</p:dataTable>
     		</p:outputPanel>
+	    	<p:separator/>
+	    	<p:toolbar>
+	    		<f:facet name="right">
+	    			<ui:param name="sectionIdentifier" value="#{empty sectionReadPage.section.value.identifier ? '' : sectionReadPage.section.value.identifier}"/>
+			    	<p:button value="Liste des unités administratives" icon="fa fa-list" outcome="administrativeUnitListView">
+			    		<f:param name="section" value="#{sectionIdentifier}" />
+			    	</p:button> 		
+	    		</f:facet>
+	    	</p:toolbar>
+	    	
+	    	<ui:include src="../css.xhtml"/>
 	    		 		
     	</ui:define>
     </cyk:page>

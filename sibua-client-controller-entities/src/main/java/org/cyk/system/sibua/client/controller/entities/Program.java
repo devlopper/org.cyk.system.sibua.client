@@ -1,6 +1,7 @@
 package org.cyk.system.sibua.client.controller.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import org.cyk.utility.client.controller.data.AbstractDataIdentifiableSystemStringIdentifiableBusinessStringNamableImpl;
 
@@ -13,11 +14,13 @@ public class Program extends AbstractDataIdentifiableSystemStringIdentifiableBus
 	private static final long serialVersionUID = 1L;
 
 	private Section section;
-	
-	public static final String FIELD_SECTION = "section";
+	private Collection<AdministrativeUnit> administrativeUnits;
 	
 	@Override
 	public String toString() {
 		return getCode()+" "+getName();
 	}
+	
+	public static final String FIELD_SECTION = "section";
+	public static final String FIELD_ADMINISTRATIVE_UNITS = "administrativeUnits";
 }

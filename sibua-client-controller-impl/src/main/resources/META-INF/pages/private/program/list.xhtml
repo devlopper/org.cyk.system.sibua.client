@@ -8,7 +8,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
 	
-    <cyk:page value="#{administrativeUnitListPage}">
+    <cyk:page value="#{programListPage}">
     	<!-- Menu is removed -->
     	<ui:define name="menuLeft"/>
     	
@@ -24,7 +24,7 @@
     				</ui:define>
     				<ui:define name="input">
     					<ui:decorate template="/input/select/one/menu.xhtml">
-			    			<ui:param name="selection" value="#{administrativeUnitListPage.section}"/>
+			    			<ui:param name="selection" value="#{programListPage.section}"/>
 			    			<ui:param name="selectableInputId" value="section"/>
 			    			<ui:param name="ajaxUpdate" value="dataTable"/>			
 			    		</ui:decorate>
@@ -38,33 +38,28 @@
 	    		
 	    		<p:dataTable
 	    			id="dataTable"
-	    			value="#{administrativeUnitListPage.administrativeUnits}"
-	    			var="administrativeUnit"
+	    			value="#{programListPage.programs}"
+	    			var="program"
 		    		>	
-	    			<f:facet name="header">
-        				<p:toolbar>
-		    				<f:facet name="left">
-		    					<ui:param name="sectionIdentifier" value="#{empty administrativeUnitListPage.section.value.identifier ? '' : administrativeUnitListPage.section.value.identifier}"/>
-		    					<p:button value="Ajouter une unité administrative" icon="fa fa-plus" outcome="administrativeUnitEditView">
-		        					<f:param name="section" value="#{sectionIdentifier}" />
-		        				</p:button>
-		        				<p:button value="Rattacher les activités" icon="fa fa-link" outcome="administrativeUnitEditActivitiesView">
-		        					<f:param name="section" value="#{sectionIdentifier}" />
-		        				</p:button>
-		    				</f:facet>
-		    				<f:facet name="right">
-		    					<p:button value="Cartographie administrative" icon="fa fa-list" outcome="programListView">
-		        					<f:param name="section" value="#{sectionIdentifier}" />
-		        				</p:button>
-		        				<p:button value="Organigramme" icon="fa fa-sitemap" outcome="sectionReadView">
-		        					<f:param name="section" value="#{sectionIdentifier}" />
-		        				</p:button>
-		    				</f:facet>
-		    			</p:toolbar>
-    				</f:facet>
-	    			<ui:include src="__dataTableColumns__.xhtml"/>
+	    			
+	    			<p:column headerText="Code" width="70"><h:outputText value="#{program.code}" /></p:column>
+	    			<p:column headerText="Libelle" width="400"><h:outputText value="#{program.name}" /></p:column>
+	    			<p:column headerText="Unités administratives">
+	    				<p:repeat value="#{program.administrativeUnits}" var="administrativeUnit">
+	    					<h:outputText value="#{administrativeUnit.code} #{administrativeUnit.name}" /><br/>
+	    				</p:repeat>
+	    			</p:column>
 	    		</p:dataTable>
     		</p:outputPanel>
+	    	
+	    	<p:toolbar>
+	    		<f:facet name="right">
+	    			<ui:param name="sectionIdentifier" value="#{empty programListPage.section.value.identifier ? '' : programListPage.section.value.identifier}"/>
+			    	<p:button value="Liste des unités administratives" icon="fa fa-list" outcome="administrativeUnitListView">
+			    		<f:param name="section" value="#{sectionIdentifier}" />
+			    	</p:button> 		
+	    		</f:facet>
+	    	</p:toolbar>
 	    	
 	    	<ui:include src="../css.xhtml"/>
 	    		 		

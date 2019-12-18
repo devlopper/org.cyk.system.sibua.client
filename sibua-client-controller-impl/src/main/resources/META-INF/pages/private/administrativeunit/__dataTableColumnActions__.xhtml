@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"      
+    xmlns:h="http://java.sun.com/jsf/html">
+
+	<p:column headerText="Actions" width="250">
+  		<p:button value="Rattachement" icon="fa fa-link" outcome="administrativeUnitEditActivitiesView">
+       		<f:param name="administrativeUnit" value="#{administrativeUnit.identifier}" />
+       	</p:button>
+       		
+       	<p:button value="Modification" icon="fa fa-pencil" outcome="administrativeUnitEditView">
+  			<f:param name="entityidentifier" value="#{administrativeUnit.identifier}" />
+  		</p:button>
+  	</p:column>
+  	
+</ui:composition>

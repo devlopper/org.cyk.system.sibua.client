@@ -124,13 +124,13 @@
 	    			<cyk:commandable value="#{administrativeUnitEditActivitiesPage.saveCommandable}" />
 	    		</f:facet>
 	    		<f:facet name="right">
-	    			<ui:param name="sectionIdentifier" value="#{empty administrativeUnitEditActivitiesPage.section.value.identifier ? '' : administrativeUnitEditPage.section.value.identifier}"/>
+	    			<ui:param name="sectionIdentifier" value="#{empty administrativeUnitEditActivitiesPage.section.value.identifier ? '' : administrativeUnitEditActivitiesPage.section.value.identifier}"/>
 			    	<p:button value="Liste des unités administratives" icon="fa fa-list" outcome="administrativeUnitListView">
 			    		<f:param name="section" value="#{sectionIdentifier}" />
 			    	</p:button> 		
 	    		</f:facet>
 	    	</p:toolbar>	 
-    		<ui:include src="css.xhtml"/>  		
+    		<ui:include src="../css.xhtml"/>  		
     	</ui:define>
     </cyk:page>
 </html>

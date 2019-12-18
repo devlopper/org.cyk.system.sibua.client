@@ -164,19 +164,18 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 			administrativeUnit.setValue(__inject__(AdministrativeUnitController.class).readBySystemIdentifier(Faces.getRequestParameter("administrativeUnit")));
 			if(administrativeUnit.getValue() != null) {
 				section.setValue(administrativeUnit.getValue().getSection());
-				Section section = administrativeUnit.getValue().getSection();
 				administrativeUnit.setChoices(__inject__(AdministrativeUnitController.class)
-						.read(new Properties().setFilters(new FilterDto().addField(AdministrativeUnit.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+						.read(new Properties().setFilters(new FilterDto().addField(AdministrativeUnit.FIELD_SECTION, CollectionHelper.listOf(section.getValue().getCode())))
 								.setIsPageable(Boolean.FALSE)));										
 				program.setChoices( __inject__(ProgramController.class)
-						.read(new Properties().setFilters(new FilterDto().addField(Program.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+						.read(new Properties().setFilters(new FilterDto().addField(Program.FIELD_SECTION, CollectionHelper.listOf(section.getValue().getCode())))
 								.setIsPageable(Boolean.FALSE)));										
 				action.setChoices( __inject__(ActionController.class)
-						.read(new Properties().setFilters(new FilterDto().addField(Action.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+						.read(new Properties().setFilters(new FilterDto().addField(Action.FIELD_SECTION, CollectionHelper.listOf(section.getValue().getCode())))
 								.setIsPageable(Boolean.FALSE)));
 				activities.setSource((List<Activity>) __inject__(ActivityController.class)
 						.read(new Properties().setQueryIdentifier(ActivityPersistence.READ_WHERE_ADMINISTRATIVE_UNIT_DOES_NOT_EXIST_BY_SECTIONS_CODES)
-								.setFilters(new FilterDto().addField(Activity.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+								.setFilters(new FilterDto().addField(Activity.FIELD_SECTION, CollectionHelper.listOf(section.getValue().getCode())))
 								.setIsPageable(Boolean.FALSE)));
 				if(activities.getSource() == null)
 					activities.setSource(new ArrayList<>());
