@@ -54,7 +54,7 @@ public class ProgramListPage extends AbstractPageContainerManagedImpl implements
 	
 	@Override
 	protected String __getWindowTitleValue__() {
-		return "Cartographie administrative par section";
+		return "Cartographie administrative des programmes par section";
 	}
 	
 }

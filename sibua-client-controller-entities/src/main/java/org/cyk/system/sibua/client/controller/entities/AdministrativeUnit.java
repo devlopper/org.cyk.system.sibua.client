@@ -36,6 +36,7 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 		return getCode()+" "+getName();
 	}
 	
+	public static final String FIELD_PARENT = "parent";
 	public static final String FIELD_SECTION = "section";
 	public static final String FIELD_SERVICE_GROUP = "serviceGroup";
 	public static final String FIELD_FUNCTIONAL_CLASSIFICATION = "functionalClassification";

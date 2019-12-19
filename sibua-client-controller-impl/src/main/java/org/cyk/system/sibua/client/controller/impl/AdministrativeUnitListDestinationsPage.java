@@ -49,7 +49,7 @@ public class AdministrativeUnitListDestinationsPage extends AbstractPageContaine
 			if(StringHelper.isBlank(Faces.getRequestParameter("section"))) {
 				
 			}else {
-				section.setValue(__inject__(SectionController.class).readBySystemIdentifier(Faces.getRequestParameter("section")));
+				section.select(__inject__(SectionController.class).readBySystemIdentifier(Faces.getRequestParameter("section")));
 			}
 		}catch(Exception exception) {
 			exception.printStackTrace();

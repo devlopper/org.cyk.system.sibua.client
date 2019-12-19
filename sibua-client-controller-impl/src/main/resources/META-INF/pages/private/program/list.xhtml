@@ -42,8 +42,7 @@
 	    			var="program"
 		    		>	
 	    			
-	    			<p:column headerText="Code" width="70"><h:outputText value="#{program.code}" /></p:column>
-	    			<p:column headerText="Libelle" width="400"><h:outputText value="#{program.name}" /></p:column>
+	    			<p:column headerText="Programme"><h:outputText value="#{program.code} #{program.name}" /></p:column>
 	    			<p:column headerText="Unités administratives">
 	    				<p:repeat value="#{program.administrativeUnits}" var="administrativeUnit">
 	    					<h:outputText value="#{administrativeUnit.code} #{administrativeUnit.name}" /><br/>

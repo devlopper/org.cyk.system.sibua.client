@@ -65,7 +65,10 @@ public class AdministrativeUnitEditPage extends AbstractPageContainerManagedImpl
 				administrativeUnit = new AdministrativeUnit();	
 				administrativeUnit.setSection(__section__);
 			}else {
-				administrativeUnit = __inject__(AdministrativeUnitController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier"));
+				administrativeUnit = __inject__(AdministrativeUnitController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier"),
+						new Properties().setFields(AdministrativeUnit.FIELD_IDENTIFIER+","+AdministrativeUnit.FIELD_CODE+","+AdministrativeUnit.FIELD_NAME
+								+","+AdministrativeUnit.FIELD_SECTION+","+AdministrativeUnit.FIELD_PARENT+","+AdministrativeUnit.FIELD_SERVICE_GROUP+","
+								+AdministrativeUnit.FIELD_LOCALISATION+","+AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION));
 				destinations.setTarget((List<Destination>) __inject__(DestinationController.class)
 						.read(new Properties().setFilters(new FilterDto().addField(Destination.FIELD_ADMINISTRATIVE_UNIT, CollectionHelper.listOf(administrativeUnit.getCode())))
 								.setIsPageable(Boolean.FALSE)));	
@@ -101,7 +104,7 @@ public class AdministrativeUnitEditPage extends AbstractPageContainerManagedImpl
 			functionalClassification.setValue(administrativeUnit.getFunctionalClassification());
 			localisation = new SelectionOne<Localisation>(Localisation.class);	
 			localisation.setValue(administrativeUnit.getLocalisation());
-			
+			parent.setValue(administrativeUnit.getParent());
 		}catch(Exception exception) {
 			exception.printStackTrace();
 		}
@@ -132,12 +135,13 @@ public class AdministrativeUnitEditPage extends AbstractPageContainerManagedImpl
 		administrativeUnit.setLocalisation(localisation.getValue());
 		administrativeUnit.setSection(section.getValue());
 		administrativeUnit.setDestinations(destinations.getTarget());
+		administrativeUnit.setParent(parent.getValue());
 		if(StringHelper.isBlank(administrativeUnit.getIdentifier())) {
 			__inject__(AdministrativeUnitController.class).create(administrativeUnit);
 		}else {
 			__inject__(AdministrativeUnitController.class).update(administrativeUnit,new Properties().setFields(AdministrativeUnit.FIELD_SECTION
 					+","+AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION+","+AdministrativeUnit.FIELD_LOCALISATION+","+AdministrativeUnit.FIELD_SERVICE_GROUP
-					+","+AdministrativeUnit.FIELD_NAME+","+AdministrativeUnit.FIELD_DESTINATIONS));	
+					+","+AdministrativeUnit.FIELD_NAME+","+AdministrativeUnit.FIELD_DESTINATIONS+","+AdministrativeUnit.FIELD_PARENT));	
 		}
 	}
 	
