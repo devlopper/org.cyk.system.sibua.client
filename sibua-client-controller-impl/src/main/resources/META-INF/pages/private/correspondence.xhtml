@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{administrativeUnitEditPage}">
+    	<ui:define name="menuLeft"/>
+    	
+    	<ui:define name="centerCenter">.
+    		<p:outputPanel id="outputPanel" styleClass="ui-g">
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="name" value="Libellé" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<p:inputText id="name" value="#{administrativeUnitEditPage.name}" required="true" requiredMessage="valeur obligatoire" style="width:100%;"/>
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="name" />
+    				</ui:define>
+    			</ui:decorate>
+    			
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="section" value="Section" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<ui:decorate template="/input/select/one/menu.xhtml">
+			    			<ui:param name="selection" value="#{administrativeUnitEditPage.section}"/>
+			    			<ui:param name="selectableInputId" value="section"/>
+			    			<ui:param name="required" value="true"/>
+			    			<ui:param name="ajaxUpdate" value="form:destinations"/>		
+			    		</ui:decorate>
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="section" />
+    				</ui:define>
+    			</ui:decorate>
+    			
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="parent" value="Parent" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<ui:decorate template="/input/select/one/menu.xhtml">
+			    			<ui:param name="selection" value="#{administrativeUnitEditPage.parent}"/>
+			    			<ui:param name="selectableInputId" value="parent"/>	
+			    			<ui:param name="required" value="false"/>
+			    		</ui:decorate>
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="parent" />
+    				</ui:define>
+    			</ui:decorate>
+    			
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="serviceGroup" value="Groupe de service" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<ui:decorate template="/input/select/one/menu.xhtml">
+			    			<ui:param name="selection" value="#{administrativeUnitEditPage.serviceGroup}"/>
+			    			<ui:param name="selectableInputId" value="serviceGroup"/>	
+			    			<ui:param name="required" value="true"/>
+			    		</ui:decorate>
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="serviceGroup" />
+    				</ui:define>
+    			</ui:decorate>
+    			
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="functionalClassification" value="Classification fonctionnelle" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<ui:decorate template="/input/select/one/menu.xhtml">
+			    			<ui:param name="selection" value="#{administrativeUnitEditPage.functionalClassification}"/>
+			    			<ui:param name="selectableInputId" value="functionalClassification"/>	
+			    			<ui:param name="required" value="true"/>	
+			    		</ui:decorate>
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="functionalClassification" />
+    				</ui:define>
+    			</ui:decorate>
+    			
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="localisation" value="Localisation" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<ui:decorate template="/input/select/one/menu.xhtml">
+			    			<ui:param name="selection" value="#{administrativeUnitEditPage.localisation}"/>
+			    			<ui:param name="selectableInputId" value="localisation"/>
+			    			<ui:param name="required" value="true"/>
+			    		</ui:decorate>
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="localisation" />
+    				</ui:define>
+    			</ui:decorate>
+    			
+    			<div class="ui-g-12">
+    				<p:pickList id="destinations" value="#{administrativeUnitEditPage.destinations}" var="destination" converter="#{objectConverter}" 
+    					itemValue="#{destination}" itemLabel="#{destination}"
+    					showCheckbox="true" showSourceFilter="true" showTargetFilter="true"
+    					filterMatchMode="contains"
+    					responsive="true"  
+    					>
+    					<f:facet name="sourceCaption">
+    						<h:outputText value="Liste des destinations SIGBUD non rattachées" style="color : red;font-weight : bold;" />
+    					</f:facet>
+       					<f:facet name="targetCaption">
+       						<h:outputText value="Liste des destinations SIGBUD rattachées à l'unité administrative" style="font-weight : bold;"/>
+       					</f:facet>
+    				</p:pickList>
+    			</div>		
+    			
+    		</p:outputPanel>
+
+	    	<p:toolbar>
+	    		<f:facet name="left">
+	    			<cyk:commandable value="#{administrativeUnitEditPage.saveCommandable}" />
+	    		</f:facet>
+	    		<f:facet name="right">
+	    			<ui:param name="sectionIdentifier" value="#{empty administrativeUnitEditPage.section.value.identifier ? '' : administrativeUnitEditPage.section.value.identifier}"/>
+			    	<p:button value="Liste des unités administratives" icon="fa fa-list" outcome="administrativeUnitListView">
+			    		<f:param name="section" value="#{sectionIdentifier}" />
+			    	</p:button> 		
+	    		</f:facet>
+	    	</p:toolbar>
+	    	
+	    	<ui:include src="../css.xhtml"/>	
+    	</ui:define>
+    </cyk:page>
+</html>

@@ -212,7 +212,7 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 	
 	@Override
 	protected String __getWindowTitleValue__() {
-		return "Rattachement des activités";
+		return "Rattachement des activités aux unités administratives";
 	}
 	
 }

@@ -79,14 +79,20 @@ public class AdministrativeUnitEditPage extends AbstractPageContainerManagedImpl
 			name = administrativeUnit.getName();
 			parent = new SelectionOne<AdministrativeUnit>(AdministrativeUnit.class);		
 			parent.setValue(administrativeUnit.getParent());
+			parent.setAreChoicesGettable(Boolean.FALSE);
 			
 			section = new SelectionOne<Section>(Section.class);		
 			section.setListener(new SelectionOne.Listener<Section>() {
 				@Override
 				public void processOnSelect(Section section) {
 					if(section == null) {
+						parent.setValue(null);
 						destinations.setSource(new ArrayList<Destination>());
 					}else {					
+						parent.setChoices(__inject__(AdministrativeUnitController.class)
+								.read(new Properties().setFilters(new FilterDto().addField(AdministrativeUnit.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+										.setIsPageable(Boolean.FALSE)));
+						
 						destinations.setSource((List<Destination>) __inject__(DestinationController.class)
 								.read(new Properties().setQueryIdentifier(DestinationPersistence.READ_WHERE_ADMINISTRATIVE_UNIT_DOES_NOT_EXIST_BY_SECTIONS_CODES)
 										.setFilters(new FilterDto().addField(Activity.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))

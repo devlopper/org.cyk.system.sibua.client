@@ -33,6 +33,12 @@
 		</navigation-case>
 		
 		<navigation-case>
+			<from-outcome>administrativeUnitListActivityView</from-outcome>
+			<to-view-id>/private/administrativeunit/listactivities.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>programListView</from-outcome>
 			<to-view-id>/private/program/list.jsf</to-view-id>
 			<redirect />
@@ -41,6 +47,18 @@
 		<navigation-case>
 			<from-outcome>sectionReadView</from-outcome>
 			<to-view-id>/private/section/read.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>activityEditDestinationsView</from-outcome>
+			<to-view-id>/private/activity/editdestinations.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>activityListDestinationView</from-outcome>
+			<to-view-id>/private/activity/listdestinations.jsf</to-view-id>
 			<redirect />
 		</navigation-case>
 		
