@@ -9,6 +9,18 @@
 		<from-view-id>*</from-view-id>
 		
 		<navigation-case>
+			<from-outcome>administrativeUnitFromDestinationCreateView</from-outcome>
+			<to-view-id>/private/administrativeunitfromdestination/create.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>administrativeUnitFromDestinationCodifyView</from-outcome>
+			<to-view-id>/private/administrativeunitfromdestination/codify.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>administrativeUnitEditView</from-outcome>
 			<to-view-id>/private/administrativeunit/edit.jsf</to-view-id>
 			<redirect />

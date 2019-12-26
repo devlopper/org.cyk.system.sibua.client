@@ -12,6 +12,7 @@ import lombok.Setter;
 public class Destination extends AbstractDataIdentifiableSystemStringIdentifiableBusinessStringNamableImpl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private Title title;
 	private Section section;
 	private Program program;
 	private Action action;

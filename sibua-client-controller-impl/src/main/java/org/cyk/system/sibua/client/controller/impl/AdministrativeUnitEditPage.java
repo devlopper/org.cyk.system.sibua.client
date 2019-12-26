@@ -147,7 +147,7 @@ public class AdministrativeUnitEditPage extends AbstractPageContainerManagedImpl
 		}else {
 			__inject__(AdministrativeUnitController.class).update(administrativeUnit,new Properties().setFields(AdministrativeUnit.FIELD_SECTION
 					+","+AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION+","+AdministrativeUnit.FIELD_LOCALISATION+","+AdministrativeUnit.FIELD_SERVICE_GROUP
-					+","+AdministrativeUnit.FIELD_NAME+","+AdministrativeUnit.FIELD_DESTINATIONS+","+AdministrativeUnit.FIELD_PARENT));	
+					+","+AdministrativeUnit.FIELD_NAME+","+AdministrativeUnit.FIELD_DESTINATIONS));	
 		}
 	}
 	

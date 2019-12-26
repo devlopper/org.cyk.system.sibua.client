@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{administrativeUnitFromDestinationCreatePage}">
+    	<ui:define name="menuLeft"/>
+    	
+    	<ui:define name="centerCenter">.
+    		<p:fieldset legend="Filtre des destinations" collapsed="false" toggleable="true">
+    			<p:dataTable id="selectableDestinations" value="#{administrativeUnitFromDestinationCreatePage.availableDestinations}" var="destination" 
+					emptyMessage="Aucune destination trouvée" lazy="true" rows="10"
+					selection="#{administrativeUnitFromDestinationCreatePage.selectableDestinations}" rowKey="#{destination.code}">
+					<p:column width="25" selectionMode="multiple" />
+					<p:column headerText="Code" width="100"><h:outputText value="#{destination.code}"/></p:column>
+		  			<p:column headerText="Libellé"><h:outputText value="#{destination.name}"/></p:column>
+		  			<!--
+		  			<p:column headerText="Titre"><h:outputText value="#{destination.title}"/></p:column>
+		  			-->
+		  			<p:column headerText="Section" width="100"><h:outputText value="#{destination.section}"/></p:column>
+		  			<p:column headerText="Actions" width="100">
+		  				<p:button value="Ajouter" icon="fa fa-plus" />
+		  			</p:column>
+				</p:dataTable>
+				<p:separator/>
+				<p:commandButton value="Ajouter les destinations sélectionnées" action="#{administrativeUnitFromDestinationCreatePage.select}" />
+    		</p:fieldset>
+    		<p:fieldset legend="Destinations sélectionnées" collapsed="false" toggleable="false">
+    			<p:dataTable id="selectedDestinations"
+	    			value="#{administrativeUnitFromDestinationCreatePage.selectedDestinations}" var="destination" emptyMessage="Aucune destination sélectionnée"
+	    		>
+	    			<p:column headerText="Code" width="100"><h:outputText value="#{destination.code}"/></p:column>
+	    			<p:column headerText="Libellé"><h:outputText value="#{destination.name}"/></p:column>
+	    			<!--
+	    			<p:column headerText="Titre"><h:outputText value="#{destination.title}"/></p:column>
+	    			-->
+	    			<p:column headerText="Section" width="100"><h:outputText value="#{destination.section}"/></p:column>
+	    			<p:column headerText="Actions" width="100">
+	    				<p:button value="Retirer" icon="fa fa-minus" />
+	    			</p:column>
+	    		</p:dataTable>
+				<p:separator/>
+				<cyk:commandable value="#{administrativeUnitFromDestinationCreatePage.createCommandable}" />
+    		</p:fieldset>			
+	    	<ui:include src="../css.xhtml"/>	
+    	</ui:define>
+    </cyk:page>
+</html>

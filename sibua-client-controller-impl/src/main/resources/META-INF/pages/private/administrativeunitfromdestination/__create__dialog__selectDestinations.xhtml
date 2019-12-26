@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+	<h:body>
+		<p:dataTable value="#{administrativeUnitFromDestinationCreatePage.availableDestinations}" var="destination" emptyMessage="Aucune destination trouvée">
+			<p:column headerText="Code"><h:outputText value="#{destination.code}"/></p:column>
+	  			<p:column headerText="Libellé"><h:outputText value="#{destination.name}"/></p:column>
+	  			<p:column headerText="Titre"><h:outputText value="#{destination.title}"/></p:column>
+	  			<p:column headerText="Section"><h:outputText value="#{destination.section}"/></p:column>
+	  			<p:column headerText="Actions">
+	  				<p:button value="Ajouter" icon="fa fa-plus" />
+	  			</p:column>
+		</p:dataTable>
+		
+   		<ui:include src="../css.xhtml"/>	
+	</h:body>				
+	   	
+</html>

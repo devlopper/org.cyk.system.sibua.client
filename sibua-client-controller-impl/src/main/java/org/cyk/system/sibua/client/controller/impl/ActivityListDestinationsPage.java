@@ -7,6 +7,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.cyk.system.sibua.client.controller.api.ActivityController;
+import org.cyk.system.sibua.client.controller.api.AdministrativeUnitController;
 import org.cyk.system.sibua.client.controller.api.SectionController;
 import org.cyk.system.sibua.client.controller.entities.Activity;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
@@ -38,11 +39,26 @@ public class ActivityListDestinationsPage extends AbstractPageContainerManagedIm
 			section.setListener(new SelectionOne.Listener<Section>() {
 				@Override
 				public void processOnSelect(Section section) {		
+					administrativeUnit.select(null);
 					if(section == null) {
+						administrativeUnit.setChoices(null);
+					}else {					
+						administrativeUnit.setChoices(__inject__(AdministrativeUnitController.class)
+								.read(new Properties().setFilters(new FilterDto().addField(AdministrativeUnit.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+										.setIsPageable(Boolean.FALSE)));											
+					}				
+				}
+			});
+			administrativeUnit = new SelectionOne<AdministrativeUnit>(AdministrativeUnit.class);
+			administrativeUnit.setAreChoicesGettable(Boolean.FALSE);
+			administrativeUnit.setListener(new SelectionOne.Listener<AdministrativeUnit>() {
+				@Override
+				public void processOnSelect(AdministrativeUnit administrativeUnit) {		
+					if(administrativeUnit == null) {
 						activities = null;
 					}else {					
 						activities = __inject__(ActivityController.class)
-								.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+								.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT, CollectionHelper.listOf(administrativeUnit.getCode())))
 										.setFields(Activity.FIELD_CODE+","+Activity.FIELD_NAME+","+Activity.FIELD_DESTINATIONS)
 										.setIsPageable(Boolean.FALSE));										
 					}				

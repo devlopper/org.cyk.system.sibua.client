@@ -29,9 +29,6 @@
 			    			<ui:param name="ajaxUpdate" value="dataTable"/>			
 			    		</ui:decorate>
     				</ui:define>
-    				<ui:define name="message">
-    					<p:message for="section" />
-    				</ui:define>
     			</ui:decorate>
     			
     			<p:separator/>
@@ -40,14 +37,23 @@
 	    			id="dataTable"
 	    			value="#{administrativeUnitListPage.administrativeUnits}"
 	    			var="administrativeUnit"
+	    			emptyMessage="Aucune unité administrative trouvée"
 		    		>	
 	    			<f:facet name="header">
         				<p:toolbar>
         					<ui:param name="sectionIdentifier" value="#{empty administrativeUnitListPage.section.value.identifier ? '' : administrativeUnitListPage.section.value.identifier}"/>
 		    				<f:facet name="left">		    					
-		    					<p:button value="Ajout UA" icon="fa fa-plus" outcome="administrativeUnitEditView">
-		        					<f:param name="section" value="#{sectionIdentifier}" />
-		        				</p:button>
+		    					<p:menuButton value="Création">
+		        					<p:menuitem value="Création à partir de destination" outcome="administrativeUnitFromDestinationCreateView">
+		        						<f:param name="section" value="#{sectionIdentifier}" />
+		        					</p:menuitem>
+		        					<p:menuitem value="Codification" outcome="administrativeUnitFromDestinationCodifyView">
+		        						<f:param name="section" value="#{sectionIdentifier}" />
+		        					</p:menuitem>
+		        					<p:menuitem value="Création simple" outcome="administrativeUnitEditView">
+		        						<f:param name="section" value="#{sectionIdentifier}" />
+		        					</p:menuitem>
+		        				</p:menuButton>
 		        				<p:button value="Activités" icon="fa fa-link" outcome="administrativeUnitEditActivitiesView">
 		        					<f:param name="section" value="#{sectionIdentifier}" />
 		        				</p:button>

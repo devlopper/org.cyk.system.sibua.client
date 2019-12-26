@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{administrativeUnitFromDestinationCodifyPage}">
+    	<ui:define name="menuLeft"/>
+    	
+    	<ui:define name="centerCenter">.
+    		<p:dataTable id="selectedAdministrativeUnitFromDestinations" rowIndexVar="rowIndex"
+    			value="#{administrativeUnitFromDestinationCodifyPage.selectedAdministrativeUnitFromDestinations}" var="administrativeUnitFromDestination" emptyMessage="Aucune unité administrative sélectionnée"
+    		>
+    			<f:facet name="header">
+    				<p:toolbar>
+    					<f:facet name="left">
+    						<p:commandButton value="Sélectionner" icon="fa fa-plus" immediate="true" actionListener="#{administrativeUnitFromDestinationCodifyPage.openAvailableAdministrativeUnitFromDestinationsDialog}" 
+    							>
+    							<p:ajax update=":form:administrativeUnitFromDestinationsDialog" oncomplete="PF('dialog').show();" />
+    						</p:commandButton>
+    					</f:facet>
+    				</p:toolbar>
+    			</f:facet>
+    			<p:column headerText="Destination" width="100"><h:outputText value="#{administrativeUnitFromDestination.code}"/></p:column>
+    			<p:column headerText="Libellé">
+    				<p:message for="name" />
+    				<p:inputText id="name" value="#{administrativeUnitFromDestination.__name__}" required="true" requiredMessage="valeur obligatoire"/>
+    			</p:column>
+    			<p:column headerText="Groupe de service" width="150">
+    				<p:selectOneMenu value="#{administrativeUnitFromDestination.serviceGroup}" converter="#{objectConverter}">
+    					<f:selectItem itemLabel="Aucune sélection" />
+    					<f:selectItems value="#{administrativeUnitFromDestinationCodifyPage.serviceGroups}" var="serviceGroup" itemValue="#{serviceGroup}" itemLabel="#{serviceGroup}" />
+    				</p:selectOneMenu>
+    			</p:column>
+    			<p:column headerText="CFAP" width="150">
+    				<p:selectOneMenu value="#{administrativeUnitFromDestination.functionalClassification}" converter="#{objectConverter}">
+    					<f:selectItem itemLabel="Aucune sélection" />
+    					<f:selectItems value="#{administrativeUnitFromDestinationCodifyPage.functionalClassifications}" var="functionalClassification" itemValue="#{functionalClassification}" itemLabel="#{functionalClassification}" />
+    				</p:selectOneMenu>
+    			</p:column>
+    			<p:column headerText="Localisation" width="150">
+    				<p:selectOneMenu value="#{administrativeUnitFromDestination.localisation}" converter="#{objectConverter}">
+    					<f:selectItem itemLabel="Aucune sélection" />
+    					<f:selectItems value="#{administrativeUnitFromDestinationCodifyPage.localisations}" var="localisation" itemValue="#{localisation}" itemLabel="#{localisation}" />
+    				</p:selectOneMenu>
+    			</p:column>
+    			<p:column headerText="Section" width="150">
+    				<p:selectOneMenu value="#{administrativeUnitFromDestination.section}" converter="#{objectConverter}">
+    					<f:selectItem itemLabel="Aucune sélection" />
+    					<f:selectItems value="#{administrativeUnitFromDestinationCodifyPage.sections}" var="section" itemValue="#{section}" itemLabel="#{section}" />
+    				</p:selectOneMenu>
+    			</p:column>
+    			
+    			<!--
+    			<p:column headerText="Titre"><h:outputText value="#{administrativeUnitFromDestination.title}"/></p:column>
+    			-->
+    			<p:column headerText="Actions" width="100">
+    				<p:button value="Retirer" icon="fa fa-minus" />
+    			</p:column>
+    		</p:dataTable>
+			<p:separator/>
+			<cyk:commandable value="#{administrativeUnitFromDestinationCodifyPage.updateCommandable}" />
+			
+			<p:dialog id="administrativeUnitFromDestinationsDialog" header="Sélection des unités administratives" modal="true" widgetVar="dialog" height="80%" width="95%" fitViewport="true" styleClass="dialogClass">
+				<p:dataTable id="selectableAdministrativeUnitFromDestinations" value="#{administrativeUnitFromDestinationCodifyPage.availableAdministrativeUnitFromDestinations}" var="administrativeUnitFromDestination" 
+					emptyMessage="Aucune unité administrative trouvée" lazy="true" rows="10" paginator="true"
+					selection="#{administrativeUnitFromDestinationCodifyPage.__selectedAdministrativeUnitFromDestinations__}">
+					<p:column width="40" selectionMode="multiple" />
+					<p:column headerText="Destination" width="100" filterable="true" filterMatchMode="contains"><h:outputText value="#{administrativeUnitFromDestination.code}"/></p:column>
+		  			<p:column headerText="Libellé" filterBy="#{administrativeUnitFromDestination.name}" filterable="true" filterMatchMode="contains"><h:outputText value="#{administrativeUnitFromDestination.name}"/></p:column>		  			
+		  			<p:column headerText="Titre" filterBy="#{administrativeUnitFromDestination.destination.title}">
+		  				<f:facet name="filter">
+			                <p:selectOneMenu onchange="PF('administrativeUnitFromDestinationsDialog').filter()">
+			                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+			                    <f:selectItems value="#{dtFilterView.brands}" />
+			                </p:selectOneMenu>
+			            </f:facet>
+		  				<h:outputText value="#{administrativeUnitFromDestination.destination.title}"/>
+		  			</p:column>		  			
+		  			<p:column headerText="Section" width="100" filterable="true" filterMatchMode="contains"><h:outputText value="#{administrativeUnitFromDestination.section}"/></p:column>
+		  			<p:column headerText="Actions" width="100">
+		  				<p:commandButton value="Ajouter" icon="fa fa-plus" action="#{administrativeUnitFromDestinationCodifyPage.selectOne(administrativeUnitFromDestination)}" update=":form:selectableAdministrativeUnitFromDestinations,:form:selectedAdministrativeUnitFromDestinations"/>
+		  			</p:column>
+				</p:dataTable>
+				<p:separator/>
+				<p:commandButton value="Ajouter la sélection" action="#{administrativeUnitFromDestinationCodifyPage.select}" update=":form:selectableAdministrativeUnitFromDestinations,:form:selectedAdministrativeUnitFromDestinations"/>				
+			</p:dialog>
+			
+	    	<ui:include src="../css.xhtml"/>	
+    	</ui:define>
+    </cyk:page>
+</html>
