@@ -83,7 +83,7 @@ public class AdministrativeUnitLoadPage extends AbstractPageContainerManagedImpl
 	}
 	
 	public void listenUpload(FileUploadEvent event) {
-	    UploadedFile uploadedFile = event.getFile();
+		UploadedFile uploadedFile = event.getFile();
 	    byte[] contents = uploadedFile.getContents();
 	    if(contents == null || contents.length == 0)
 	    	return;
@@ -128,7 +128,7 @@ public class AdministrativeUnitLoadPage extends AbstractPageContainerManagedImpl
 						administrativeUnit.addActivityDestinations(activityDestination);
 				}
 			}
-		}		
+		}
 	}
 	
 	private AdministrativeUnit __getAdministrativeUnitByName__(String name) {

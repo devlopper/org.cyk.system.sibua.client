@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{administrativeUnitCodifyPage}">
+    	<ui:define name="menuLeft"/>
+    	
+    	<ui:define name="centerCenter">.
+    		<p:dataTable id="selectedAdministrativeUnits" rowIndexVar="rowIndex"
+    			value="#{administrativeUnitCodifyPage.selectedAdministrativeUnits}" var="administrativeUnit" emptyMessage="Aucune unité administrative sélectionnée"
+    		>
+    			<f:facet name="header">
+    				<p:toolbar>
+    					<f:facet name="left">
+    						<p:commandButton value="Sélectionner" icon="fa fa-plus" immediate="true" actionListener="#{administrativeUnitCodifyPage.openAvailableAdministrativeUnitsDialog}" 
+    							>
+    							<p:ajax update=":form:administrativeUnitsDialog" oncomplete="PF('dialog').show();" />
+    						</p:commandButton>
+    					</f:facet>
+    				</p:toolbar>
+    			</f:facet>
+    			<!--
+    			<p:column headerText="Code" width="100"><h:outputText value="#{administrativeUnit.code}"/></p:column>
+    			-->
+    			<p:column headerText="Libellé">
+    				<p:message for="name" />
+    				<p:inputText id="name" value="#{administrativeUnit.__name__}" required="true" requiredMessage="valeur obligatoire" style="width:100%;"/>
+    			</p:column>
+    			<p:column headerText="Groupe de service" width="150">
+    				<p:selectOneMenu value="#{administrativeUnit.serviceGroup}" converter="#{objectConverter}">
+    					<f:selectItems value="#{administrativeUnitCodifyPage.serviceGroups}" var="serviceGroup" itemValue="#{serviceGroup}" itemLabel="#{serviceGroup}" />
+    				</p:selectOneMenu>
+    			</p:column>
+    			<p:column headerText="CFAP" width="150">
+    				<p:selectOneMenu value="#{administrativeUnit.functionalClassification}" converter="#{objectConverter}">
+    					<f:selectItems value="#{administrativeUnitCodifyPage.functionalClassifications}" var="functionalClassification" itemValue="#{functionalClassification}" itemLabel="#{functionalClassification}" />
+    				</p:selectOneMenu>
+    			</p:column>
+    			<p:column headerText="Actions" width="100">
+    				<p:button value="Retirer" icon="fa fa-minus" />
+    			</p:column>
+    		</p:dataTable>
+			<p:separator/>
+			<cyk:commandable value="#{administrativeUnitCodifyPage.updateCommandable}" />
+			
+			<p:dialog id="administrativeUnitsDialog" header="Sélection des unités administratives" modal="true" widgetVar="dialog" height="95%" width="95%" fitViewport="true" styleClass="dialogClass">
+				<p:dataTable id="selectableAdministrativeUnits" value="#{administrativeUnitCodifyPage.availableAdministrativeUnits}" var="administrativeUnit" 
+					emptyMessage="Aucune unité administrative trouvée" lazy="true" rows="10" paginator="true"
+					selection="#{administrativeUnitCodifyPage.__selectedAdministrativeUnits__}" widgetVar="administrativeUnitsDataTable">
+					<p:column width="40" selectionMode="multiple" />
+		  			<p:column headerText="Libellé" filterBy="#{administrativeUnit.name}"><h:outputText value="#{administrativeUnit.name}"/></p:column>		  			
+		  			<p:column headerText="Section" width="200" filterBy="#{administrativeUnit.section}">
+		  				<f:facet name="filter">
+			                <p:selectOneMenu onchange="PF('administrativeUnitsDataTable').filter()" filter="true" filterMatchMode="contains">
+			                    <f:selectItems value="#{administrativeUnitCodifyPage.sections}" var="section" itemValue="#{section.code}" itemLabel="#{section}" />
+			                </p:selectOneMenu>
+			            </f:facet>
+		  				<h:outputText value="#{administrativeUnit.section.code}"/>
+		  			</p:column>
+		  			<p:column headerText="CFAP" width="200" filterBy="#{administrativeUnit.functionalClassification}">
+		  				<f:facet name="filter">
+			                <p:selectOneMenu onchange="PF('administrativeUnitsDataTable').filter()" filter="true" filterMatchMode="contains">
+			                    <f:selectItems value="#{administrativeUnitCodifyPage.functionalClassifications}" var="functionalClassification" itemValue="#{functionalClassification.code}" itemLabel="#{functionalClassification}" />
+			                </p:selectOneMenu>
+			            </f:facet>
+		  				<h:outputText value="#{administrativeUnit.functionalClassification}"/>
+		  			</p:column>
+		  			<p:column headerText="Groupe de service" width="200" filterBy="#{administrativeUnit.serviceGroup}">
+		  				<f:facet name="filter">
+			                <p:selectOneMenu onchange="PF('administrativeUnitsDataTable').filter()" filter="true" filterMatchMode="contains">
+			                    <f:selectItems value="#{administrativeUnitCodifyPage.serviceGroups}" var="serviceGroup" itemValue="#{serviceGroup.code}" itemLabel="#{serviceGroup}" />
+			                </p:selectOneMenu>
+			            </f:facet>
+		  				<h:outputText value="#{administrativeUnit.serviceGroup}"/>
+		  			</p:column>
+		  			<p:column headerText="Actions" width="100">
+		  				<p:commandButton value="Ajouter" icon="fa fa-plus" action="#{administrativeUnitCodifyPage.selectOne(administrativeUnit)}" update=":form:selectableAdministrativeUnits,:form:selectedAdministrativeUnits"/>
+		  			</p:column>
+				</p:dataTable>
+				<p:separator/>
+				<p:commandButton value="Ajouter la sélection" action="#{administrativeUnitCodifyPage.select}" update=":form:selectableAdministrativeUnits,:form:selectedAdministrativeUnits"/>				
+			</p:dialog>
+			
+	    	<ui:include src="../css.xhtml"/>	
+    	</ui:define>
+    </cyk:page>
+</html>

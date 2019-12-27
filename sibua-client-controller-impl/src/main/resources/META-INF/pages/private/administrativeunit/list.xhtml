@@ -42,18 +42,17 @@
 	    			<f:facet name="header">
         				<p:toolbar>
         					<ui:param name="sectionIdentifier" value="#{empty administrativeUnitListPage.section.value.identifier ? '' : administrativeUnitListPage.section.value.identifier}"/>
-		    				<f:facet name="left">		    					
-		    					<p:menuButton value="Création">
-		        					<p:menuitem value="Création à partir de destination" outcome="administrativeUnitFromDestinationCreateView">
-		        						<f:param name="section" value="#{sectionIdentifier}" />
-		        					</p:menuitem>
-		        					<p:menuitem value="Codification" outcome="administrativeUnitFromDestinationCodifyView">
-		        						<f:param name="section" value="#{sectionIdentifier}" />
-		        					</p:menuitem>
-		        					<p:menuitem value="Création simple" outcome="administrativeUnitEditView">
-		        						<f:param name="section" value="#{sectionIdentifier}" />
-		        					</p:menuitem>
-		        				</p:menuButton>
+		    				<f:facet name="left">
+		    					<p:button value="Chargement" icon="fa fa-upload" outcome="administrativeUnitLoadView">
+		        					<f:param name="section" value="#{sectionIdentifier}" />
+		        				</p:button>
+		        				<p:button value="Codification" icon="fa fa-thumb-tack" outcome="administrativeUnitCodifyView">
+		        					<f:param name="section" value="#{sectionIdentifier}" />
+		        				</p:button>
+		        				<p:button value="Créer" outcome="administrativeUnitEditView">
+		        					<f:param name="section" value="#{sectionIdentifier}" />
+		        				</p:button>
+		    					
 		        				<p:button value="Activités" icon="fa fa-link" outcome="administrativeUnitEditActivitiesView">
 		        					<f:param name="section" value="#{sectionIdentifier}" />
 		        				</p:button>

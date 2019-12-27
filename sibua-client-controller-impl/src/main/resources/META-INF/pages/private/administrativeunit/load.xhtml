@@ -17,6 +17,7 @@
     				<ui:define name="input">
     					<p:fileUpload id="file" fileUploadListener="#{administrativeUnitLoadPage.listenUpload}" 
     						auto="true" update="fileContentOutputPanel" label="Sélectionner un fichier excel"
+    						multiple="false" mode="advanced"
     						allowTypes="/(\.|\/)(xls|xlsx)$/" />	
     				</ui:define>
     				<ui:define name="message">

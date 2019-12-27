@@ -30,6 +30,7 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 	private Localisation localisation;
 	private Integer orderNumber;
 	private AdministrativeUnit parent;
+	private String __name__;
 	
 	private List<AdministrativeUnit> parents;
 	private List<AdministrativeUnit> children;

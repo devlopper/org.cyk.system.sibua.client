@@ -21,6 +21,18 @@
 		</navigation-case>
 		
 		<navigation-case>
+			<from-outcome>administrativeUnitLoadView</from-outcome>
+			<to-view-id>/private/administrativeunit/load.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>administrativeUnitCodifyView</from-outcome>
+			<to-view-id>/private/administrativeunit/codify.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>administrativeUnitEditView</from-outcome>
 			<to-view-id>/private/administrativeunit/edit.jsf</to-view-id>
 			<redirect />
