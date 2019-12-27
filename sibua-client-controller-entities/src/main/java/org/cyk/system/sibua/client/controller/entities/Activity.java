@@ -19,6 +19,12 @@ public class Activity extends AbstractDataIdentifiableSystemStringIdentifiableBu
 	private Program program;
 	private Action action;
 	private List<Destination> destinations;
+	private Destination destination;
+	
+	@Override
+	public Activity setCode(String code) {
+		return (Activity) super.setCode(code);
+	}
 	
 	@Override
 	public String toString() {
@@ -30,5 +36,6 @@ public class Activity extends AbstractDataIdentifiableSystemStringIdentifiableBu
 	public static final String FIELD_PROGRAM = "program";
 	public static final String FIELD_ACTION = "action";
 	public static final String FIELD_DESTINATIONS = "destinations";
+	public static final String FIELD_DESTINATION = "destination";
 	
 }

@@ -1,6 +1,7 @@
 package org.cyk.system.sibua.client.controller.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.cyk.utility.client.controller.data.AbstractDataIdentifiableSystemStringIdentifiableBusinessStringNamableImpl;
 
@@ -18,6 +19,12 @@ public class Destination extends AbstractDataIdentifiableSystemStringIdentifiabl
 	private Action action;
 	private Activity activity;
 	private AdministrativeUnit administrativeUnit;
+	private List<Activity> activities;
+	
+	@Override
+	public Destination setCode(String code) {
+		return (Destination) super.setCode(code);
+	}
 	
 	@Override
 	public String toString() {
@@ -28,6 +35,7 @@ public class Destination extends AbstractDataIdentifiableSystemStringIdentifiabl
 	public static final String FIELD_PROGRAM = "program";
 	public static final String FIELD_ACTION = "action";
 	public static final String FIELD_ACTIVITY = "activity";
+	public static final String FIELD_ACTIVITIES = "activities";
 	public static final String FIELD_ADMINISTRATIVE_UNIT = "administrativeUnit";
 	
 }

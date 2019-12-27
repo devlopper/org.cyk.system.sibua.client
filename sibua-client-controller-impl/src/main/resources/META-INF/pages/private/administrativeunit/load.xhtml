@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{administrativeUnitLoadPage}">
+    	<ui:define name="menuLeft"/>
+    	
+    	<ui:define name="centerCenter">.
+    		<p:outputPanel id="outputPanel" styleClass="ui-g">
+    			<ui:decorate template="/layout/inputMessage/default.xhtml">
+    				<ui:define name="input">
+    					<p:fileUpload id="file" fileUploadListener="#{administrativeUnitLoadPage.listenUpload}" 
+    						auto="true" update="fileContentOutputPanel" label="Sélectionner un fichier excel"
+    						allowTypes="/(\.|\/)(xls|xlsx)$/" />	
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="file" />
+    				</ui:define>
+    			</ui:decorate>
+    		</p:outputPanel>
+    		
+    		<p:outputPanel id="fileContentOutputPanel">
+    			<h3><h:outputText value="Section : #{administrativeUnitLoadPage.section.value.code} #{administrativeUnitLoadPage.section.value.name}" /></h3>    			
+    			<p:separator/>
+    			<p:repeat value="#{administrativeUnitLoadPage.administrativeUnits}" var="administrativeUnit">
+	    			<p:fieldset legend="#{administrativeUnit.code} #{administrativeUnit.name}" toggleable="true" collapsed="false">
+	    				<p:dataTable value="#{administrativeUnit.activityDestinations}" var="activityDestination">
+	    					<f:facet name="header">
+	    						<h:outputText value="Correspondance Budget programme - Budget moyen" />
+	    					</f:facet>
+	    					<p:column headerText="Activité (Budget programme)">
+	    						<h:outputText value="#{activityDestination.activity.code}" styleClass="cyk-code"/>
+	    						<h:outputText value=" #{activityDestination.activity.name}" />
+	    					</p:column>
+	    					<p:column headerText="Destination (Budget moyen)">
+	    						<h:outputText value="#{activityDestination.destination.code}" styleClass="cyk-code"/>
+	    						<h:outputText value=" #{activityDestination.destination.name}" />
+	    					</p:column>
+	    				</p:dataTable>
+	    			</p:fieldset>
+	    		</p:repeat>
+    		</p:outputPanel>
+	    	<p:separator/>	  	
+	    	<cyk:commandable value="#{administrativeUnitLoadPage.loadCommandable}" />	    	
+	    	<ui:include src="../css.xhtml"/>	
+    	</ui:define>
+    </cyk:page>
+</html>
