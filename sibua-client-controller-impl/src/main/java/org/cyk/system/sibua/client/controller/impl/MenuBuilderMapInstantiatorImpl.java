@@ -16,8 +16,10 @@ public class MenuBuilderMapInstantiatorImpl extends org.cyk.utility.client.contr
 		sessionMenuBuilder.addItems(
 				__inject__(MenuItemBuilder.class).setCommandableName("Unité administrative").setCommandableIcon(Icon.BUILDING)
 					.addChild(
-							__inject__(MenuItemBuilder.class).setCommandableName("Rattacher les activités").setCommandableNavigationIdentifier("administrativeUnitEditActivitiesView")
-							,__inject__(MenuItemBuilder.class).setCommandableName("Liste des unités administratives").setCommandableNavigationIdentifier("administrativeUnitListView")
+							__inject__(MenuItemBuilder.class).setCommandableName("Liste").setCommandableNavigationIdentifier("administrativeUnitListView").setCommandableIcon(Icon.LIST)
+							,__inject__(MenuItemBuilder.class).setCommandableName("Chargement").setCommandableNavigationIdentifier("administrativeUnitLoadView").setCommandableIcon(Icon.UPLOAD)
+							,__inject__(MenuItemBuilder.class).setCommandableName("Codification").setCommandableNavigationIdentifier("administrativeUnitCodifyView").setCommandableIcon(Icon.THUMB_TACK)
+							,__inject__(MenuItemBuilder.class).setCommandableName("Section").setCommandableNavigationIdentifier("workspaceConfigureView").setCommandableIcon(Icon.GEAR)
 							)
 				/*,__inject__(MenuItemBuilder.class).setCommandableName("Parametrage").setCommandableIcon(Icon.GEARS)
 					.list(PersistableClassesGetter.getInstance().get())

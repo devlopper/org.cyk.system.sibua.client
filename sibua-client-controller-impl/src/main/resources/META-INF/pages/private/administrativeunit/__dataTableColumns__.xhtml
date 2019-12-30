@@ -5,11 +5,13 @@
     xmlns:f="http://java.sun.com/jsf/core"      
     xmlns:h="http://java.sun.com/jsf/html">
 
-	<p:column headerText="Code" width="170"><h:outputText value="#{administrativeUnit.code}" /></p:column>
- 	<p:column headerText="Libelle"><h:outputText value="#{administrativeUnit.name}" /></p:column>
- 	<p:column headerText="Groupe de service" width="120"><h:outputText value="#{administrativeUnit.serviceGroup.code}" /></p:column>
- 	<p:column headerText="CFAP" width="100"><h:outputText value="#{administrativeUnit.functionalClassification.code}" /></p:column>
+	<p:column headerText="Code" width="150"><h:outputText value="#{administrativeUnit.code}" /></p:column>
+ 	<p:column headerText="Libellé"><h:outputText value="#{administrativeUnit.name}" /></p:column>
+ 	<p:column headerText="CFAP" width="150"><h:outputText value="#{administrativeUnit.functionalClassification.code}" /></p:column>
+ 	<p:column headerText="Groupe de service" width="150"><h:outputText value="#{administrativeUnit.serviceGroup.code}" /></p:column> 	
+ 	<!--
  	<p:column headerText="Localisation géographique" width="150"><h:outputText value="#{administrativeUnit.localisation.name}" /></p:column>
+ 	-->
  	<ui:include src="__dataTableColumnActions__.xhtml"/>
   	
 </ui:composition>

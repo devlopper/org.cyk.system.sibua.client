@@ -10,38 +10,53 @@
 	
     <cyk:page value="#{administrativeUnitListPage}">
     	<!-- Menu is removed -->
+    	<!--
     	<ui:define name="menuLeft"/>
-    	
+    	-->
     	<ui:define name="centerCenter">.
     		<p:outputPanel id="outputPanel" styleClass="ui-g">
     			<ui:param name="labelDivWidthProportion" value="1"/>
     			<ui:param name="inputDivWidthProportion" value="11"/>
     			<ui:param name="messageDivWidthProportion" value="0"/>
-    		
-    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
-    				<ui:define name="label">
-    					<p:outputLabel for="section" value="Section" />
-    				</ui:define>
-    				<ui:define name="input">
-    					<ui:decorate template="/input/select/one/menu.xhtml">
-			    			<ui:param name="selection" value="#{administrativeUnitListPage.section}"/>
-			    			<ui:param name="selectableInputId" value="section"/>
-			    			<ui:param name="ajaxUpdate" value="dataTable"/>			
-			    		</ui:decorate>
-    				</ui:define>
-    			</ui:decorate>
     			
+    			<ui:fragment rendered="#{administrativeUnitListPage.defaultSection == null}">
+    				<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+	    				<ui:define name="label">
+	    					<p:outputLabel for="section" value="Section" />
+	    				</ui:define>
+	    				<ui:define name="input">
+	    					<!--
+	    					<p:selectOneMenu id="section" value="#{administrativeUnitListPage.section}" filter="true" filterMatchMode="contains">
+			                	<f:selectItem noSelectionOption="true" itemValue="#{administrativeUnitListPage.section.code}" itemLabel="Aucune section" />
+			                    <f:selectItems value="#{administrativeUnitListPage.sections}" var="section" itemValue="#{section.code}" itemLabel="#{section}" />
+			                    <p:ajax listener="" oncomplete="PF('administrativeUnitsDataTable').filter()"  />
+			                </p:selectOneMenu>
+			                -->
+	    					
+	    					<ui:decorate template="/input/select/one/menu.xhtml">
+				    			<ui:param name="selection" value="#{administrativeUnitListPage.section}"/>
+				    			<ui:param name="selectableInputId" value="section"/>
+				    			<ui:param name="ajaxDisabled" value="false"/>
+				    			<ui:param name="ajaxOncomplete" value="PF('administrativeUnitsDataTable').filter()"/>			
+				    		</ui:decorate>
+				    		
+	    				</ui:define>
+	    			</ui:decorate>
+    			</ui:fragment>
+    			  			
     			<p:separator/>
 	    		
+	    		<ui:param name="sectionIdentifier" value="#{empty administrativeUnitListPage.defaultSection.identifier ? '' : administrativeUnitListPage.defaultSection.identifier}"/>
+	    		
 	    		<p:dataTable
-	    			id="dataTable"
-	    			value="#{administrativeUnitListPage.administrativeUnits}"
-	    			var="administrativeUnit"
-	    			emptyMessage="Aucune unité administrative trouvée"
-		    		>	
+	    			id="dataTable" value="#{administrativeUnitListPage.administrativeUnits}" var="administrativeUnit" emptyMessage="Aucune unité administrative trouvée"
+	    			lazy="true" rows="100" paginator="true" rowsPerPageTemplate="100,200,500,1000" paginatorAlwaysVisible="false"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"					
+					widgetVar="administrativeUnitsDataTable"
+		    		>
+		    		<!--	
 	    			<f:facet name="header">
-        				<p:toolbar>
-        					<ui:param name="sectionIdentifier" value="#{empty administrativeUnitListPage.section.value.identifier ? '' : administrativeUnitListPage.section.value.identifier}"/>
+        				<p:toolbar>        					
 		    				<f:facet name="left">
 		    					<p:button value="Chargement" icon="fa fa-upload" outcome="administrativeUnitLoadView">
 		        					<f:param name="section" value="#{sectionIdentifier}" />
@@ -81,12 +96,11 @@
 		    				</f:facet>
 		    			</p:toolbar>
     				</f:facet>
+    				-->
 	    			<ui:include src="__dataTableColumns__.xhtml"/>
 	    		</p:dataTable>
-    		</p:outputPanel>
-	    	
-	    	<ui:include src="../css.xhtml"/>
-	    		 		
+    		</p:outputPanel>	    	
+	    	<ui:include src="../css.xhtml"/>	    		 		
     	</ui:define>
     </cyk:page>
 </html>

@@ -9,14 +9,16 @@
       xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
 	
     <cyk:page value="#{administrativeUnitLoadPage}">
+    	<!--
     	<ui:define name="menuLeft"/>
+    	-->
     	
     	<ui:define name="centerCenter">.
     		<p:outputPanel id="outputPanel" styleClass="ui-g">
     			<ui:decorate template="/layout/inputMessage/default.xhtml">
     				<ui:define name="input">
     					<p:fileUpload id="file" fileUploadListener="#{administrativeUnitLoadPage.listenUpload}" 
-    						auto="true" update="fileContentOutputPanel" label="Sélectionner un fichier excel"
+    						auto="true" update="#{componentHelper.globalMessagesTargetsIdentifiers},fileContentOutputPanel" label="Sélectionner un fichier excel"
     						multiple="false" mode="advanced"
     						allowTypes="/(\.|\/)(xls|xlsx)$/" />	
     				</ui:define>
@@ -27,8 +29,38 @@
     		</p:outputPanel>
     		
     		<p:outputPanel id="fileContentOutputPanel">
-    			<h3><h:outputText value="Section : #{administrativeUnitLoadPage.section.value.code} #{administrativeUnitLoadPage.section.value.name}" /></h3>    			
-    			<p:separator/>
+    			<h3><h:outputText value="Section : #{administrativeUnitLoadPage.section.value.code} #{administrativeUnitLoadPage.section.value.name}" rendered="#{administrativeUnitLoadPage.section.value != null}"/></h3> 
+    			<h:outputText value="Nombre d'unité administrative : #{administrativeUnitLoadPage.administrativeUnitsDataModel.rowCount}." rendered="#{administrativeUnitLoadPage.section.value != null}"/>
+    			<h:outputText value="Nombre de rattachement : #{administrativeUnitLoadPage.numberOfActivityDestinations}." rendered="#{administrativeUnitLoadPage.section.value != null}"/>
+    			<h:outputText value="Nombre d'unité administrative dans la base : #{administrativeUnitLoadPage.numberOfExistingAdministrativeUnits}." rendered="#{administrativeUnitLoadPage.section.value != null}"/>   			
+    			<p:dataTable
+    				id="administrativeUnits" value="#{administrativeUnitLoadPage.administrativeUnitsDataModel}" var="administrativeUnit" 
+					emptyMessage="Aucune unité administrative chargée" lazy="true" rows="10" paginator="true" paginatorAlwaysVisible="false"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,50,100" rendered="#{administrativeUnitLoadPage.section.value != null}"
+    			>
+    				<p:column>
+    					<h:outputText value="#{administrativeUnit.name}"/>
+    					<p:dataTable value="#{administrativeUnit.activityDestinations}" var="activityDestination" rendered="#{not empty administrativeUnit.activityDestinations}">
+	    					<!--
+	    					<f:facet name="header">
+	    						<h:outputText value="Correspondance Budget programme - Budget moyen" />
+	    					</f:facet>
+	    					-->
+	    					<p:column headerText="Activité (Budget programme)">
+	    						<h:outputText value="#{activityDestination.activity.code}" styleClass="cyk-code"/>
+	    						<h:outputText value=" #{activityDestination.activity.name}" />
+	    					</p:column>
+	    					<p:column headerText="Destination (Budget moyen)">
+	    						<h:outputText value="#{activityDestination.destination.code}" styleClass="cyk-code"/>
+	    						<h:outputText value=" #{activityDestination.destination.name}" />
+	    					</p:column>
+	    				</p:dataTable>
+    				</p:column>
+    			</p:dataTable>
+    			
+    			
+    			<!--
     			<p:repeat value="#{administrativeUnitLoadPage.administrativeUnits}" var="administrativeUnit">
 	    			<p:fieldset legend="#{administrativeUnit.code} #{administrativeUnit.name}" toggleable="true" collapsed="false">
 	    				<p:dataTable value="#{administrativeUnit.activityDestinations}" var="activityDestination">
@@ -46,8 +78,8 @@
 	    				</p:dataTable>
 	    			</p:fieldset>
 	    		</p:repeat>
+	    		-->
     		</p:outputPanel>
-	    	<p:separator/>	  	
 	    	<cyk:commandable value="#{administrativeUnitLoadPage.loadCommandable}" />	    	
 	    	<ui:include src="../css.xhtml"/>	
     	</ui:define>

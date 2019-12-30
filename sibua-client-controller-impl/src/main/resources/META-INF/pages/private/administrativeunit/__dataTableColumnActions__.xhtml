@@ -5,14 +5,17 @@
     xmlns:f="http://java.sun.com/jsf/core"      
     xmlns:h="http://java.sun.com/jsf/html">
 
-	<p:column headerText="Actions" width="250">
-  		<p:button value="Rattachement" icon="fa fa-link" outcome="administrativeUnitEditActivitiesView">
-       		<f:param name="administrativeUnit" value="#{administrativeUnit.identifier}" />
-       	</p:button>
-       		
-       	<p:button value="Modification" icon="fa fa-pencil" outcome="administrativeUnitEditView">
-  			<f:param name="entityidentifier" value="#{administrativeUnit.identifier}" />
-  		</p:button>
+	<p:column width="100">
+		<p:menuButton value="Actions">
+    		<p:menuitem value="Rattachement" icon="fa fa-link" outcome="administrativeUnitEditActivitiesView">
+    			<f:param name="entityidentifier" value="#{administrativeUnit.identifier}" />
+    			<f:param name="section" value="#{sectionIdentifier}" />
+    		</p:menuitem>    	
+    		<p:menuitem value="Modification" icon="fa fa-pencil" outcome="administrativeUnitEditView">
+    			<f:param name="entityidentifier" value="#{administrativeUnit.identifier}" />
+    			<f:param name="section" value="#{sectionIdentifier}" />
+    		</p:menuitem>    					
+    	</p:menuButton>
   	</p:column>
   	
 </ui:composition>

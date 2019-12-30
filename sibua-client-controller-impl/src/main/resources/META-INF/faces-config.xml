@@ -9,6 +9,12 @@
 		<from-view-id>*</from-view-id>
 		
 		<navigation-case>
+			<from-outcome>workspaceConfigureView</from-outcome>
+			<to-view-id>/private/configureworkspace.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>administrativeUnitFromDestinationCreateView</from-outcome>
 			<to-view-id>/private/administrativeunitfromdestination/create.jsf</to-view-id>
 			<redirect />
