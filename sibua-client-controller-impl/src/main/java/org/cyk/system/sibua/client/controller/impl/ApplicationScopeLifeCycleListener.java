@@ -21,4 +21,6 @@ public class ApplicationScopeLifeCycleListener extends AbstractApplicationScopeL
 	public void __destroy__(Object object) {}
 	
 	/**/
+	
+	public static final String MENU_USER = "user";
 }

@@ -5,10 +5,43 @@
     xmlns:f="http://java.sun.com/jsf/core"      
     xmlns:h="http://java.sun.com/jsf/html">
 
-	<p:column headerText="Code" width="150"><h:outputText value="#{administrativeUnit.code}" /></p:column>
- 	<p:column headerText="Libellé"><h:outputText value="#{administrativeUnit.name}" /></p:column>
- 	<p:column headerText="CFAP" width="150"><h:outputText value="#{administrativeUnit.functionalClassification.code}" /></p:column>
- 	<p:column headerText="Groupe de service" width="150"><h:outputText value="#{administrativeUnit.serviceGroup.code}" /></p:column> 	
+	<p:column headerText="Code" width="150" filterBy="#{administrativeUnit.code}">
+		<h:outputText value="#{administrativeUnit.code}" />
+	</p:column>
+ 	
+ 	<p:column headerText="Libellé" filterBy="#{administrativeUnit.name}">
+ 		<h:outputText value="#{administrativeUnit.name}" />
+ 	</p:column>
+ 	
+ 	<p:column headerText="Section" width="100" filterBy="#{administrativeUnit.section}" rendered="#{sectionRendered}">
+ 		<f:facet name="filter">
+			<p:selectOneMenu onchange="PF('#{dataTableWidgetVar}').filter()" filter="true" filterMatchMode="contains">
+				<f:selectItem noSelectionOption="true" itemLabel="-- Tout --"/>
+				<f:selectItems value="#{sections}" var="section" itemValue="#{section.code}" itemLabel="#{section}" />
+			</p:selectOneMenu>
+		</f:facet>
+ 		<h:outputText value="#{administrativeUnit.section.code}" />
+ 	</p:column>
+ 	
+ 	<p:column headerText="CFAP" width="150" filterBy="#{administrativeUnit.functionalClassification}">
+ 		<f:facet name="filter">
+			<p:selectOneMenu onchange="PF('#{dataTableWidgetVar}').filter()" filter="true" filterMatchMode="contains">
+				<f:selectItem noSelectionOption="true" itemLabel="-- Tout --"/>
+				<f:selectItems value="#{functionalClassifications}" var="functionalClassification" itemValue="#{functionalClassification.code}" itemLabel="#{functionalClassification}" />
+			</p:selectOneMenu>
+		</f:facet>
+ 		<h:outputText value="#{administrativeUnit.functionalClassification.code}" />
+ 	</p:column>
+ 	
+ 	<p:column headerText="Groupe de service" width="150" filterBy="#{administrativeUnit.serviceGroup}">
+ 		<f:facet name="filter">
+ 			<p:selectOneMenu onchange="PF('#{dataTableWidgetVar}').filter()" filter="true" filterMatchMode="contains">
+ 				<f:selectItem noSelectionOption="true" itemLabel="-- Tout --"/>
+				<f:selectItems value="#{serviceGroups}" var="serviceGroup" itemValue="#{serviceGroup.code}" itemLabel="#{serviceGroup}" />
+			</p:selectOneMenu>
+		</f:facet>
+ 		<h:outputText value="#{administrativeUnit.serviceGroup.code}" />
+ 	</p:column> 	
  	<!--
  	<p:column headerText="Localisation géographique" width="150"><h:outputText value="#{administrativeUnit.localisation.name}" /></p:column>
  	-->

@@ -35,6 +35,24 @@
 	
 	<profiles>
 		<profile>
+			<id>wildfly.10.3.111.91</id>
+			<properties>
+				<wildfly.hostname>10.3.111.91</wildfly.hostname>
+				<wildfly.username>dgbf</wildfly.username>
+				<wildfly.password>dgbf</wildfly.password>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>wildfly.10.3.4.37</id>
+			<properties>
+				<wildfly.hostname>10.3.4.37</wildfly.hostname>
+				<wildfly.username>dgbf</wildfly.username>
+				<wildfly.password>dgbf</wildfly.password>
+			</properties>
+		</profile>
+		
+		<profile>
 			<id>deployment.common</id>
 			<properties>
 				<cyk.variable.system.name>Module de gestion des unités administratives</cyk.variable.system.name>
@@ -68,6 +86,13 @@
 			<id>deployment.wildfly.remote.10.3.4.37</id>
 			<properties>
 				<cyk.variable.system.proxy.uniform.resource.identifier>http://10.3.4.37:8080/sibua/server/api</cyk.variable.system.proxy.uniform.resource.identifier>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>deployment.wildfly.remote.10.3.111.91</id>
+			<properties>
+				<cyk.variable.system.proxy.uniform.resource.identifier>http://10.3.111.91:8080/sibua/server/api</cyk.variable.system.proxy.uniform.resource.identifier>
 			</properties>
 		</profile>
 	</profiles>

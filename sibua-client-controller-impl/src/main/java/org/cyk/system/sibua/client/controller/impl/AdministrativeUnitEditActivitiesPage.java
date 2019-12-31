@@ -158,10 +158,10 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 		
 		activities = new DualListModel<Activity>();
 		
-		if(StringHelper.isBlank(Faces.getRequestParameter("administrativeUnit"))) {
+		if(StringHelper.isBlank(Faces.getRequestParameter("entityidentifier"))) {
 			
 		}else {
-			administrativeUnit.setValue(__inject__(AdministrativeUnitController.class).readBySystemIdentifier(Faces.getRequestParameter("administrativeUnit")));
+			administrativeUnit.setValue(__inject__(AdministrativeUnitController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier")));
 			if(administrativeUnit.getValue() != null) {
 				section.setValue(administrativeUnit.getValue().getSection());
 				administrativeUnit.setChoices(__inject__(AdministrativeUnitController.class)

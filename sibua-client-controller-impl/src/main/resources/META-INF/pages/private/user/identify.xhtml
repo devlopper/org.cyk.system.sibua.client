@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{userIdentifyPage}">
+    	<ui:define name="centerCenter">.
+    		<p:outputPanel id="outputPanel">
+    			<p:fieldset legend="Informations personnelles et contacts">
+    				<div class="ui-g">
+	    				<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+		    				<ui:define name="label">
+		    					<p:outputLabel for="registrationNumber" value="Matricule" />
+		    				</ui:define>
+		    				<ui:define name="input">
+		    					<p:inputText id="registrationNumber" value="#{userIdentifyPage.user.registrationNumber}" required="true" requiredMessage="valeur obligatoire" style="width:100%;"/>
+		    				</ui:define>
+		    				<ui:define name="message">
+		    					<p:message for="registrationNumber" />
+		    				</ui:define>
+		    			</ui:decorate>
+		    			
+	    				<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+		    				<ui:define name="label">
+		    					<p:outputLabel for="firstName" value="Nom" />
+		    				</ui:define>
+		    				<ui:define name="input">
+		    					<p:inputText id="firstName" value="#{userIdentifyPage.user.firstName}" required="true" requiredMessage="valeur obligatoire" style="width:100%;"/>
+		    				</ui:define>
+		    				<ui:define name="message">
+		    					<p:message for="firstName" />
+		    				</ui:define>
+		    			</ui:decorate>
+		    			
+		    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+		    				<ui:define name="label">
+		    					<p:outputLabel for="lastNames" value="Prénoms" />
+		    				</ui:define>
+		    				<ui:define name="input">
+		    					<p:inputText id="lastNames" value="#{userIdentifyPage.user.lastNames}" required="true" requiredMessage="valeur obligatoire" style="width:100%;"/>
+		    				</ui:define>
+		    				<ui:define name="message">
+		    					<p:message for="lastNames" />
+		    				</ui:define>
+		    			</ui:decorate>
+		    			
+		    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+		    				<ui:define name="label">
+		    					<p:outputLabel for="section" value="Section" />
+		    				</ui:define>
+		    				<ui:define name="input">
+		    					<ui:decorate template="/input/select/one/menu.xhtml">
+					    			<ui:param name="selection" value="#{userIdentifyPage.section}"/>
+					    			<ui:param name="selectableInputId" value="section"/>
+					    			<ui:param name="ajaxUpdate" value="form:administrativeUnit"/>		
+					    		</ui:decorate>
+		    				</ui:define>
+		    				<ui:define name="message">
+		    					<p:message for="section" />
+		    				</ui:define>
+		    			</ui:decorate>
+		    			
+		    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+		    				<ui:define name="label">
+		    					<p:outputLabel for="administrativeUnit" value="Unité administrative" />
+		    				</ui:define>
+		    				<ui:define name="input">
+		    					<ui:decorate template="/input/select/one/menu.xhtml">
+					    			<ui:param name="selection" value="#{userIdentifyPage.administrativeUnit}"/>
+					    			<ui:param name="selectableInputId" value="administrativeUnit"/>	
+					    			<ui:param name="required" value="true"/>
+					    		</ui:decorate>
+		    				</ui:define>
+		    				<ui:define name="message">
+		    					<p:message for="administrativeUnit" />
+		    				</ui:define>
+		    			</ui:decorate>
+		    			
+		    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+		    				<ui:define name="label">
+		    					<p:outputLabel for="electronicMailAddress" value="Adresse de courriel électronique" />
+		    				</ui:define>
+		    				<ui:define name="input">
+		    					<p:inputText id="electronicMailAddress" value="#{userIdentifyPage.user.electronicMailAddress}" required="true" requiredMessage="valeur obligatoire" style="width:100%;"/>
+		    				</ui:define>
+		    				<ui:define name="message">
+		    					<p:message for="electronicMailAddress" />
+		    				</ui:define>
+		    			</ui:decorate>
+		    			
+		    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+		    				<ui:define name="label">
+		    					<p:outputLabel for="phoneNumber" value="Numéro de téléphone" />
+		    				</ui:define>
+		    				<ui:define name="input">
+		    					<p:inputText id="phoneNumber" value="#{userIdentifyPage.user.phoneNumber}" required="true" requiredMessage="valeur obligatoire" style="width:100%;"/>
+		    				</ui:define>
+		    				<ui:define name="message">
+		    					<p:message for="phoneNumber" />
+		    				</ui:define>
+		    			</ui:decorate>
+	    			</div>
+    			</p:fieldset>	    			   			
+    			<p:fieldset legend="Pièces justificatives">    				    				
+    				<p:dataTable id="files" value="#{userIdentifyPage.uploadedFiles}" var="uploadedFile" rowIndexVar="rowIndex" emptyMessage="Aucun fichier sélectionné">
+    					<p:column headerText="#" width="50">
+    						<f:facet name="header">
+    							<p:commandButton title="Ajouter une ligne" icon="fa fa-plus" action="#{userIdentifyPage.addFile}" process="@this" update="files"/>
+    						</f:facet>
+    						<h:outputText value="#{rowIndex+1}" />
+    					</p:column>
+    					<p:column headerText="Fichier">
+    						<p:fileUpload value="#{uploadedFile.uploadedFile}" mode="simple" skinSimple="true" />
+    					</p:column>
+    					<p:column width="50">
+    						<p:commandButton title="Supprimer" icon="fa fa-remove" action="#{userIdentifyPage.removeFile(uploadedFile)}" process="files" update="files"/>
+    					</p:column>    					
+    				</p:dataTable>	    			
+    			</p:fieldset>
+    		</p:outputPanel>
+    		<p:separator/>
+	    	<cyk:commandable value="#{userIdentifyPage.createCommandable}" />	    	
+	    	<ui:include src="../css.xhtml"/>	
+    	</ui:define>
+    </cyk:page>
+</html>

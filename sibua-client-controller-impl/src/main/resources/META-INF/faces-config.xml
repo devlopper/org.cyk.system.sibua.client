@@ -9,6 +9,30 @@
 		<from-view-id>*</from-view-id>
 		
 		<navigation-case>
+			<from-outcome>userIdentifyView</from-outcome>
+			<to-view-id>/private/user/identify.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>userValidateView</from-outcome>
+			<to-view-id>/private/user/validate.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>userCreateAccountView</from-outcome>
+			<to-view-id>/private/user/createaccount.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>userNotifyView</from-outcome>
+			<to-view-id>/private/user/notify.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>workspaceConfigureView</from-outcome>
 			<to-view-id>/private/configureworkspace.jsf</to-view-id>
 			<redirect />
@@ -35,6 +59,12 @@
 		<navigation-case>
 			<from-outcome>administrativeUnitCodifyView</from-outcome>
 			<to-view-id>/private/administrativeunit/codify.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>administrativeUnitLocaliseView</from-outcome>
+			<to-view-id>/private/administrativeunit/localise.jsf</to-view-id>
 			<redirect />
 		</navigation-case>
 		
