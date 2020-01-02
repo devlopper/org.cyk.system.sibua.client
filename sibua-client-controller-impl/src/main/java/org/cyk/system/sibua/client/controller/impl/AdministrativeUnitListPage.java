@@ -83,6 +83,10 @@ public class AdministrativeUnitListPage extends AbstractPageContainerManagedImpl
 						
 				List<AdministrativeUnit> list = (List<AdministrativeUnit>) __inject__(AdministrativeUnitController.class)
 						.read(new Properties().setQueryIdentifier(AdministrativeUnitPersistence.READ_BY_FILTERS)
+								.setFields(AdministrativeUnit.FIELD_IDENTIFIER+","+AdministrativeUnit.FIELD_CODE+","+AdministrativeUnit.FIELD_NAME
+										+","+AdministrativeUnit.FIELD_SECTION+","+AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION
+										+","+AdministrativeUnit.FIELD_SERVICE_GROUP+","+AdministrativeUnit.FIELD_LOCALISATION
+										+","+AdministrativeUnit.FIELD_ACTIVITY_DESTINATIONS)
 								.setFilters(filter).setIsPageable(Boolean.TRUE).setFrom(first).setCount(pageSize));
 				if(CollectionHelper.isEmpty(list))
 					setRowCount(0);

@@ -178,4 +178,5 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 	public static final String FIELD_PARENTS = "parents";
 	public static final String FIELD_CHILDREN = "children";
 	public static final String FIELD_DESTINATIONS = "destinations";
+	public static final String FIELD_ACTIVITY_DESTINATIONS = "activityDestinations";
 }
