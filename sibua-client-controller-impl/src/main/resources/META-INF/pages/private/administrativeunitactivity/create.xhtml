@@ -23,7 +23,7 @@
 		    -->
 		    
 		    <p:dataTable id="dataTable" value="#{__page__.__administrativeUnitActivities__}" var="administrativeUnitActivity" emptyMessage="Toutes les activités sont rattachées"
-		    	rowIndexVar="rowIndex">	
+		    	rowIndexVar="rowIndex" rendered="#{__page__.defaultSection != null}">	
 		    	<p:column headerText="#" width="30">
 		    		<h:outputText value="#{rowIndex+1}" />
 		    	</p:column>
@@ -35,11 +35,14 @@
 		    	
 		    	<p:column headerText="Unité administrative">
 		    		<p:autoComplete value="#{administrativeUnitActivity.administrativeUnit}" converter="#{objectConverter}" placeholder="Rechercher..." var="administrativeUnit" itemValue="#{administrativeUnit}" 
-		    			itemLabel="#{administrativeUnit.name}" completeMethod="#{administrativeUnitActivityCreatePage.readAdministrativeUnitByString}" cache="true" 
+		    			itemLabel="#{administrativeUnit.nameAndCodeWithParenthesis}" completeMethod="#{administrativeUnitActivityCreatePage.readAdministrativeUnitByString}" cache="true" 
 				    	maxResults="5" queryDelay="500" emptyMessage="-- Aucun résultat --" style="width:100% !important;"/>
-		    	</p:column>			    	
-		    				
+		    	</p:column>			    			    				
 		   	</p:dataTable>
+    		
+    		<ui:fragment rendered="#{__page__.defaultSection == null}">
+    			<h1><h:outputText value="Sélectionner une section afin de rattacher les activités" /></h1>
+    		</ui:fragment>
     		
     		<p:separator/>
     		<cyk:commandable value="#{administrativeUnitActivityCreatePage.createCommandable}" />	    		

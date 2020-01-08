@@ -46,7 +46,7 @@ public class AdministrativeUnitActivityCreatePage extends AbstractPageContainerM
 	@Override
 	protected void __listenPostConstruct__() {
 		super.__listenPostConstruct__();		
-		Collection<Activity> activities = __inject__(ActivityController.class).read(new Properties()
+		Collection<Activity> activities = defaultSection == null ? null : __inject__(ActivityController.class).read(new Properties()
 				.setQueryIdentifier(ActivityPersistence.READ_WHERE_ADMINISTRATIVE_UNIT_DOES_NOT_EXIST_BY_FILTERS)
 				.setFilters(new FilterDto().addField(Activity.FIELD_SECTION, defaultSection == null ? null : List.of(defaultSection.getCode())))
 				.setFields("identifier,code,name")

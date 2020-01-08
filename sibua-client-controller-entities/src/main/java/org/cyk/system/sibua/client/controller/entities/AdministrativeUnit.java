@@ -174,6 +174,12 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 		return collection;
 	}
 	
+	public String getNameAndCodeWithParenthesis() {
+		if(StringHelper.isBlank(getName()))
+			return null;
+		return getName()+" ("+getCode()+")";
+	}
+	
 	@Override
 	public String toString() {
 		return getCode()+" "+getName();
