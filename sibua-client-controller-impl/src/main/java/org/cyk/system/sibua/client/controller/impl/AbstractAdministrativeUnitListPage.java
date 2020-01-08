@@ -21,8 +21,10 @@ import org.cyk.utility.__kernel__.constant.ConstantEmpty;
 import org.cyk.utility.__kernel__.map.MapHelper;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
+import org.cyk.utility.__kernel__.value.ValueHelper;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.SelectionOne;
 import org.cyk.utility.server.persistence.query.filter.FilterDto;
+import org.omnifaces.util.Faces;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -39,11 +41,12 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 	protected Collection<ServiceGroup> serviceGroups;
 	protected Collection<Localisation> localisations;
 	protected LazyDataModel<AdministrativeUnit> administrativeUnits;
-	protected Boolean isShowAll;
+	protected Boolean isShowAll,export;
 	
 	@Override
 	protected void __listenPostConstruct__() {
 		super.__listenPostConstruct__();
+		export = ValueHelper.convertToBoolean(Faces.getRequestParameter("export"));
 		section = new SelectionOne<Section>(Section.class);		
 		section.setAreChoicesGettable(defaultSection == null);
 		section.setListener(new SelectionOne.Listener<Section>() {
@@ -114,7 +117,8 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 		.setFields(AdministrativeUnit.FIELD_IDENTIFIER+","+AdministrativeUnit.FIELD_CODE+","+AdministrativeUnit.FIELD_NAME
 				+","+AdministrativeUnit.FIELD_SECTION+","+AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION
 				+","+AdministrativeUnit.FIELD_SERVICE_GROUP+","+AdministrativeUnit.FIELD_LOCALISATION
-				//+","+AdministrativeUnit.FIELD_ACTIVITY_DESTINATIONS+","+AdministrativeUnit.FIELD_ACTIVITIES+","+AdministrativeUnit.FIELD_DESTINATIONS										
+				+","+AdministrativeUnit.FIELD_ACTIVITY_DESTINATIONS+","+AdministrativeUnit.FIELD_ACTIVITIES+","+AdministrativeUnit.FIELD_DESTINATIONS
+				+","+AdministrativeUnit.FIELD_CHILDREN
 				)
 		.setFilters(filter).setIsPageable(Boolean.TRUE).setFrom(first).setCount(pageSize);
 	}

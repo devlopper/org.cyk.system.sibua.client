@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"      
+    xmlns:h="http://java.sun.com/jsf/html">
+	<!--
+	<ui:include src="__dataTableColumnToggler__.xhtml"/>
+	-->
+	<p:column headerText="Code" width="150" filterBy="#{activity.code}">
+		<h:outputText value="#{activity.code}" />
+	</p:column>
+ 	
+ 	<p:column headerText="Libellé" filterBy="#{activity.name}">
+ 		<h:outputText value="#{activity.name}" />
+ 	</p:column>
+ 	
+ 	<p:column headerText="Action" width="200" filterBy="#{activity.action}">
+ 		<f:facet name="filter">
+			<p:autoComplete onchange="PF('activitiesDataTable').filter()" placeholder="Rechercher..."
+		    	var="action" itemValue="#{action.code}" itemLabel="#{action}"
+		    	completeMethod="#{actionController.readByString}" cache="true" 
+		    	maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
+		    >
+		    	<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />
+		    </p:autoComplete>
+		</f:facet>
+ 		<h:outputText value="#{activity.action}" />
+ 	</p:column>
+ 	
+ 	<p:column headerText="Programme" width="200" filterBy="#{activity.action.program}">
+ 		<f:facet name="filter">
+			<p:autoComplete onchange="PF('activitiesDataTable').filter()" placeholder="Rechercher..."
+		    	var="program" itemValue="#{action.program.code}" itemLabel="#{program}"
+		    	completeMethod="#{programController.readByString}" cache="true" 
+		    	maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
+		    >
+		    	<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />
+		    </p:autoComplete>
+		</f:facet>
+ 		<h:outputText value="#{activity.action.program}" />
+ 	</p:column>
+ 	
+ 	<p:column headerText="Section" width="200" filterBy="#{activity.action.program.section}">
+ 		<f:facet name="filter">
+			<p:autoComplete onchange="PF('activitiesDataTable').filter()" placeholder="Rechercher..."
+		    	var="section" itemValue="#{section.code}" itemLabel="#{section}"
+		    	completeMethod="#{sectionController.readByString}" cache="true" 
+		    	maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
+		    >
+		    	<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />	
+		    </p:autoComplete>
+		</f:facet>
+ 		<h:outputText value="#{activity.action.program.section}" />
+ 	</p:column>
+ 	 	
+ 	<!--
+ 	<ui:include src="__dataTableColumnActions__.xhtml"/>
+  	
+  	<ui:include src="__dataTableRowExpansion__.xhtml"/>
+  	-->
+</ui:composition>

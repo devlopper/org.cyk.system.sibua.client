@@ -123,6 +123,12 @@
 		</navigation-case>
 		
 		<navigation-case>
+			<from-outcome>administrativeUnitActivityCreateView</from-outcome>
+			<to-view-id>/private/administrativeunitactivity/create.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>programListView</from-outcome>
 			<to-view-id>/private/program/list.jsf</to-view-id>
 			<redirect />
@@ -131,6 +137,12 @@
 		<navigation-case>
 			<from-outcome>sectionReadView</from-outcome>
 			<to-view-id>/private/section/read.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>activityListView</from-outcome>
+			<to-view-id>/private/activity/list.jsf</to-view-id>
 			<redirect />
 		</navigation-case>
 		

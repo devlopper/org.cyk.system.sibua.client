@@ -22,8 +22,16 @@ public class MenuBuilderMapInstantiatorImpl extends org.cyk.utility.client.contr
 			ua.addChild(__inject__(MenuItemBuilder.class).setCommandableName("Codification").setCommandableNavigationIdentifier("administrativeUnitCodifyView").setCommandableIcon(Icon.THUMB_TACK));
 			if(isAdmin)
 				ua.addChild(__inject__(MenuItemBuilder.class).setCommandableName("Génération des codes").setCommandableNavigationIdentifier("administrativeUnitGenerateCodeView").setCommandableIcon(Icon.FLASH));
+			ua.addChild(__inject__(MenuItemBuilder.class).setCommandableName("Activités").setCommandableNavigationIdentifier("activityListView").setCommandableIcon(Icon.LINK));
+			//ua.addChild(__inject__(MenuItemBuilder.class).setCommandableName("Rattachement des activités").setCommandableNavigationIdentifier("activityEditAdministrativeUnitsView"));
 			ua.addChild(__inject__(MenuItemBuilder.class).setCommandableName("Section").setCommandableNavigationIdentifier("workspaceConfigureView").setCommandableIcon(Icon.GEAR));
 			sessionMenuBuilder.addItems(ua);
+			
+			MenuItemBuilder activity = __inject__(MenuItemBuilder.class).setCommandableName("Activité").setCommandableIcon(Icon.FLASH);
+			activity.addChild(__inject__(MenuItemBuilder.class).setCommandableName("Liste").setCommandableNavigationIdentifier("activityListView").setCommandableIcon(Icon.LIST));
+			activity.addChild(__inject__(MenuItemBuilder.class).setCommandableName("Rattachement").setCommandableNavigationIdentifier("administrativeUnitActivityCreateView").setCommandableIcon(Icon.LINK));
+			sessionMenuBuilder.addItems(activity);
+			
 			/*
 			sessionMenuBuilder.addItems(
 					__inject__(MenuItemBuilder.class).setCommandableName("Unité administrative").setCommandableIcon(Icon.BUILDING)

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{administrativeUnitActivityCreatePage}">
+    	<ui:define name="centerCenter">
+    		.
+    		
+    		<!--
+    		<p:dataTable
+		   		id="dataTable" value="#{__page__.administrativeUnitActivities}" var="administrativeUnitActivity" emptyMessage="Aucune activité non rattachée trouvée"
+		   		lazy="true" rows="20" paginator="true" rowsPerPageTemplate="20,50,100" paginatorAlwaysVisible="false"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"					
+				currentPageReportTemplate="{totalRecords} trouvées. Page {currentPage}/{totalPages}" selection="#{administrativeUnitActivityCreatePage.selectedAdministrativeUnitActivities}"
+				widgetVar="administrativeUnitActivitiesDataTable" rowIndexVar="rowIndex" filterDelay="1000"
+		    	>
+		    -->
+		    
+		    <p:dataTable id="dataTable" value="#{__page__.__administrativeUnitActivities__}" var="administrativeUnitActivity" emptyMessage="Toutes les activités sont rattachées"
+		    	rowIndexVar="rowIndex">	
+		    	<p:column headerText="#" width="30">
+		    		<h:outputText value="#{rowIndex+1}" />
+		    	</p:column>
+		    	
+		    	<p:column headerText="Activité">
+		    		<h:outputText value="#{administrativeUnitActivity.activity.code}" styleClass="cyk-code" />
+		    		<h:outputText value=" #{administrativeUnitActivity.activity.name}" />
+		    	</p:column>
+		    	
+		    	<p:column headerText="Unité administrative">
+		    		<p:autoComplete value="#{administrativeUnitActivity.administrativeUnit}" converter="#{objectConverter}" placeholder="Rechercher..." var="administrativeUnit" itemValue="#{administrativeUnit}" 
+		    			itemLabel="#{administrativeUnit.name}" completeMethod="#{administrativeUnitActivityCreatePage.readAdministrativeUnitByString}" cache="true" 
+				    	maxResults="5" queryDelay="500" emptyMessage="-- Aucun résultat --" style="width:100% !important;"/>
+		    	</p:column>			    	
+		    				
+		   	</p:dataTable>
+    		
+    		<p:separator/>
+    		<cyk:commandable value="#{administrativeUnitActivityCreatePage.createCommandable}" />	    		
+    		<ui:include src="../css.xhtml"/>  		
+    	</ui:define>
+    </cyk:page>
+</html>
