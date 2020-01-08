@@ -51,6 +51,24 @@
 		</navigation-case>
 		
 		<navigation-case>
+			<from-outcome>administrativeUnitPrintView</from-outcome>
+			<to-view-id>/private/administrativeunit/print.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>administrativeUnitGenerateCodeView</from-outcome>
+			<to-view-id>/private/administrativeunit/generatecode.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>administrativeUnitListForAdminView</from-outcome>
+			<to-view-id>/private/admin/administrativeunit/list.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>administrativeUnitLoadView</from-outcome>
 			<to-view-id>/private/administrativeunit/load.jsf</to-view-id>
 			<redirect />
@@ -83,6 +101,12 @@
 		<navigation-case>
 			<from-outcome>administrativeUnitEditActivitiesView</from-outcome>
 			<to-view-id>/private/administrativeunit/editactivities.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>administrativeUnitEditChildrenView</from-outcome>
+			<to-view-id>/private/administrativeunit/editchildren.jsf</to-view-id>
 			<redirect />
 		</navigation-case>
 		

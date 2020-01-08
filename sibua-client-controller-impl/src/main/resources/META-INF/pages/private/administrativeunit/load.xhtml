@@ -29,56 +29,36 @@
     		</p:outputPanel>
     		
     		<p:outputPanel id="fileContentOutputPanel">
-    			<h3><h:outputText value="Section : #{administrativeUnitLoadPage.section.value.code} #{administrativeUnitLoadPage.section.value.name}" rendered="#{administrativeUnitLoadPage.section.value != null}"/></h3> 
-    			<h:outputText value="Nombre d'unité administrative : #{administrativeUnitLoadPage.administrativeUnitsDataModel.rowCount}." rendered="#{administrativeUnitLoadPage.section.value != null}"/>
-    			<h:outputText value="Nombre de rattachement : #{administrativeUnitLoadPage.numberOfActivityDestinations}." rendered="#{administrativeUnitLoadPage.section.value != null}"/>
-    			<h:outputText value="Nombre d'unité administrative dans la base : #{administrativeUnitLoadPage.numberOfExistingAdministrativeUnits}." rendered="#{administrativeUnitLoadPage.section.value != null}"/>   			
+    			<ui:fragment rendered="#{administrativeUnitLoadPage.section.value != null}">
+    				<h3><h:outputText value="Section : #{administrativeUnitLoadPage.section.value.code} #{administrativeUnitLoadPage.section.value.name}"/></h3> 
+    				<h:outputText value="Nombre d'unité administrative : #{administrativeUnitLoadPage.administrativeUnitsDataModel.rowCount}."/>
+    				<h:outputText value="Nombre d'activité : #{administrativeUnitLoadPage.numberOfActivities}."/>
+    				<h:outputText value="Nombre de destination : #{administrativeUnitLoadPage.numberOfDestinations}."/>
+    				<h:outputText value="Nombre de rattachement : #{administrativeUnitLoadPage.numberOfActivityDestinations}."/>
+    				<h:outputText value="Nombre d'unité administrative déja dans la base : #{administrativeUnitLoadPage.numberOfExistingAdministrativeUnits}."/>
+    			</ui:fragment>   			   			
+    			
     			<p:dataTable
     				id="administrativeUnits" value="#{administrativeUnitLoadPage.administrativeUnitsDataModel}" var="administrativeUnit" 
 					emptyMessage="Aucune unité administrative chargée" lazy="true" rows="10" paginator="true" paginatorAlwaysVisible="false"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					rowsPerPageTemplate="10,20,50,100" rendered="#{administrativeUnitLoadPage.section.value != null}"
+					rowsPerPageTemplate="10,20,50,100" rendered="#{administrativeUnitLoadPage.section.value != null}" rowIndexVar="rowIndex"
     			>
-    				<p:column>
+    				<ui:include src="__dataTableColumnToggler__.xhtml"/>		
+    				<p:column headerText="Unité administrative">
     					<h:outputText value="#{administrativeUnit.name}"/>
-    					<p:dataTable value="#{administrativeUnit.activityDestinations}" var="activityDestination" rendered="#{not empty administrativeUnit.activityDestinations}">
-	    					<!--
-	    					<f:facet name="header">
-	    						<h:outputText value="Correspondance Budget programme - Budget moyen" />
-	    					</f:facet>
-	    					-->
-	    					<p:column headerText="Activité (Budget programme)">
-	    						<h:outputText value="#{activityDestination.activity.code}" styleClass="cyk-code"/>
-	    						<h:outputText value=" #{activityDestination.activity.name}" />
-	    					</p:column>
-	    					<p:column headerText="Destination (Budget moyen)">
-	    						<h:outputText value="#{activityDestination.destination.code}" styleClass="cyk-code"/>
-	    						<h:outputText value=" #{activityDestination.destination.name}" />
-	    					</p:column>
-	    				</p:dataTable>
-    				</p:column>
+    				</p:column>  
+    				<p:column headerText="Groupe de service" width="200">
+    					<h:outputText value="#{administrativeUnit.serviceGroup}"/>
+    				</p:column>  
+    				<p:column headerText="CFAP" width="200">
+    					<h:outputText value="#{administrativeUnit.functionalClassification}"/>
+    				</p:column>  
+    				<p:column headerText="Localisation" width="200">
+    					<h:outputText value="#{administrativeUnit.localisation}"/>
+    				</p:column>    				
+    				<ui:include src="__dataTableRowExpansion__.xhtml"/>
     			</p:dataTable>
-    			
-    			
-    			<!--
-    			<p:repeat value="#{administrativeUnitLoadPage.administrativeUnits}" var="administrativeUnit">
-	    			<p:fieldset legend="#{administrativeUnit.code} #{administrativeUnit.name}" toggleable="true" collapsed="false">
-	    				<p:dataTable value="#{administrativeUnit.activityDestinations}" var="activityDestination">
-	    					<f:facet name="header">
-	    						<h:outputText value="Correspondance Budget programme - Budget moyen" />
-	    					</f:facet>
-	    					<p:column headerText="Activité (Budget programme)">
-	    						<h:outputText value="#{activityDestination.activity.code}" styleClass="cyk-code"/>
-	    						<h:outputText value=" #{activityDestination.activity.name}" />
-	    					</p:column>
-	    					<p:column headerText="Destination (Budget moyen)">
-	    						<h:outputText value="#{activityDestination.destination.code}" styleClass="cyk-code"/>
-	    						<h:outputText value=" #{activityDestination.destination.name}" />
-	    					</p:column>
-	    				</p:dataTable>
-	    			</p:fieldset>
-	    		</p:repeat>
-	    		-->
     		</p:outputPanel>
 	    	<cyk:commandable value="#{administrativeUnitLoadPage.loadCommandable}" />	    	
 	    	<ui:include src="../css.xhtml"/>	

@@ -32,27 +32,27 @@
     				<p:inputText id="name" value="#{administrativeUnit.__name__}" required="true" requiredMessage="valeur obligatoire" style="width:100%;"/>
     			</p:column>
     			<p:column headerText="Groupe de service" width="200">
-    				<p:autoComplete value="#{administrativeUnit.serviceGroup}" converter="#{objectConverter}" placeholder="Rechercher..."
+    				<p:autoComplete value="#{administrativeUnit.serviceGroup}" converter="#{objectConverter}" dropdown="true"
     					var="serviceGroup" itemValue="#{serviceGroup}" itemLabel="#{serviceGroup}"
-    					completeMethod="#{serviceGroupController.readByString}" cache="true" 
+    					completeMethod="#{administrativeUnitCodifyPage.queryServiceGroupByString}" autoSelection="false" cache="true" 
     					maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
     				/>
     			</p:column>    		
     			<p:column headerText="CFAP" width="200">
-    				<p:autoComplete value="#{administrativeUnit.functionalClassification}" converter="#{objectConverter}" placeholder="Rechercher..."
+    				<p:autoComplete value="#{administrativeUnit.functionalClassification}" converter="#{objectConverter}" dropdown="true"
     					var="functionalClassification" itemValue="#{functionalClassification}" itemLabel="#{functionalClassification}"
-    					completeMethod="#{functionalClassificationController.readByString}" cache="true" 
+    					completeMethod="#{administrativeUnitCodifyPage.queryFunctionalClassificationByString}" autoSelection="false" cache="true" 
     					maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
     				/>
     			</p:column>
     			<p:column headerText="Localisation" width="200">
-    				<p:autoComplete value="#{administrativeUnit.localisation}" converter="#{objectConverter}" placeholder="Rechercher..."
+    				<p:autoComplete value="#{administrativeUnit.localisation}" converter="#{objectConverter}" dropdown="true"
     					var="localisation" itemValue="#{localisation}" itemLabel="#{localisation}"
-    					completeMethod="#{localisationController.readByString}" cache="true" 
+    					completeMethod="#{administrativeUnitCodifyPage.queryLocalisationByString}" autoSelection="false" cache="true" 
     					maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
     				/>
     			</p:column>    			
-    			<p:column width="40">
+    			<p:column headerText="Actions" width="50">
     				<p:commandButton title="Retirer" icon="fa fa-minus" action="#{administrativeUnitCodifyPage.unselectOne(administrativeUnit)}" update=":form:selectedAdministrativeUnits"/>
     			</p:column>
     		</p:dataTable>
@@ -69,9 +69,9 @@
 							<h:outputText value="Groupe de service" />
 						</div>
 						<div class="ui-g-3">
-							<p:autoComplete value="#{administrativeUnitCodifyPage.serviceGroup}" converter="#{objectConverter}" placeholder="Rechercher..."
+							<p:autoComplete value="#{administrativeUnitCodifyPage.serviceGroup}" converter="#{objectConverter}" dropdown="true"
 		    					var="serviceGroup" itemValue="#{serviceGroup}" itemLabel="#{serviceGroup}"
-		    					completeMethod="#{serviceGroupController.readByString}" cache="true" 
+		    					completeMethod="#{administrativeUnitCodifyPage.queryServiceGroupByString}" autoSelection="false" cache="true" 
 		    					maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
 		    				/>
 			                <p:selectOneRadio value="#{administrativeUnitCodifyPage.overrideServiceGroup}">
@@ -84,9 +84,9 @@
 							<h:outputText value="CFAP" />
 						</div>
 						<div class="ui-g-3">
-							<p:autoComplete value="#{administrativeUnitCodifyPage.functionalClassification}" converter="#{objectConverter}" placeholder="Rechercher..."
+							<p:autoComplete value="#{administrativeUnitCodifyPage.functionalClassification}" converter="#{objectConverter}" dropdown="true"
 		    					var="functionalClassification" itemValue="#{functionalClassification}" itemLabel="#{functionalClassification}"
-		    					completeMethod="#{functionalClassificationController.readByString}" cache="true" 
+		    					completeMethod="#{administrativeUnitCodifyPage.queryFunctionalClassificationByString}" autoSelection="false" cache="true" 
 		    					maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
 		    				/>
 			                <p:selectOneRadio value="#{administrativeUnitCodifyPage.overrideFunctionalClassification}">
@@ -99,9 +99,9 @@
 							<h:outputText value="Localisation" />
 						</div>
 						<div class="ui-g-3">
-							<p:autoComplete value="#{administrativeUnitCodifyPage.localisation}" converter="#{objectConverter}" placeholder="Rechercher..."
+							<p:autoComplete value="#{administrativeUnitCodifyPage.localisation}" converter="#{objectConverter}" dropdown="true"
 		    					var="localisation" itemValue="#{localisation}" itemLabel="#{localisation}"
-		    					completeMethod="#{localisationController.readByString}" cache="true" 
+		    					completeMethod="#{administrativeUnitCodifyPage.queryLocalisationByString}" autoSelection="false" cache="true" 
 		    					maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
 		    				/>
 							<p:selectOneRadio value="#{administrativeUnitCodifyPage.overrideLocalisation}">
@@ -122,20 +122,19 @@
 		  			<p:column headerText="Libellé" filterBy="#{administrativeUnit.name}"><h:outputText value="#{administrativeUnit.name}"/></p:column>		  			
 		  			<p:column headerText="Section" width="200" filterBy="#{administrativeUnit.section}" rendered="#{administrativeUnitCodifyPage.section == null}">
 		  				<f:facet name="filter">
-		  					<p:autoComplete onchange="PF('administrativeUnitsDataTable').filter()" placeholder="Rechercher..."
-		    					var="section" itemValue="#{section.code}" itemLabel="#{section.code}"
-		    					completeMethod="#{sectionController.readByString}" cache="true"
-		    					maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
-		    				/>	
+			                <p:selectOneMenu onchange="PF('administrativeUnitsDataTable').filter()" filter="true" filterMatchMode="contains">
+			                	<f:selectItem noSelectionOption="true" itemValue="#{administrativeUnitCodifyPage.section.code}" itemLabel="#{administrativeUnitCodifyPage.section}" />
+			                    <f:selectItems value="#{administrativeUnitCodifyPage.sections}" var="section" itemValue="#{section.code}" itemLabel="#{section}" />
+			                </p:selectOneMenu>
 			            </f:facet>
 		  				<h:outputText value="#{administrativeUnit.section.code}"/>
 		  			</p:column>
 		  			
 		  			<p:column headerText="Groupe de service" width="200" filterBy="#{administrativeUnit.serviceGroup}">
 		  				<f:facet name="filter">
-		  					 <p:autoComplete onchange="PF('administrativeUnitsDataTable').filter()" placeholder="Rechercher..."
+		  					 <p:autoComplete onchange="PF('administrativeUnitsDataTable').filter()" dropdown="true"
 		    					var="serviceGroup" itemValue="#{serviceGroup.code}" itemLabel="#{serviceGroup}"
-		    					completeMethod="#{serviceGroupController.readByString}" cache="true" 
+		    					completeMethod="#{administrativeUnitCodifyPage.queryServiceGroupByString}" autoSelection="false" cache="true" 
 		    					maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
 		    				/>	               
 			            </f:facet>
@@ -144,9 +143,9 @@
 		  			
 		  			<p:column headerText="CFAP" width="200" filterBy="#{administrativeUnit.functionalClassification}">
 		  				<f:facet name="filter">
-		  					<p:autoComplete onchange="PF('administrativeUnitsDataTable').filter()" placeholder="Rechercher..."
+		  					<p:autoComplete onchange="PF('administrativeUnitsDataTable').filter()" dropdown="true"
 		    					var="functionalClassification" itemValue="#{functionalClassification.code}" itemLabel="#{functionalClassification}"
-		    					completeMethod="#{functionalClassificationController.readByString}" cache="true" 
+		    					completeMethod="#{administrativeUnitCodifyPage.queryFunctionalClassificationByString}" autoSelection="false" cache="true" 
 		    					maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
 		    				/>
 			            </f:facet>
@@ -155,23 +154,23 @@
 		  			
 		  			<p:column headerText="Localisation" width="200" filterBy="#{administrativeUnit.localisation}">
 		  				<f:facet name="filter">
-			                <p:autoComplete onchange="PF('administrativeUnitsDataTable').filter()" placeholder="Rechercher..."
+			                <p:autoComplete onchange="PF('administrativeUnitsDataTable').filter()" dropdown="true"
 		    					var="localisation" itemValue="#{localisation.code}" itemLabel="#{localisation}"
-		    					completeMethod="#{localisationController.readByString}" cache="true" 
+		    					completeMethod="#{administrativeUnitCodifyPage.queryLocalisationByString}" autoSelection="false" cache="true" 
 		    					maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
 		    				/>
 			            </f:facet>
 		  				<h:outputText value="#{administrativeUnit.localisation}"/>
 		  			</p:column>
 		  			
-		  			<p:column width="50">
-		  				<p:commandButton title="Ajouter" icon="fa fa-plus" action="#{administrativeUnitCodifyPage.selectOne(administrativeUnit)}" update=":form:selectableAdministrativeUnits,:form:selectedAdministrativeUnits"/>
+		  			<p:column width="100">
+		  				<p:commandButton title="Ajouter" icon="fa fa-plus" action="#{administrativeUnitCodifyPage.selectOne(administrativeUnit)}" immediate="true" update=":form:selectableAdministrativeUnits,:form:selectedAdministrativeUnits"/>
 		  			</p:column>
 				</p:dataTable>
 				<p:separator/>
 				<p:commandButton value="Ajouter la sélection" icon="fa fa-plus" action="#{administrativeUnitCodifyPage.select}" update=":form:selectableAdministrativeUnits,:form:selectedAdministrativeUnits"/>				
-			</p:dialog>			
-			<ui:include src="../css.xhtml"/>  		
+			</p:dialog>
+			
     	</ui:define>
     </cyk:page>
 </html>

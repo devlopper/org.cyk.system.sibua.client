@@ -5,15 +5,12 @@ import java.io.Serializable;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
 import org.cyk.system.sibua.client.controller.entities.Section;
 import org.cyk.utility.__kernel__.identifier.resource.PathAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierHelper;
 import org.cyk.utility.__kernel__.session.SessionHelper;
-import org.cyk.utility.__kernel__.system.action.SystemActionAsFunctionParameter;
 import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
-import org.cyk.utility.__kernel__.system.action.SystemActionList;
 import org.cyk.utility.client.controller.component.command.Commandable;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.component.window.WindowBuilder;
@@ -58,6 +55,9 @@ public class WorkspaceConfigurationPage extends AbstractPageContainerManagedImpl
 	protected String __processWindowDialogOkCommandableGetUrl__(WindowBuilder window, CommandableBuilder commandable) {
 		PathAsFunctionParameter pathAsFunctionParameter = new PathAsFunctionParameter();
 		pathAsFunctionParameter.setIdentifier("administrativeUnitListView");
-		return UniformResourceIdentifierHelper.build(new UniformResourceIdentifierAsFunctionParameter().setPath(pathAsFunctionParameter));
+		String string =  UniformResourceIdentifierHelper.build(new UniformResourceIdentifierAsFunctionParameter().setPath(pathAsFunctionParameter));
+		if(section != null && section.getValue() != null)
+			string = string  + "?section="+section.getValue().getCode();
+		return string;
 	}
 }

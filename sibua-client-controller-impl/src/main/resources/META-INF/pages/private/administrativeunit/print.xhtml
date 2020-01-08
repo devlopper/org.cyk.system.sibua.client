@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{administrativeUnitListPage}">
+    	<ui:define name="centerCenter">.
+	    	<ui:param name="sectionIdentifier" value="#{empty administrativeUnitListPage.defaultSection.identifier ? '' : administrativeUnitListPage.defaultSection.identifier}"/>
+	    		
+	    	<p:dataTable
+	    		id="dataTable" value="#{administrativeUnitListPage.administrativeUnits}" var="administrativeUnit" emptyMessage="Aucune unité administrative trouvée"
+	    		lazy="true" rows="10" paginator="true" rowsPerPageTemplate="10,50,100,200,500,1000" paginatorAlwaysVisible="false"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"					
+				widgetVar="administrativeUnitsDataTable" rowIndexVar="rowIndex"
+		    	>
+		    			
+	    		<f:facet name="header">
+        			<p:toolbar>        					
+		    			<!--
+		    			<f:facet name="left">
+		        			<p:button value="Activités" icon="fa fa-link" outcome="administrativeUnitEditActivitiesView">
+		        				<f:param name="section" value="#{sectionIdentifier}" />
+		        			</p:button>
+		        			<p:button value="Destinations" outcome="activityEditDestinationsView">
+		        				<f:param name="section" value="#{sectionIdentifier}" />
+		        			</p:button>
+		    			</f:facet>
+		    			-->
+		    			<f:facet name="right">
+		    				<h:outputText value="Nombre d'unité administrative : #{administrativeUnitListPage.administrativeUnits.rowCount}" />
+		    				<p:commandButton icon="fa fa-file-excel-o" value="Excel" ajax="false">
+		    					<p:dataExporter type="xls" target="dataTable" fileName="unite_administrative_section_#{sectionIdentifier}" />
+		    				</p:commandButton>
+		    				<p:commandButton icon="fa fa-file-pdf-o" value="Pdf" ajax="false">
+		    					<p:dataExporter type="pdf" target="dataTable" fileName="unite_administrative_section_#{sectionIdentifier}" />
+		    				</p:commandButton>
+		    			</f:facet>
+		    			
+		    		</p:toolbar>
+    			</f:facet>
+    			
+    			<ui:include src="__dataTableColumns__.xhtml">
+    				<ui:param name="dataTableWidgetVar" value="administrativeUnitsDataTable"/>
+    				<ui:param name="sectionRendered" value="#{administrativeUnitListPage.defaultSection == null}"/>
+    				<ui:param name="sections" value="#{administrativeUnitListPage.sections}"/>
+    				<ui:param name="serviceGroups" value="#{administrativeUnitListPage.serviceGroups}"/>
+    				<ui:param name="functionalClassifications" value="#{administrativeUnitListPage.functionalClassifications}"/>
+    				<ui:param name="localisations" value="#{administrativeUnitListPage.localisations}"/>
+    			</ui:include>
+	    	</p:dataTable>
+    		
+	    	<ui:include src="../css.xhtml"/>	    		 		
+    	</ui:define>
+    </cyk:page>
+</html>

@@ -9,109 +9,99 @@
       xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
 	
     <cyk:page value="#{administrativeUnitEditActivitiesPage}">
-    	<!--
-    	<ui:define name="menuLeft"/>
-    	-->
-    	
     	<ui:define name="centerCenter">
     		.
     		<ui:param name="labelDivWidthProportion" value="2"/>
     		<ui:param name="inputDivWidthProportion" value="9"/>
     		<ui:param name="messageDivWidthProportion" value="1"/>
-    		<p:outputPanel id="outputPanel" styleClass="ui-g">
-    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
-    				<ui:define name="label">
-    					<p:outputLabel for="section" value="Section" />
-    				</ui:define>
-    				<ui:define name="input">
-    					<ui:decorate template="/input/select/one/menu.xhtml">
-			    			<ui:param name="selection" value="#{administrativeUnitEditActivitiesPage.section}"/>
-			    			<ui:param name="selectableInputId" value="section"/>
-			    			<ui:param name="ajaxUpdate" value="form:administrativeUnit,form:program,form:action,form:activities"/>			
-			    		</ui:decorate>
-    				</ui:define>
-    				<ui:define name="message">
-    					<p:message for="section" />
-    				</ui:define>
-    			</ui:decorate>
-    			
-    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
-    				<ui:define name="label">
-    					<p:outputLabel for="program" value="Programme" />
-    				</ui:define>
-    				<ui:define name="input">
-    					<ui:decorate template="/input/select/one/menu.xhtml">
-			    			<ui:param name="selection" value="#{administrativeUnitEditActivitiesPage.program}"/>
-			    			<ui:param name="selectableInputId" value="program"/>
-			    			<ui:param name="ajaxUpdate" value="form:action,form:activities"/>			
-			    		</ui:decorate>
-    				</ui:define>
-    				<ui:define name="message">
-    					<p:message for="program" />
-    				</ui:define>
-    			</ui:decorate>
-    			
-    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
-    				<ui:define name="label">
-    					<p:outputLabel for="action" value="Action" />
-    				</ui:define>
-    				<ui:define name="input">
-    					<ui:decorate template="/input/select/one/menu.xhtml">
-			    			<ui:param name="selection" value="#{administrativeUnitEditActivitiesPage.action}"/>
-			    			<ui:param name="selectableInputId" value="action"/>
-			    			<ui:param name="ajaxUpdate" value="form:activities"/>			
-			    		</ui:decorate>
-    				</ui:define>
-    				<ui:define name="message">
-    					<p:message for="action" />
-    				</ui:define>
-    			</ui:decorate>	
-    			
-    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
-    				<ui:define name="label">
-    					<p:outputLabel for="administrativeUnit" value="Unité administrative" />
-    				</ui:define>
-    				<ui:define name="input">
-    					<ui:decorate template="/input/select/one/menu.xhtml">
-			    			<ui:param name="selection" value="#{administrativeUnitEditActivitiesPage.administrativeUnit}"/>
-			    			<ui:param name="selectableInputId" value="administrativeUnit"/>
-			    			<ui:param name="ajaxUpdate" value="form:activities"/>
-			    			<ui:param name="required" value="true"/>		
-			    		</ui:decorate>
-    				</ui:define>
-    				<ui:define name="message">
-    					<p:message for="administrativeUnit" />
-    				</ui:define>
-    			</ui:decorate>	
-    			
-    			<div class="ui-g-12">
-    				<p:pickList id="activities" value="#{administrativeUnitEditActivitiesPage.activities}" var="activity" converter="#{objectConverter}" 
-    					itemValue="#{activity}" itemLabel="#{activity}"
-    					showCheckbox="true" showSourceFilter="true" showTargetFilter="true"
-    					filterMatchMode="contains"
-    					responsive="true"  
-    					>
-    					<f:facet name="sourceCaption">
-    						<h:outputText value="Liste des activités non rattachées" style="color : red;font-weight : bold;" />
-    					</f:facet>
-       					<f:facet name="targetCaption">
-       						<h:outputText value="Liste des activités rattachées à l'unité administrative" style="font-weight : bold;"/>
-       					</f:facet>
-    				</p:pickList>
-    			</div>		
-    		</p:outputPanel>
     		
-    		<p:toolbar>
-	    		<f:facet name="left">
-	    			<cyk:commandable value="#{administrativeUnitEditActivitiesPage.saveCommandable}" />
-	    		</f:facet>
-	    		<f:facet name="right">
-	    			<ui:param name="sectionIdentifier" value="#{empty administrativeUnitEditActivitiesPage.section.value.identifier ? '' : administrativeUnitEditActivitiesPage.section.value.identifier}"/>
-			    	<p:button value="Liste des unités administratives" icon="fa fa-list" outcome="administrativeUnitListView">
-			    		<f:param name="section" value="#{sectionIdentifier}" />
-			    	</p:button> 		
-	    		</f:facet>
-	    	</p:toolbar>	 
+    		<p:dataTable id="selectedActivities" value="#{administrativeUnitEditActivitiesPage.selectedActivities}" var="activity" rowIndexVar="rowIndex"
+    			emptyMessage="Aucune activité"
+    		>
+    			<f:facet name="header">
+    				<p:toolbar>
+    					<f:facet name="left">
+    						<p:commandButton value="Ajouter" icon="fa fa-plus" immediate="true" actionListener="#{administrativeUnitEditActivitiesPage.openAvailableActivitiesDialog}" >
+    							<p:ajax update=":form:activitiesDialog" oncomplete="PF('dialog').show();" />
+    						</p:commandButton>
+    					</f:facet>
+    				</p:toolbar>
+    			</f:facet>
+    			
+    			<p:column headerText="#" width="25">
+    				<h:outputText value="#{rowIndex+1}" />
+    			</p:column>
+    			<p:column headerText="Activité">
+    				<h:outputText value="#{activity.code}" styleClass="cyk-code"/><h:outputText value=" #{activity.name}" />
+    			</p:column>
+    			<p:column headerText="Unité opérationnelle" width="200">
+    				<h:outputText value="" />
+    			</p:column>
+    			<p:column headerText="Budget opérationnel de programme" width="200">
+    				<h:outputText value="" />
+    			</p:column>
+    			<p:column headerText="Programme">
+    				<h:outputText value="#{activity.action.program.code}" styleClass="cyk-code"/><h:outputText value=" #{activity.action.program.name}" />
+    			</p:column>
+    			<p:column width="50">
+    				<p:commandButton title="Retirer" icon="fa fa-minus" action="#{administrativeUnitEditActivitiesPage.unselectOne(activity)}" update=":form:selectedActivities"/>
+    			</p:column>
+    		</p:dataTable>
+    		
+    		<p:dialog id="activitiesDialog" header="Sélection des activités non rattachées" modal="true" widgetVar="dialog" fitViewport="true" 
+				styleClass="cyk-activity-dialog" closeOnEscape="true" draggable="false" dynamic="false" resizable="false">
+				
+				<p:dataTable id="selectableActivities" value="#{administrativeUnitEditActivitiesPage.availableActivities}" var="activity" rowIndexVar="rowIndex"
+					emptyMessage="Aucune activité trouvée" lazy="true" rows="10" paginator="true" paginatorAlwaysVisible="false"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,50,100" currentPageReportTemplate="{totalRecords} trouvées. Page {currentPage}/{totalPages}"
+					selection="#{administrativeUnitEditActivitiesPage.__selectedActivities__}" widgetVar="activitiesDataTable" filterDelay="2000">
+
+					<p:column width="40" selectionMode="multiple">
+						<h:outputText value="#{rowIndex+1}" />
+					</p:column>
+		  			<p:column headerText="Libellé" filterBy="#{activity.name}">
+		  				<h:outputText value="#{activity.code}" styleClass="cyk-code"/><h:outputText value=" #{activity.name}"/>
+		  			</p:column>		  			
+		  			
+		  			<p:column headerText="Programme" width="400" filterBy="#{activity.action.program}">
+		  				<f:facet name="filter">
+		  					<p:autoComplete onchange="PF('activitiesDataTable').filter()" dropdown="false"
+		    					var="program" itemValue="#{program.code}" itemLabel="#{program}"
+		    					completeMethod="#{programController.readByString}" cache="true"
+		    					maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --" placeholder="Rechercher..."
+		    				>
+		    					<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />
+		    				</p:autoComplete>
+			            </f:facet>
+		  				<h:outputText value="#{activity.action.program.code}" styleClass="cyk-code"/><h:outputText value=" #{activity.action.program.name}"/>
+		  			</p:column>
+		  			
+		  			<p:column headerText="Action" width="400" filterBy="#{activity.action}">
+		  				<f:facet name="filter">
+		  					<p:autoComplete onchange="PF('activitiesDataTable').filter()" onselect="PF('activitiesDataTable').filter()" dropdown="false"
+		    					var="action" itemValue="#{action.code}" itemLabel="#{action}"
+		    					completeMethod="#{actionController.readByString}" cache="true"
+		    					maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --" placeholder="Rechercher..."
+		    				>
+		    					<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />
+		    				</p:autoComplete>	
+			            </f:facet>
+		  				<h:outputText value="#{activity.action.code}" styleClass="cyk-code"/><h:outputText value="#{activity.action.name}"/>
+		  			</p:column>
+		  			
+		  			<p:column width="50">
+		  				<p:commandButton title="Ajouter" icon="fa fa-plus" action="#{administrativeUnitEditActivitiesPage.selectOne(activity)}" immediate="true" update=":form:selectableActivities,:form:selectedActivities"/>
+		  			</p:column>
+				</p:dataTable>
+				<p:separator/>
+				<p:commandButton value="Ajouter la sélection" icon="fa fa-plus" action="#{administrativeUnitEditActivitiesPage.select}" update=":form:selectableActivities,:form:selectedActivities"/>
+				
+			</p:dialog>
+    		
+    		<p:separator/>
+	    	<cyk:commandable value="#{administrativeUnitEditActivitiesPage.saveCommandable}" />
+	    		
     		<ui:include src="../css.xhtml"/>  		
     	</ui:define>
     </cyk:page>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{administrativeUnitEditChildrenPage}">
+    	<ui:define name="centerCenter">
+    		.
+    		<ui:param name="labelDivWidthProportion" value="2"/>
+    		<ui:param name="inputDivWidthProportion" value="9"/>
+    		<ui:param name="messageDivWidthProportion" value="1"/>
+    		
+    		<p:dataTable id="selectedAdministrativeUnits" value="#{administrativeUnitEditChildrenPage.selectedAdministrativeUnits}" var="administrativeUnit" rowIndexVar="rowIndex"
+    			emptyMessage="Aucune unité administrative trouvée"
+    		>
+    			<f:facet name="header">
+    				<p:toolbar>
+    					<f:facet name="left">
+    						<p:commandButton value="Ajouter" icon="fa fa-plus" immediate="true" actionListener="#{administrativeUnitEditChildrenPage.openAvailableAdministrativeUnitsDialog}" >
+    							<p:ajax update=":form:administrativeUnitsDialog" oncomplete="PF('dialog').show();" />
+    						</p:commandButton>
+    					</f:facet>
+    				</p:toolbar>
+    			</f:facet>
+    			
+    			<p:column headerText="#" width="25">
+    				<h:outputText value="#{rowIndex+1}" />
+    			</p:column>
+    			<p:column>
+    				<h:outputText value="#{administrativeUnit.code}" styleClass="cyk-code"/><h:outputText value=" #{administrativeUnit.name}" />
+    			</p:column> 			
+    			<p:column width="50">
+    				<p:commandButton title="Retirer" icon="fa fa-minus" action="#{administrativeUnitEditChildrenPage.unselectOne(administrativeUnit)}" update=":form:selectedAdministrativeUnits"/>
+    			</p:column>
+    		</p:dataTable>
+    		
+    		<p:dialog id="administrativeUnitsDialog" header="Sélection des unités administratives" modal="true" widgetVar="dialog" fitViewport="true" 
+				styleClass="cyk-administrative-unit-dialog" closeOnEscape="true" draggable="false" dynamic="false" resizable="false">
+				
+				<p:dataTable id="selectableAdministrativeUnits" value="#{administrativeUnitEditChildrenPage.availableAdministrativeUnits}" var="administrativeUnit" rowIndexVar="rowIndex"
+					emptyMessage="Aucune activité trouvée" lazy="true" rows="10" paginator="true" paginatorAlwaysVisible="false"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,50,100" currentPageReportTemplate="{totalRecords} trouvées. Page {currentPage}/{totalPages}"
+					selection="#{administrativeUnitEditChildrenPage.__selectedAdministrativeUnits__}" widgetVar="administrativeUnitsDataTable" filterDelay="2000">
+
+					<p:column width="40" selectionMode="multiple">
+						<h:outputText value="#{rowIndex+1}" />
+					</p:column>
+		  			<p:column headerText="Libellé" filterBy="#{administrativeUnit.name}">
+		  				<h:outputText value="#{administrativeUnit.code}" styleClass="cyk-code"/><h:outputText value=" #{administrativeUnit.name}"/>
+		  			</p:column>		  			
+		  			
+		  			<p:column headerText="Groupe de service" width="400" filterBy="#{administrativeUnit.serviceGroup}">
+		  				<f:facet name="filter">
+		  					<p:autoComplete onchange="PF('administrativeUnitsDataTable').filter()" dropdown="false"
+		    					var="serviceGroup" itemValue="#{serviceGroup.code}" itemLabel="#{serviceGroup}"
+		    					completeMethod="#{serviceGroupController.readByString}" cache="true"
+		    					maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --" placeholder="Rechercher..."
+		    				>
+		    					<p:ajax event="itemSelect" oncomplete="PF('administrativeUnitsDataTable').filter()" />
+		    				</p:autoComplete>
+			            </f:facet>
+		  				<h:outputText value="#{administrativeUnit.serviceGroup.code}" styleClass="cyk-code"/><h:outputText value=" #{administrativeUnit.serviceGroup.name}"/>
+		  			</p:column>
+		  			
+		  			
+		  			
+		  			<p:column width="50">
+		  				<p:commandButton title="Ajouter" icon="fa fa-plus" action="#{administrativeUnitEditChildrenPage.selectOne(administrativeUnit)}" immediate="true" update=":form:selectableAdministrativeUnits,:form:selectedAdministrativeUnits"/>
+		  			</p:column>
+				</p:dataTable>
+				<p:separator/>
+				<p:commandButton value="Ajouter la sélection" icon="fa fa-plus" action="#{administrativeUnitEditChildrenPage.select}" update=":form:selectableAdministrativeUnits,:form:selectedAdministrativeUnits"/>
+				
+			</p:dialog>
+    		
+    		<p:separator/>
+	    	<cyk:commandable value="#{administrativeUnitEditChildrenPage.updateCommandable}" />
+	    		
+    		<ui:include src="../css.xhtml"/>  		
+    	</ui:define>
+    </cyk:page>
+</html>

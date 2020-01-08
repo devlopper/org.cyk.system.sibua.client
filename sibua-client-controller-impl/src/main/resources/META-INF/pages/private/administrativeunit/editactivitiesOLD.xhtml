@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{administrativeUnitEditActivitiesPage}">
+    	<!--
+    	<ui:define name="menuLeft"/>
+    	-->
+    	
+    	<ui:define name="centerCenter">
+    		.
+    		<ui:param name="labelDivWidthProportion" value="2"/>
+    		<ui:param name="inputDivWidthProportion" value="9"/>
+    		<ui:param name="messageDivWidthProportion" value="1"/>
+    		<p:outputPanel id="outputPanel" styleClass="ui-g">
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="section" value="Section" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<ui:decorate template="/input/select/one/menu.xhtml">
+			    			<ui:param name="selection" value="#{administrativeUnitEditActivitiesPage.section}"/>
+			    			<ui:param name="selectableInputId" value="section"/>
+			    			<ui:param name="ajaxUpdate" value="form:administrativeUnit,form:program,form:action,form:activities"/>			
+			    		</ui:decorate>
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="section" />
+    				</ui:define>
+    			</ui:decorate>
+    			
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="program" value="Programme" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<ui:decorate template="/input/select/one/menu.xhtml">
+			    			<ui:param name="selection" value="#{administrativeUnitEditActivitiesPage.program}"/>
+			    			<ui:param name="selectableInputId" value="program"/>
+			    			<ui:param name="ajaxUpdate" value="form:action,form:activities"/>			
+			    		</ui:decorate>
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="program" />
+    				</ui:define>
+    			</ui:decorate>
+    			
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="action" value="Action" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<ui:decorate template="/input/select/one/menu.xhtml">
+			    			<ui:param name="selection" value="#{administrativeUnitEditActivitiesPage.action}"/>
+			    			<ui:param name="selectableInputId" value="action"/>
+			    			<ui:param name="ajaxUpdate" value="form:activities"/>			
+			    		</ui:decorate>
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="action" />
+    				</ui:define>
+    			</ui:decorate>	
+    			
+    			<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+    				<ui:define name="label">
+    					<p:outputLabel for="administrativeUnit" value="Unité administrative" />
+    				</ui:define>
+    				<ui:define name="input">
+    					<ui:decorate template="/input/select/one/menu.xhtml">
+			    			<ui:param name="selection" value="#{administrativeUnitEditActivitiesPage.administrativeUnit}"/>
+			    			<ui:param name="selectableInputId" value="administrativeUnit"/>
+			    			<ui:param name="ajaxUpdate" value="form:activities"/>
+			    			<ui:param name="required" value="true"/>		
+			    		</ui:decorate>
+    				</ui:define>
+    				<ui:define name="message">
+    					<p:message for="administrativeUnit" />
+    				</ui:define>
+    			</ui:decorate>	
+    			
+    			<div class="ui-g-12">
+    				<p:pickList id="activities" value="#{administrativeUnitEditActivitiesPage.activities}" var="activity" converter="#{objectConverter}" 
+    					itemValue="#{activity}" itemLabel="#{activity}"
+    					showCheckbox="true" showSourceFilter="true" showTargetFilter="true"
+    					filterMatchMode="contains"
+    					responsive="true"  
+    					>
+    					<f:facet name="sourceCaption">
+    						<h:outputText value="Liste des activités non rattachées" style="color : red;font-weight : bold;" />
+    					</f:facet>
+       					<f:facet name="targetCaption">
+       						<h:outputText value="Liste des activités rattachées à l'unité administrative" style="font-weight : bold;"/>
+       					</f:facet>
+    				</p:pickList>
+    			</div>		
+    		</p:outputPanel>
+    		
+    		<p:toolbar>
+	    		<f:facet name="left">
+	    			<cyk:commandable value="#{administrativeUnitEditActivitiesPage.saveCommandable}" />
+	    		</f:facet>
+	    		<f:facet name="right">
+	    			<ui:param name="sectionIdentifier" value="#{empty administrativeUnitEditActivitiesPage.section.value.identifier ? '' : administrativeUnitEditActivitiesPage.section.value.identifier}"/>
+			    	<p:button value="Liste des unités administratives" icon="fa fa-list" outcome="administrativeUnitListView">
+			    		<f:param name="section" value="#{sectionIdentifier}" />
+			    	</p:button> 		
+	    		</f:facet>
+	    	</p:toolbar>	 
+    		<ui:include src="../css.xhtml"/>  		
+    	</ui:define>
+    </cyk:page>
+</html>

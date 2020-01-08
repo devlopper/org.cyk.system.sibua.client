@@ -43,7 +43,12 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 			return this;
 		if(this.destinations == null)
 			this.destinations = new ArrayList<>();
-		this.destinations.addAll(destinations);
+		if(this.destinations.isEmpty())
+			this.destinations.addAll(destinations);
+		else
+			for(Destination destination : destinations)
+				if(!this.destinations.contains(destination))
+					this.destinations.add(destination);
 		return this;
 	}
 	
@@ -114,7 +119,12 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 			return this;
 		if(this.activities == null)
 			this.activities = new ArrayList<>();
-		this.activities.addAll(activities);
+		if(this.activities.isEmpty())
+			this.activities.addAll(activities);
+		else
+			for(Activity activity : activities)
+				if(!this.activities.contains(activity))
+					this.activities.add(activity);
 		return this;
 	}
 	

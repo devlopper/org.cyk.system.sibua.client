@@ -4,8 +4,10 @@
 	xmlns:p="http://primefaces.org/ui"
     xmlns:f="http://java.sun.com/jsf/core"      
     xmlns:h="http://java.sun.com/jsf/html">
-
-	<p:column headerText="Code" width="150" filterBy="#{administrativeUnit.code}">
+	
+	<ui:include src="__dataTableColumnToggler__.xhtml"/>
+	
+	<p:column headerText="Code" width="150" filterBy="#{administrativeUnit.code}" rendered="#{__page__.isShowAll}">
 		<h:outputText value="#{administrativeUnit.code}" />
 	</p:column>
  	
@@ -23,16 +25,6 @@
  		<h:outputText value="#{administrativeUnit.section.code}" />
  	</p:column>
  	
- 	<p:column headerText="CFAP" width="150" filterBy="#{administrativeUnit.functionalClassification}">
- 		<f:facet name="filter">
-			<p:selectOneMenu onchange="PF('#{dataTableWidgetVar}').filter()" filter="true" filterMatchMode="contains">
-				<f:selectItem noSelectionOption="true" itemLabel="-- Tout --"/>
-				<f:selectItems value="#{functionalClassifications}" var="functionalClassification" itemValue="#{functionalClassification.code}" itemLabel="#{functionalClassification}" />
-			</p:selectOneMenu>
-		</f:facet>
- 		<h:outputText value="#{administrativeUnit.functionalClassification.code}" />
- 	</p:column>
- 	
  	<p:column headerText="Groupe de service" width="150" filterBy="#{administrativeUnit.serviceGroup}">
  		<f:facet name="filter">
  			<p:selectOneMenu onchange="PF('#{dataTableWidgetVar}').filter()" filter="true" filterMatchMode="contains">
@@ -41,10 +33,37 @@
 			</p:selectOneMenu>
 		</f:facet>
  		<h:outputText value="#{administrativeUnit.serviceGroup.code}" />
+ 		<h:outputText value=" #{administrativeUnit.serviceGroup.name}" rendered="#{param['showName']}"/>
  	</p:column> 	
+ 	
+ 	<p:column headerText="CFAP" width="150" filterBy="#{administrativeUnit.functionalClassification}">
+ 		<f:facet name="filter">
+			<p:selectOneMenu onchange="PF('#{dataTableWidgetVar}').filter()" filter="true" filterMatchMode="contains">
+				<f:selectItem noSelectionOption="true" itemLabel="-- Tout --"/>
+				<f:selectItems value="#{functionalClassifications}" var="functionalClassification" itemValue="#{functionalClassification.code}" itemLabel="#{functionalClassification}" />
+			</p:selectOneMenu>
+		</f:facet>
+ 		<h:outputText value="#{administrativeUnit.functionalClassification.code}" />
+ 		<h:outputText value=" #{administrativeUnit.functionalClassification.name}" rendered="#{param['showName']}"/>
+ 	</p:column>
+ 	
+ 	<p:column headerText="Localisation" width="150" filterBy="#{administrativeUnit.localisation}">
+ 		<f:facet name="filter">
+			<p:selectOneMenu onchange="PF('#{dataTableWidgetVar}').filter()" filter="true" filterMatchMode="contains">
+				<f:selectItem noSelectionOption="true" itemLabel="-- Tout --"/>
+				<f:selectItems value="#{localisations}" var="localisation" itemValue="#{localisation.code}" itemLabel="#{localisation}" />
+			</p:selectOneMenu>
+		</f:facet>
+ 		<h:outputText value="#{administrativeUnit.localisation.code}" />
+ 		<h:outputText value=" #{administrativeUnit.localisation.name}" rendered="#{param['showName']}"/>
+ 	</p:column>
+ 	 	
  	<!--
  	<p:column headerText="Localisation géographique" width="150"><h:outputText value="#{administrativeUnit.localisation.name}" /></p:column>
  	-->
+ 	
  	<ui:include src="__dataTableColumnActions__.xhtml"/>
+  	
+  	<ui:include src="__dataTableRowExpansion__.xhtml"/>
   	
 </ui:composition>

@@ -5,9 +5,13 @@
     xmlns:f="http://java.sun.com/jsf/core"      
     xmlns:h="http://java.sun.com/jsf/html">
 
-	<p:column width="100">
+	<p:column width="100" rendered="#{__page__.isShowAll}" exportable="false">
 		<p:menuButton value="Actions">
     		<p:menuitem value="Rattachement" icon="fa fa-link" outcome="administrativeUnitEditActivitiesView">
+    			<f:param name="entityidentifier" value="#{administrativeUnit.identifier}" />
+    			<f:param name="section" value="#{sectionIdentifier}" />
+    		</p:menuitem>   
+    		<p:menuitem value="Arborescence" icon="fa fa-tree" outcome="administrativeUnitEditChildrenView">
     			<f:param name="entityidentifier" value="#{administrativeUnit.identifier}" />
     			<f:param name="section" value="#{sectionIdentifier}" />
     		</p:menuitem>    	

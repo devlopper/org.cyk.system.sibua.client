@@ -27,6 +27,11 @@ public class Activity extends AbstractDataIdentifiableSystemStringIdentifiableBu
 	}
 	
 	@Override
+	public Activity setName(String name) {
+		return (Activity) super.setName(name);
+	}
+	
+	@Override
 	public String toString() {
 		return getCode()+" "+getName();
 	}

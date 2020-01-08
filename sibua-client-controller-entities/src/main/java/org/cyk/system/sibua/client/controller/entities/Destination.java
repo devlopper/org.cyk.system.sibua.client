@@ -27,6 +27,11 @@ public class Destination extends AbstractDataIdentifiableSystemStringIdentifiabl
 	}
 	
 	@Override
+	public Destination setName(String name) {
+		return (Destination) super.setName(name);
+	}
+	
+	@Override
 	public String toString() {
 		return getCode()+" "+getName();
 	}

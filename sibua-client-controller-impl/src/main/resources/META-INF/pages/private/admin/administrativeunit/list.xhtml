@@ -8,10 +8,12 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
 	
-    <cyk:page value="#{administrativeUnitListPage}">
+    <cyk:page value="#{administrativeUnitListForAdminPage}">
     	<ui:define name="centerCenter">.	    	
-	    	<ui:include src="__dataTable__.xhtml"/>	    	    		
-	    	<ui:include src="../css.xhtml"/>	    		 		
+	    	<ui:include src="../../administrativeunit/__dataTable__.xhtml">
+	    		<ui:param name="isShowAll" value="true"/>
+	    	</ui:include>
+	    	<ui:include src="../../css.xhtml"/>	    		 		
     	</ui:define>
     </cyk:page>
 </html>

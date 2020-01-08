@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.RegExUtils;
 import org.cyk.system.sibua.client.controller.entities.Section;
 import org.cyk.utility.__kernel__.DependencyInjection;
 import org.cyk.utility.__kernel__.properties.Properties;
@@ -25,6 +26,7 @@ public interface SectionController extends ControllerEntity<Section> {
 	static String getCodeFromExcelString(String string) {
 		if(StringHelper.isBlank(string))
 			return null;
+		string = RegExUtils.removeAll(string, " ");
 		Matcher matcher = CODE_EXCEL_STRING_PATTERN.matcher(string);
 		if(!matcher.find())
 			return null;		

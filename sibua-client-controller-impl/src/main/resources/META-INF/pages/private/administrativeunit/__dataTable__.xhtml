@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"      
+    xmlns:h="http://java.sun.com/jsf/html">
+	
+	<!--
+    		<p:outputPanel id="outputPanel" styleClass="ui-g">
+    			<ui:param name="labelDivWidthProportion" value="1"/>
+    			<ui:param name="inputDivWidthProportion" value="11"/>
+    			<ui:param name="messageDivWidthProportion" value="0"/>
+    			
+    			<ui:fragment rendered="#{administrativeUnitListPage.defaultSection == null}">
+    				<ui:decorate template="/layout/labelInputMessage/default.xhtml">
+	    				<ui:define name="label">
+	    					<p:outputLabel for="section" value="Section" />
+	    				</ui:define>
+	    				<ui:define name="input">
+	    					<ui:decorate template="/input/select/one/menu.xhtml">
+				    			<ui:param name="selection" value="#{administrativeUnitListPage.section}"/>
+				    			<ui:param name="selectableInputId" value="section"/>
+				    			<ui:param name="ajaxDisabled" value="false"/>
+				    			<ui:param name="ajaxOncomplete" value="PF('administrativeUnitsDataTable').filter()"/>			
+				    		</ui:decorate>				    		
+	    				</ui:define>
+	    			</ui:decorate>
+    			</ui:fragment>
+    		</p:outputPanel>	  			
+    		
+    		<p:separator/>
+	    	-->	
+	
+	<ui:param name="sectionIdentifier" value="#{empty __page__.defaultSection.identifier ? '' : __page__.defaultSection.identifier}"/>
+	
+	<p:dataTable
+   		id="dataTable" value="#{__page__.administrativeUnits}" var="administrativeUnit" emptyMessage="Aucune unité administrative trouvée"
+   		lazy="true" rows="20" paginator="true" rowsPerPageTemplate="20,50,100" paginatorAlwaysVisible="false"
+		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"					
+		currentPageReportTemplate="{totalRecords} trouvées. Page {currentPage}/{totalPages}"
+		widgetVar="administrativeUnitsDataTable" rowIndexVar="rowIndex" filterDelay="2000"
+    	>
+    			
+   		<f:facet name="header">
+      		<p:toolbar>        					
+    			<!--
+    			<f:facet name="left">
+        			<p:button value="Activités" icon="fa fa-link" outcome="administrativeUnitEditActivitiesView">
+        				<f:param name="section" value="#{sectionIdentifier}" />
+        			</p:button>
+        			<p:button value="Destinations" outcome="activityEditDestinationsView">
+        				<f:param name="section" value="#{sectionIdentifier}" />
+        			</p:button>
+    			</f:facet>
+    			-->
+    			<f:facet name="right">
+    				<p:commandButton icon="fa fa-file-excel-o" value="Exporter en Excel" ajax="false">
+    					<p:dataExporter type="xls" target="dataTable" fileName="unite_administrative_section_#{sectionIdentifier}" />
+    					<f:param name="showName" value="true" />
+    					<f:param name="export" value="true" />
+    				</p:commandButton>
+    				<p:commandButton icon="fa fa-file-pdf-o" value="Exporter en Pdf" ajax="false">
+    					<p:dataExporter type="pdf" target="dataTable" fileName="unite_administrative_section_#{sectionIdentifier}" />
+    					<f:param name="export" value="true" />
+    				</p:commandButton>
+    				<!--
+        			<p:button value="Unité administrative - Destination" outcome="administrativeUnitListDestinationView">
+       					<f:param name="section" value="#{sectionIdentifier}" />
+       				</p:button>
+       				<p:button value="Unité administrative - Activité" outcome="administrativeUnitListActivityView">
+       					<f:param name="section" value="#{sectionIdentifier}" />
+       				</p:button>
+       				<p:button value="Activité - Destination" outcome="activityListDestinationView">
+       					<f:param name="section" value="#{sectionIdentifier}" />
+       				</p:button>
+       				-->
+    			</f:facet>
+    			
+    		</p:toolbar>
+  		</f:facet>
+  			
+ 		<ui:include src="__dataTableColumns__.xhtml">
+ 			<ui:param name="dataTableWidgetVar" value="administrativeUnitsDataTable"/>
+ 			<ui:param name="sectionRendered" value="#{__page__.defaultSection == null}"/>
+ 			<ui:param name="sections" value="#{__page__.sections}"/>
+ 			<ui:param name="serviceGroups" value="#{__page__.serviceGroups}"/>
+ 			<ui:param name="functionalClassifications" value="#{__page__.functionalClassifications}"/>
+ 			<ui:param name="localisations" value="#{__page__.localisations}"/>
+ 		</ui:include>
+   	</p:dataTable>
+  	
+</ui:composition>
