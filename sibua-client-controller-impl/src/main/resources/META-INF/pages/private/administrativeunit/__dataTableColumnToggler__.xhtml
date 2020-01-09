@@ -5,13 +5,13 @@
     xmlns:f="http://java.sun.com/jsf/core"      
     xmlns:h="http://java.sun.com/jsf/html">
 
-	<p:column style="width:50px" exportable="false" rendered="#{not __page__.export}">
+	<p:column style="width:50px" exportable="false" rendered="#{empty param['export']}" >
 		<h:outputText value="#{rowIndex+1}" />
-		<p:rowToggler rendered="#{not export and (not empty administrativeUnit.activityDestinations or not empty administrativeUnit.activities or not empty administrativeUnit.destinations or not empty administrativeUnit.children)}"/>	
+		<p:rowToggler rendered="#{not empty administrativeUnit.activityDestinations or not empty administrativeUnit.activities or not empty administrativeUnit.destinations or not empty administrativeUnit.children}"/>	
 	</p:column>	
   	
-  	<p:column style="width:50px" exportable="true" rendered="#{__page__.export}">
-		<h:outputText value="#{rowIndex+1}" />	
+  	<p:column style="width:50px" exportable="true" rendered="#{not empty param['export']}">
+		<h:outputText value="#{rowIndex+1}" />
 	</p:column>	
   	
 </ui:composition>

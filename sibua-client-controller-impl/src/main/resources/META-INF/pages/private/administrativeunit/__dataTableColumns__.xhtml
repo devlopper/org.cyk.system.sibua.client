@@ -7,7 +7,7 @@
 	
 	<ui:include src="__dataTableColumnToggler__.xhtml"/>
 	
-	<p:column headerText="Code" width="150" filterBy="#{administrativeUnit.code}" rendered="#{__page__.isShowAll}">
+	<p:column headerText="Code" width="150" filterBy="#{administrativeUnit.code}">
 		<h:outputText value="#{administrativeUnit.code}" />
 	</p:column>
  	
@@ -17,20 +17,26 @@
  	
  	<p:column headerText="Section" width="100" filterBy="#{administrativeUnit.section}" rendered="#{sectionRendered}">
  		<f:facet name="filter">
-			<p:selectOneMenu onchange="PF('#{dataTableWidgetVar}').filter()" filter="true" filterMatchMode="contains">
-				<f:selectItem noSelectionOption="true" itemLabel="-- Tout --"/>
-				<f:selectItems value="#{sections}" var="section" itemValue="#{section.code}" itemLabel="#{section}" />
-			</p:selectOneMenu>
+ 			<p:autoComplete onchange="PF('#{dataTableWidgetVar}').filter()" placeholder="Rechercher..."
+		    	var="section" itemValue="#{section.code}" itemLabel="#{section}"
+		    	completeMethod="#{sectionController.readByString}" cache="true"
+		    	maxResults="5" queryDelay="500" emptyMessage="-- Aucun résultat --"
+		    >
+		    	<p:ajax event="itemSelect" oncomplete="PF('#{dataTableWidgetVar}').filter()" />
+		    </p:autoComplete>
 		</f:facet>
  		<h:outputText value="#{administrativeUnit.section.code}" />
  	</p:column>
  	
  	<p:column headerText="Groupe de service" width="150" filterBy="#{administrativeUnit.serviceGroup}">
  		<f:facet name="filter">
- 			<p:selectOneMenu onchange="PF('#{dataTableWidgetVar}').filter()" filter="true" filterMatchMode="contains">
- 				<f:selectItem noSelectionOption="true" itemLabel="-- Tout --"/>
-				<f:selectItems value="#{serviceGroups}" var="serviceGroup" itemValue="#{serviceGroup.code}" itemLabel="#{serviceGroup}" />
-			</p:selectOneMenu>
+ 			<p:autoComplete onchange="PF('#{dataTableWidgetVar}').filter()" placeholder="Rechercher..."
+		    	var="serviceGroup" itemValue="#{serviceGroup.code}" itemLabel="#{serviceGroup}"
+		    	completeMethod="#{serviceGroupController.readByString}" cache="true"
+		    	maxResults="5" queryDelay="500" emptyMessage="-- Aucun résultat --"
+		    >
+		    	<p:ajax event="itemSelect" oncomplete="PF('#{dataTableWidgetVar}').filter()" />
+		    </p:autoComplete>
 		</f:facet>
  		<h:outputText value="#{administrativeUnit.serviceGroup.code}" />
  		<h:outputText value=" #{administrativeUnit.serviceGroup.name}" rendered="#{param['showName']}"/>
@@ -38,10 +44,13 @@
  	
  	<p:column headerText="CFAP" width="150" filterBy="#{administrativeUnit.functionalClassification}">
  		<f:facet name="filter">
-			<p:selectOneMenu onchange="PF('#{dataTableWidgetVar}').filter()" filter="true" filterMatchMode="contains">
-				<f:selectItem noSelectionOption="true" itemLabel="-- Tout --"/>
-				<f:selectItems value="#{functionalClassifications}" var="functionalClassification" itemValue="#{functionalClassification.code}" itemLabel="#{functionalClassification}" />
-			</p:selectOneMenu>
+ 			<p:autoComplete onchange="PF('#{dataTableWidgetVar}').filter()" placeholder="Rechercher..."
+		    	var="functionalClassification" itemValue="#{functionalClassification.code}" itemLabel="#{functionalClassification}"
+		    	completeMethod="#{functionalClassificationController.readByString}" cache="true"
+		    	maxResults="5" queryDelay="500" emptyMessage="-- Aucun résultat --"
+		    >
+		    	<p:ajax event="itemSelect" oncomplete="PF('#{dataTableWidgetVar}').filter()" />
+		    </p:autoComplete>
 		</f:facet>
  		<h:outputText value="#{administrativeUnit.functionalClassification.code}" />
  		<h:outputText value=" #{administrativeUnit.functionalClassification.name}" rendered="#{param['showName']}"/>
@@ -49,10 +58,13 @@
  	
  	<p:column headerText="Localisation" width="150" filterBy="#{administrativeUnit.localisation}">
  		<f:facet name="filter">
-			<p:selectOneMenu onchange="PF('#{dataTableWidgetVar}').filter()" filter="true" filterMatchMode="contains">
-				<f:selectItem noSelectionOption="true" itemLabel="-- Tout --"/>
-				<f:selectItems value="#{localisations}" var="localisation" itemValue="#{localisation.code}" itemLabel="#{localisation}" />
-			</p:selectOneMenu>
+ 			<p:autoComplete onchange="PF('#{dataTableWidgetVar}').filter()" placeholder="Rechercher..."
+		    	var="localisation" itemValue="#{localisation.code}" itemLabel="#{localisation}"
+		    	completeMethod="#{localisationController.readByString}" cache="true"
+		    	maxResults="5" queryDelay="500" emptyMessage="-- Aucun résultat --"
+		    >
+		    	<p:ajax event="itemSelect" oncomplete="PF('#{dataTableWidgetVar}').filter()" />
+		    </p:autoComplete>
 		</f:facet>
  		<h:outputText value="#{administrativeUnit.localisation.code}" />
  		<h:outputText value=" #{administrativeUnit.localisation.name}" rendered="#{param['showName']}"/>

@@ -75,7 +75,8 @@
 		  			</p:column>
 				</p:dataTable>
 				<p:separator/>
-				<p:commandButton value="Ajouter la sélection" icon="fa fa-plus" action="#{administrativeUnitEditChildrenPage.select}" update=":form:selectableAdministrativeUnits,:form:selectedAdministrativeUnits"/>
+				<p:commandButton value="Ajouter la sélection" icon="fa fa-plus" action="#{administrativeUnitEditChildrenPage.select}" 
+					update=":form:selectableAdministrativeUnits,:form:selectedAdministrativeUnits" oncomplete="PF('dialog').hide();"/>
 				
 			</p:dialog>
     		
