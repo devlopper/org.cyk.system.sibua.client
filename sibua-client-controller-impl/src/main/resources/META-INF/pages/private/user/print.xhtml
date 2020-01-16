@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{userPrintPage}">
+    	<ui:define name="centerCenter">.    		
+	    	<p:outputPanel id="identitySheet">
+				<ui:decorate template="__read__.xhtml">
+				
+				</ui:decorate>
+	    		<p:separator/>
+	    		<div style="text-align: center;">
+	    			<p:barcode value="#{userPrintPage.user.identifier}" type="qr" />
+	    		</div>	    				
+	    	</p:outputPanel>
+	    	
+	    	<p:commandButton value="Imprimer" icon="fa fa-print" type="button">
+	    		<p:printer target="identitySheet" />
+	    	</p:commandButton>
+		    	
+	    	<ui:include src="../css.xhtml"/>	
+    	</ui:define>
+    </cyk:page>
+</html>

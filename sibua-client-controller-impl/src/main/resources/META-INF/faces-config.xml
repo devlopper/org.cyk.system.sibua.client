@@ -9,8 +9,26 @@
 		<from-view-id>*</from-view-id>
 		
 		<navigation-case>
-			<from-outcome>userIdentifyView</from-outcome>
-			<to-view-id>/private/user/identify.jsf</to-view-id>
+			<from-outcome>userCreateView</from-outcome>
+			<to-view-id>/private/user/create.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>userActivateView</from-outcome>
+			<to-view-id>/private/user/activate.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>userReadView</from-outcome>
+			<to-view-id>/private/user/read.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>userPrintView</from-outcome>
+			<to-view-id>/private/user/print.jsf</to-view-id>
 			<redirect />
 		</navigation-case>
 		

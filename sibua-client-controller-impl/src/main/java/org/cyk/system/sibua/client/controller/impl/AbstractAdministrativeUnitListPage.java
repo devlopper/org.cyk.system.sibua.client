@@ -22,6 +22,8 @@ import org.cyk.utility.__kernel__.map.MapHelper;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.value.ValueHelper;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntity;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntityBuilder;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.SelectionOne;
 import org.cyk.utility.server.persistence.query.filter.FilterDto;
 import org.omnifaces.util.Faces;
@@ -35,6 +37,11 @@ import lombok.Setter;
 public abstract class AbstractAdministrativeUnitListPage extends AbstractPageContainerManagedImpl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private AutoCompleteEntity<Section> sectionAutoComplete;
+	private AutoCompleteEntity<ServiceGroup> serviceGroupAutoComplete;
+	private AutoCompleteEntity<FunctionalClassification> functionalClassificationAutoComplete;
+	private AutoCompleteEntity<Localisation> localisationAutoComplete;
+	
 	protected SelectionOne<Section> section;
 	protected Collection<Section> sections;
 	protected Collection<FunctionalClassification> functionalClassifications;
@@ -46,6 +53,11 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 	@Override
 	protected void __listenPostConstruct__() {
 		super.__listenPostConstruct__();
+		sectionAutoComplete = AutoCompleteEntityBuilder.build(Section.class, "administrativeUnitsDataTable");		
+		serviceGroupAutoComplete = AutoCompleteEntityBuilder.build(ServiceGroup.class, "administrativeUnitsDataTable");
+		functionalClassificationAutoComplete = AutoCompleteEntityBuilder.build(FunctionalClassification.class, "administrativeUnitsDataTable");
+		localisationAutoComplete = AutoCompleteEntityBuilder.build(Localisation.class, "administrativeUnitsDataTable");
+		
 		export = ValueHelper.convertToBoolean(Faces.getRequestParameter("export"));
 		section = new SelectionOne<Section>(Section.class);		
 		section.setAreChoicesGettable(defaultSection == null);
@@ -82,17 +94,17 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 				String sectionCode = (String) MapHelper.readByKey(filters, AdministrativeUnit.FIELD_SECTION);
 				if(StringHelper.isBlank(sectionCode))
 					sectionCode = defaultSection == null ? section.getValue() == null ? null : section.getValue().getCode() : defaultSection.getCode();
-				filter.addField(AdministrativeUnit.FIELD_SECTION, CollectionHelper.listOf(Boolean.TRUE,sectionCode));				
-				filter.addField(AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION, CollectionHelper.listOf(Boolean.TRUE,MapHelper.readByKey(filters, AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION)));
-				filter.addField(AdministrativeUnit.FIELD_SERVICE_GROUP, CollectionHelper.listOf(Boolean.TRUE,MapHelper.readByKey(filters, AdministrativeUnit.FIELD_SERVICE_GROUP)));
-				filter.addField(AdministrativeUnit.FIELD_LOCALISATION, CollectionHelper.listOf(Boolean.TRUE,MapHelper.readByKey(filters, AdministrativeUnit.FIELD_LOCALISATION)));
+				filter.addField(AdministrativeUnit.FIELD_SECTION, sectionCode);				
+				filter.addField(AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION, MapHelper.readByKey(filters, AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION));
+				filter.addField(AdministrativeUnit.FIELD_SERVICE_GROUP, MapHelper.readByKey(filters, AdministrativeUnit.FIELD_SERVICE_GROUP));
+				filter.addField(AdministrativeUnit.FIELD_LOCALISATION, MapHelper.readByKey(filters, AdministrativeUnit.FIELD_LOCALISATION));
 				
 				List<AdministrativeUnit> list = (List<AdministrativeUnit>) __inject__(AdministrativeUnitController.class).read(__getProperties__(filter, first, pageSize));
 				if(CollectionHelper.isEmpty(list))
 					setRowCount(0);
 				else {
 					Long count = __inject__(AdministrativeUnitController.class).count(new Properties()
-							.setQueryIdentifier(AdministrativeUnitPersistence.COUNT_BY_FILTERS).setFilters(filter));
+							.setQueryIdentifier(AdministrativeUnitPersistence.COUNT_BY_FILTERS_CODES_LIKE).setFilters(filter));
 					setRowCount(count == null ? 0 : count.intValue());	
 				}
 				return list;
@@ -113,7 +125,7 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 	}
 	
 	protected Properties __getProperties__(Object filter,Object first,Object pageSize) {
-		return new Properties().setQueryIdentifier(AdministrativeUnitPersistence.READ_BY_FILTERS)
+		return new Properties().setQueryIdentifier(AdministrativeUnitPersistence.READ_BY_FILTERS_CODES_LIKE)
 		.setFields(AdministrativeUnit.FIELD_IDENTIFIER+","+AdministrativeUnit.FIELD_CODE+","+AdministrativeUnit.FIELD_NAME
 				+","+AdministrativeUnit.FIELD_SECTION+","+AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION
 				+","+AdministrativeUnit.FIELD_SERVICE_GROUP+","+AdministrativeUnit.FIELD_LOCALISATION

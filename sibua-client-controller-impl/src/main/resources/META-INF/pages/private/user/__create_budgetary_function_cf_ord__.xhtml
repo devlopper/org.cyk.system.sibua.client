@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"      
+    xmlns:h="http://java.sun.com/jsf/html">
+	
+	<ui:param name="functionTab" value="#{userCreatePage.functionTabs.get(functionIndex)}"/>
+	
+	<p:fieldset legend="#{functionName}">
+		<div class="ui-g">
+			<div class="ui-g-12">
+ 				<div class="ui-g-3">
+ 					<p:outputLabel for="#{functionCode}BudgetaryCertificateReference" value="Référence de l'acte de nomination" />
+ 				</div>
+ 				<div class="ui-g-8">
+ 					<p:inputText id="#{functionCode}BudgetaryCertificateReference" value="#{functionTab.fileReference}"/>
+					<p:message for="#{functionCode}BudgetaryCertificateReference" />
+ 				</div>
+ 				<div class="ui-g-1">
+ 					<p:fileUpload id="#{functionCode}BudgetaryCertificateFile" value="#{functionTab.uploadedFile}" mode="simple" skinSimple="true" label="Fichier"/>
+ 				</div>
+ 			</div>
+ 			<div class="ui-g-12">
+ 				<div class="ui-g-3">
+ 					<p:outputLabel for="#{functionCode}Localisation" value="Localisation(s) géographique(s)" />
+ 				</div>
+ 				<div class="ui-g-9">		
+ 					<ui:decorate template="/input/select/one/autoComplete.xhtml">
+	    				<ui:param name="autoComplete" value="#{functionTab.localisations}"/>
+	    				<ui:param name="autoCompleteId" value="#{functionCode}Localisation"/>
+	    			</ui:decorate>			 											 							
+					<p:message for="#{functionCode}Localisation" /> 							
+ 				</div>
+ 			</div>
+		</div>
+	</p:fieldset>
+	
+</ui:composition>

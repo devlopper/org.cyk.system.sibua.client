@@ -81,7 +81,11 @@
   			
  		<ui:include src="__dataTableColumns__.xhtml">
  			<ui:param name="dataTableWidgetVar" value="administrativeUnitsDataTable"/>
- 			<ui:param name="sectionRendered" value="#{__page__.defaultSection == null}"/>
+ 			<ui:param name="sectionAutoComplete" value="#{__page__.sectionAutoComplete}"/>
+ 			<ui:param name="serviceGroupAutoComplete" value="#{__page__.serviceGroupAutoComplete}"/>
+ 			<ui:param name="functionalClassificationAutoComplete" value="#{__page__.functionalClassificationAutoComplete}"/>
+ 			<ui:param name="localisationAutoComplete" value="#{__page__.localisationAutoComplete}"/>
+ 			
  			<ui:param name="sections" value="#{__page__.sections}"/>
  			<ui:param name="serviceGroups" value="#{__page__.serviceGroups}"/>
  			<ui:param name="functionalClassifications" value="#{__page__.functionalClassifications}"/>

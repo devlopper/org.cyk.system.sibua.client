@@ -1,8 +1,8 @@
-package org.cyk.system.sibua.client.controller.entities;
+package org.cyk.system.sibua.client.controller.entities.user;
 
 import java.io.Serializable;
 
-import org.cyk.system.sibua.server.persistence.entities.UserFileType;
+import org.cyk.system.sibua.server.persistence.entities.user.UserFileType;
 import org.cyk.utility.client.controller.data.AbstractDataIdentifiableSystemStringImpl;
 
 import lombok.Getter;

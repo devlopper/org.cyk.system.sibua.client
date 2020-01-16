@@ -49,7 +49,7 @@ public class AdministrativeUnitActivityCreatePage extends AbstractPageContainerM
 		Collection<Activity> activities = defaultSection == null ? null : __inject__(ActivityController.class).read(new Properties()
 				.setQueryIdentifier(ActivityPersistence.READ_WHERE_ADMINISTRATIVE_UNIT_DOES_NOT_EXIST_BY_FILTERS)
 				.setFilters(new FilterDto().addField(Activity.FIELD_SECTION, defaultSection == null ? null : List.of(defaultSection.getCode())))
-				.setFields("identifier,code,name")
+				.setFields("identifier,code,name,action")
 				.setIsPageable(Boolean.FALSE)
 				);
 		if(CollectionHelper.isNotEmpty(activities))

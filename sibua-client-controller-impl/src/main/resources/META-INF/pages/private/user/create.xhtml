@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{userCreatePage}">
+    	<ui:define name="centerCenter">.
+    		<ui:decorate template="__oneTemplate__.xhtml">
+    			<ui:define name="typeLabel">
+    				<p:outputLabel for="type" value="Je suis" />
+    			</ui:define>
+    			<ui:define name="typeControl">
+    				<ui:decorate template="/input/select/one/menu.xhtml">
+		    			<ui:param name="selection" value="#{userCreatePage.userType}"/>
+		    			<ui:param name="selectableInputId" value="type"/>
+		    		</ui:decorate>
+    				<p:message for="type" />
+    			</ui:define>
+    		
+    			<ui:define name="registrationNumberLabel">
+    				<p:outputLabel for="registrationNumber" value="Matricule" />
+    			</ui:define>
+    			<ui:define name="registrationNumberControl">
+    				<p:inputText id="registrationNumber" value="#{userCreatePage.user.registrationNumber}"/>
+    				<p:message for="registrationNumber" />
+    			</ui:define>	
+    		
+    			<ui:define name="civilityLabel">
+    				<p:outputLabel for="civility" value="Civilité" />
+    			</ui:define>
+    			<ui:define name="civilityControl">
+    				<ui:decorate template="/input/select/one/menu.xhtml">
+		    			<ui:param name="selection" value="#{userCreatePage.civility}"/>
+		    			<ui:param name="selectableInputId" value="civility"/>
+		    		</ui:decorate>
+   					<p:message for="civility" />
+    			</ui:define>	
+    		
+    			<ui:define name="firstNameLabel">
+    				<p:outputLabel for="firstName" value="Nom" />
+    			</ui:define>
+    			<ui:define name="firstNameControl">
+    				<p:inputText id="firstName" value="#{userCreatePage.user.firstName}"/>
+    				<p:message for="firstName" />
+    			</ui:define>	
+    		
+    			<ui:define name="lastNamesLabel">
+    				<p:outputLabel for="lastNames" value="Prénom(s)" />
+    			</ui:define>
+    			<ui:define name="lastNamesControl">
+    				<p:inputText id="lastNames" value="#{userCreatePage.user.lastNames}"/>
+    				<p:message for="lastNames" />
+    			</ui:define>	
+    		
+    			<ui:define name="electronicMailAddressLabel">
+    				<p:outputLabel for="electronicMailAddress" value="Adresse de courriel électronique" />
+    			</ui:define>
+    			<ui:define name="electronicMailAddressControl">
+    				<p:inputText id="electronicMailAddress" value="#{userCreatePage.user.electronicMailAddress}"/>
+    				<p:message for="electronicMailAddress" />
+    			</ui:define>	
+    		
+    			<ui:define name="postalAddressLabel">
+    				<p:outputLabel for="postalAddress" value="Adresse postale" />
+    			</ui:define>
+    			<ui:define name="postalAddressControl">
+    				<p:inputText id="postalAddress" value="#{userCreatePage.user.postalAddress}"/>
+    				<p:message for="postalAddress" />
+    			</ui:define>	
+    		
+    			<ui:define name="mobilePhoneNumberLabel">
+    				<p:outputLabel for="mobilePhoneNumber" value="Numéro de téléphone mobile" />
+    			</ui:define>
+    			<ui:define name="mobilePhoneNumberControl">
+    				<p:inputText id="mobilePhoneNumber" value="#{userCreatePage.user.mobilePhoneNumber}"/>
+    				<p:message for="mobilePhoneNumber" />
+    			</ui:define>	
+    		
+    			<ui:define name="deskPhoneNumberLabel">
+    				<p:outputLabel for="deskPhoneNumber" value="Numéro de téléphone bureau" />
+    			</ui:define>
+    			<ui:define name="deskPhoneNumberControl">
+    				<p:inputText id="deskPhoneNumber" value="#{userCreatePage.user.deskPhoneNumber}"/>
+    				<p:message for="deskPhoneNumber" />
+    			</ui:define>	
+    		
+    			<ui:define name="deskPostLabel">
+    				<p:outputLabel for="deskPost" value="Poste bureau" />
+    			</ui:define>
+    			<ui:define name="deskPostControl">
+    				<p:inputText id="deskPost" value="#{userCreatePage.user.deskPost}"/>
+    				<p:message for="deskPost" />
+    			</ui:define>	
+    		
+    			<ui:define name="administrativeUnitLabel">
+    				<p:outputLabel for="administrativeUnit" value="Unité administrative" />
+    			</ui:define>
+    			<ui:define name="administrativeUnitControl">
+    				<ui:decorate template="/input/select/one/autoComplete.xhtml">
+		    			<ui:param name="autoComplete" value="#{userCreatePage.administrativeUnit}"/>
+		    		</ui:decorate>
+    				<p:message for="administrativeUnit" />
+    			</ui:define>	
+    		
+    			<ui:define name="administrativeUnitCertificateReferenceLabel">
+    				<p:outputLabel for="administrativeUnitCertificateReference" value="Référence" />
+    			</ui:define>
+    			<ui:define name="administrativeUnitCertificateReferenceControl">
+    				<p:inputText id="administrativeUnitCertificateReference" value="#{userCreatePage.user.certificateReference}"/>
+    				<p:message for="administrativeUnitCertificateReference" />
+    			</ui:define>	
+    		
+    			<ui:define name="administrativeUnitCertificateFileControl">
+    				<p:fileUpload id="administrativeUnitCertificateFile" value="#{userCreatePage.administrativeUnitCertificateUploadedFile}" mode="simple" skinSimple="true" label="Fichier"/>
+    			</ui:define>
+    			    			 			
+    			<ui:define name="budgetaryFunctions">
+    				<p:selectManyCheckbox value="#{userCreatePage.selectedFunctionCategoryCodes}">
+    					<f:selectItem itemValue="CF" itemLabel="Contrôleur Financier" />
+    					<f:selectItem itemValue="ORD" itemLabel="Ordonnateur" />
+    					<f:selectItem itemValue="GC" itemLabel="Gestionnaire de Crédits" />
+    					<p:ajax event="change" update="cf,ord,gc" />
+    				</p:selectManyCheckbox>
+    				<p:separator/>
+    				
+    				<p:outputPanel id="cf">
+    					<p:outputPanel id="cf_content" rendered="#{userCreatePage.isHasFunctionCategoryCode('CF')}">
+    						<ui:include src="__create_budgetary_function_cf_ord__.xhtml">
+    							<ui:param name="functionCode" value="cf"/>
+    							<ui:param name="functionName" value="Contrôleur Financier"/>
+    							<ui:param name="functionIndex" value="0"/>
+    						</ui:include>
+    						<!--
+    						<p:fieldset legend="Contrôleur Financier">
+    							<div class="ui-g">
+	    							<div class="ui-g-12">
+							 			<div class="ui-g-3">
+							 				<p:outputLabel for="budgetaryCertificateReference" value="Référence de l'acte de nomination" />
+							 			</div>
+							 			<div class="ui-g-8">
+							 				<p:inputText id="budgetaryCertificateReference" value="#{userCreatePage.functionTabs.get(0).fileReference}"/>
+		    								<p:message for="budgetaryCertificateReference" />
+							 			</div>
+							 			<div class="ui-g-1">
+							 				<p:fileUpload id="budgetaryCertificateFile" value="#{userCreatePage.functionTabs.get(0).uploadedFile}" mode="simple" skinSimple="true" label="Fichier"/>
+							 			</div>
+							 		</div>
+							 		<div class="ui-g-12">
+							 			<div class="ui-g-3">					 				
+							 				<p:outputLabel for="localisation" value="Localisation(s) géographique(s)" />					 				
+							 			</div>
+							 			<div class="ui-g-9">		
+							 				<ui:decorate template="/input/select/one/autoComplete.xhtml">
+								    			<ui:param name="autoComplete" value="#{userCreatePage.functionTabs.get(0).localisations}"/>
+								    		</ui:decorate>			 											 							
+		    								<p:message for="localisation" /> 							
+							 			</div>
+							 		</div>
+						 		</div>
+    						</p:fieldset>
+    						-->
+    					</p:outputPanel>    					
+    				</p:outputPanel>
+    				
+    				<p:outputPanel id="ord">
+    					<p:outputPanel id="ord_content" rendered="#{userCreatePage.isHasFunctionCategoryCode('ORD')}">
+    						<ui:include src="__create_budgetary_function_cf_ord__.xhtml">
+    							<ui:param name="functionCode" value="ord"/>
+    							<ui:param name="functionName" value="Ordonnateur"/>
+    							<ui:param name="functionIndex" value="1"/>
+    						</ui:include>
+    					</p:outputPanel>
+    				</p:outputPanel>
+    				<p:outputPanel id="gc">
+    					<p:outputPanel id="gc_content" rendered="#{userCreatePage.isHasFunctionCategoryCode('GC')}">
+    						<h1>GC</h1>
+    					</p:outputPanel>
+    				</p:outputPanel>
+    				
+    				<!--
+    				<p:tabView value="#{userCreatePage.functionTabs}" var="tab" cache="false" >
+						<p:tab title="#{tab.name}">
+							<div class="ui-g-12">
+					 			<div class="ui-g-2">
+					 				<p:outputLabel for="budgetaryCertificateReference" value="Référence de l'acte de nomination" />
+					 			</div>
+					 			<div class="ui-g-9">
+					 				<p:inputText id="budgetaryCertificateReference" value="#{tab.fileReference}"/>
+    								<p:message for="budgetaryCertificateReference" />
+					 			</div>
+					 			<div class="ui-g-1">
+					 				<p:fileUpload id="budgetaryCertificateFile" value="#{userCreatePage.budgetaryCertificateUploadedFile}" mode="simple" skinSimple="true" label="Fichier"/>
+					 			</div>
+					 		</div>
+					 		<div class="ui-g-12">
+					 			<div class="ui-g-2">					 				
+					 				<p:outputLabel for="localisations" value="Localisations géographiques" />					 				
+					 			</div>
+					 			<div class="ui-g-10">		
+					 							 				
+					 				<p:autoComplete id="localisations" value="#{tab.localisations.value}"  placeholder="Rechercher..." var="item"  itemValue="#{item}" 
+										itemLabel="#{item.name}" converter="#{objectConverter}" completeMethod="#{tab.localisations.complete}"
+										maxResults="#{tab.localisations.numberOfResults}" queryDelay="500" 
+										widgetVar="#{tab.localisations.widgetVar}" onchange="#{tab.localisations.onChange}"
+									>		
+		
+									</p:autoComplete>   				
+    								<p:message for="localisations" /> 							
+					 			</div>
+					 		</div>
+						</p:tab>
+						<p:tab title="Ordonnateur">
+						
+						</p:tab>
+						<p:tab title="Gestionnaire de Crédits">
+						
+						</p:tab>
+					</p:tabView>
+					-->
+    			</ui:define>
+    		</ui:decorate>
+    		
+    		<p:separator/>
+	    	<cyk:commandable value="#{userCreatePage.createCommandable}" />
+	    	<ui:include src="../css.xhtml"/>		
+    	</ui:define>
+    </cyk:page>
+</html>

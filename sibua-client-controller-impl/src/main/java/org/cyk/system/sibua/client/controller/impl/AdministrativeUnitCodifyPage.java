@@ -72,6 +72,7 @@ public class AdministrativeUnitCodifyPage extends AbstractPageContainerManagedIm
 				}
 				*/	
 				filter = new FilterDto();
+				/*
 				filter.addField(AdministrativeUnit.FIELD_NAME, filters.get(AdministrativeUnit.FIELD_NAME));
 				String sectionCode = section == null ? (String) filters.get(AdministrativeUnit.FIELD_SECTION) : section.getCode();
 				if(StringHelper.isNotBlank(sectionCode))
@@ -84,15 +85,30 @@ public class AdministrativeUnitCodifyPage extends AbstractPageContainerManagedIm
 					filter.addField(AdministrativeUnit.FIELD_LOCALISATION, CollectionHelper.listOf(filters.get(AdministrativeUnit.FIELD_LOCALISATION)));
 				if(CollectionHelper.isNotEmpty(selectedAdministrativeUnits))
 					filter.addField(AdministrativeUnit.FIELD_CODE, selectedAdministrativeUnits.stream().map(AdministrativeUnit::getCode).collect(Collectors.toSet()));
+				*/
+				
+				filter.addField(AdministrativeUnit.FIELD_NAME, filters.get(AdministrativeUnit.FIELD_NAME));
+				String sectionCode = section == null ? (String) filters.get(AdministrativeUnit.FIELD_SECTION) : section.getCode();
+				if(StringHelper.isNotBlank(sectionCode))
+					filter.addField(AdministrativeUnit.FIELD_SECTION, sectionCode);
+				if(filters.get(AdministrativeUnit.FIELD_SERVICE_GROUP) != null)
+					filter.addField(AdministrativeUnit.FIELD_SERVICE_GROUP, filters.get(AdministrativeUnit.FIELD_SERVICE_GROUP));
+				if(filters.get(AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION) != null)
+					filter.addField(AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION, filters.get(AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION));
+				if(filters.get(AdministrativeUnit.FIELD_LOCALISATION) != null)
+					filter.addField(AdministrativeUnit.FIELD_LOCALISATION, filters.get(AdministrativeUnit.FIELD_LOCALISATION));
+				if(CollectionHelper.isNotEmpty(selectedAdministrativeUnits))
+					filter.addField(AdministrativeUnit.FIELD_CODE, selectedAdministrativeUnits.stream().map(AdministrativeUnit::getCode).collect(Collectors.toSet()));
 				
 				List<AdministrativeUnit> list = (List<AdministrativeUnit>) __inject__(AdministrativeUnitController.class)
-						.read(new Properties().setQueryIdentifier(AdministrativeUnitPersistence.READ_WHERE_CODE_NOT_IN_BY_FILTERS).setFilters(filter)
+						.read(new Properties().setQueryIdentifier(AdministrativeUnitPersistence.READ_WHERE_CODE_NOT_IN_BY_FILTERS_CODES_LIKE).setFilters(filter)
 								.setIsPageable(Boolean.TRUE).setFrom(first).setCount(pageSize));
+				
 				if(CollectionHelper.isEmpty(list))
 					setRowCount(0);
 				else {
 					Long count = __inject__(AdministrativeUnitController.class)
-							.count(new Properties().setQueryIdentifier(AdministrativeUnitPersistence.COUNT_WHERE_CODE_NOT_IN_BY_FILTERS).setFilters(filter));
+							.count(new Properties().setQueryIdentifier(AdministrativeUnitPersistence.COUNT_WHERE_CODE_NOT_IN_BY_FILTERS_CODES_LIKE).setFilters(filter));
 					setRowCount(count == null ? 0 : count.intValue());	
 				}
 				return list;

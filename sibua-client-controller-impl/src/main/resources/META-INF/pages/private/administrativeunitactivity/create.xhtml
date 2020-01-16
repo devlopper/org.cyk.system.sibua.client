@@ -24,8 +24,18 @@
 		    
 		    <p:dataTable id="dataTable" value="#{__page__.__administrativeUnitActivities__}" var="administrativeUnitActivity" emptyMessage="Toutes les activités sont rattachées"
 		    	rowIndexVar="rowIndex" rendered="#{__page__.defaultSection != null}">	
-		    	<p:column headerText="#" width="30">
+		    	<p:column headerText="#" width="40">
 		    		<h:outputText value="#{rowIndex+1}" />
+		    	</p:column>
+		    	
+		    	<p:column headerText="Programme">
+		    		<h:outputText value="#{administrativeUnitActivity.activity.action.program.code}" styleClass="cyk-code" />
+		    		<h:outputText value=" #{administrativeUnitActivity.activity.action.program.name}" />
+		    	</p:column>
+		    	
+		    	<p:column headerText="Action">
+		    		<h:outputText value="#{administrativeUnitActivity.activity.action.code}" styleClass="cyk-code" />
+		    		<h:outputText value=" #{administrativeUnitActivity.activity.action.name}" />
 		    	</p:column>
 		    	
 		    	<p:column headerText="Activité">
@@ -33,10 +43,12 @@
 		    		<h:outputText value=" #{administrativeUnitActivity.activity.name}" />
 		    	</p:column>
 		    	
-		    	<p:column headerText="Unité administrative">
+		    	<p:column headerText="Unité administrative (Gestionnaire des crédits)">
 		    		<p:autoComplete value="#{administrativeUnitActivity.administrativeUnit}" converter="#{objectConverter}" placeholder="Rechercher..." var="administrativeUnit" itemValue="#{administrativeUnit}" 
 		    			itemLabel="#{administrativeUnit.nameAndCodeWithParenthesis}" completeMethod="#{administrativeUnitActivityCreatePage.readAdministrativeUnitByString}" cache="true" 
-				    	maxResults="5" queryDelay="500" emptyMessage="-- Aucun résultat --" style="width:100% !important;"/>
+				    	maxResults="5" queryDelay="500" emptyMessage="-- Aucun résultat --" style="width:100% !important;">
+				    	<p:ajax event="query" partialSubmit="true"/>
+				    </p:autoComplete>
 		    	</p:column>			    			    				
 		   	</p:dataTable>
     		

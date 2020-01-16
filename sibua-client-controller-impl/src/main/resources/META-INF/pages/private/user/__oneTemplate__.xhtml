@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"      
+    xmlns:h="http://java.sun.com/jsf/html">
+	
+	<div class="ui-g">
+		<div class="ui-g-12">
+			<div class="ui-g-2 ui-widget-header">
+				<h:outputText value="Informations personnelles"/>
+			</div>
+			<div class="ui-g-10">
+				<p:separator/>	
+			</div>					
+		</div>
+		
+		<div class="ui-g-12">
+			<div class="ui-g-1">
+				<ui:insert name="typeLabel"><h:outputText value="Type Label" /></ui:insert>
+			</div>
+			<div class="ui-g-3">
+				<ui:insert name="typeControl"><h:outputText value="Type Control" /></ui:insert>
+			</div>
+			<div class="ui-g-1">
+				<ui:insert name="registrationNumberLabel"><h:outputText value="Registration Number Label" /></ui:insert>
+			</div>
+			<div class="ui-g-7">
+				<ui:insert name="registrationNumberControl"><h:outputText value="Registration Number Control" /></ui:insert>
+			</div>
+		</div>
+
+		<div class="ui-g-12">
+			<div class="ui-g-1">
+				<ui:insert name="civilityLabel"><h:outputText value="Civility Label" /></ui:insert>
+			</div>
+			<div class="ui-g-3">
+				<ui:insert name="civilityControl"><h:outputText value="Civility Control" /></ui:insert>
+			</div>
+			<div class="ui-g-1">
+				<ui:insert name="firstNameLabel"><h:outputText value="First Name Label" /></ui:insert>
+			</div>
+			<div class="ui-g-3">
+				<ui:insert name="firstNameControl"><h:outputText value="First Name Control" /></ui:insert>
+			</div>
+			<div class="ui-g-1">
+				<ui:insert name="lastNamesLabel"><h:outputText value="Last Names Label" /></ui:insert>
+			</div>
+			<div class="ui-g-3">
+				<ui:insert name="lastNamesControl"><h:outputText value="Last Names Control" /></ui:insert>
+			</div>
+		</div>
+	</div>
+
+  	<div class="ui-g">
+  		<div class="ui-g-12">
+			<div class="ui-g-2 ui-widget-header">
+				<h:outputText value="Contacts"/>
+			</div>
+			<div class="ui-g-10">
+				<p:separator/>	
+			</div>					
+		</div>
+
+		<div class="ui-g-12">
+			<div class="ui-g-2">
+				<ui:insert name="electronicMailAddressLabel"><h:outputText value="Electronic Mail Address Label" /></ui:insert>
+			</div>
+			<div class="ui-g-3">
+				<ui:insert name="electronicMailAddressControl"><h:outputText value="Electronic Mail Address Control" /></ui:insert>
+			</div>
+			<div class="ui-g-2">
+				<ui:insert name="postalAddressLabel"><h:outputText value="Postal Address Label" /></ui:insert>
+			</div>
+			<div class="ui-g-5">
+				<ui:insert name="postalAddressControl"><h:outputText value="Postal Address Control" /></ui:insert>
+			</div>
+		</div>
+
+ 		<div class="ui-g-12">
+ 			<div class="ui-g-2">
+ 				<ui:insert name="mobilePhoneNumberLabel"><h:outputText value="Mobile Phone Number Label" /></ui:insert>
+ 			</div>
+ 			<div class="ui-g-2">
+ 				<ui:insert name="mobilePhoneNumberControl"><h:outputText value="Mobile Phone Number Control" /></ui:insert>
+ 			</div>
+ 			<div class="ui-g-2">
+ 				<ui:insert name="deskPhoneNumberLabel"><h:outputText value="deskPhoneNumber Label" /></ui:insert>
+ 			</div>
+ 			<div class="ui-g-2">
+ 				<ui:insert name="deskPhoneNumberControl"><h:outputText value="deskPhoneNumber Control" /></ui:insert>
+ 			</div>
+ 			<div class="ui-g-1">
+ 				<ui:insert name="deskPostLabel"><h:outputText value="deskPost Label" /></ui:insert>
+ 			</div>
+ 			<div class="ui-g-3">
+ 				<ui:insert name="deskPostControl"><h:outputText value="deskPost Control" /></ui:insert>
+ 			</div>
+ 		</div>
+  	</div>	
+  	
+  	<div class="ui-g">
+ 		<div class="ui-g-12">
+			<div class="ui-g-2 ui-widget-header">
+				<h:outputText value="Service"/>
+			</div>
+			<div class="ui-g-10">
+				<p:separator/>	
+			</div>					
+		</div>
+		
+		<div class="ui-g-12">
+			<div class="ui-g-2">
+				<ui:insert name="administrativeUnitLabel"><h:outputText value="administrative unit Label" /></ui:insert>
+			</div>
+			<div class="ui-g-10">
+				<ui:insert name="administrativeUnitControl"><h:outputText value="administrative unit Control" /></ui:insert>
+			</div>
+		</div>
+
+ 		<div class="ui-g-12">
+ 			<div class="ui-g-2">
+ 				<ui:insert name="administrativeUnitCertificateReferenceLabel"><h:outputText value="administrative unit certificate reference Label" /></ui:insert>
+ 			</div>
+ 			<div class="ui-g-9">
+ 				<ui:insert name="administrativeUnitCertificateReferenceControl"><h:outputText value="administrative unit certificate reference Control" /></ui:insert>
+ 			</div>
+ 			<div class="ui-g-1">
+ 				<ui:insert name="administrativeUnitCertificateFileControl"><h:outputText value="administrative unit certificate file Control" /></ui:insert>
+ 			</div>
+ 		</div>
+ 	</div>
+
+ 	<div class="ui-g">
+ 		<div class="ui-g-12">
+			<div class="ui-g-2 ui-widget-header">
+				<h:outputText value="Fonction(s) budgétaire(s)"/>
+			</div>				
+		</div>
+		<div class="ui-g-12">
+			<ui:insert name="budgetaryFunctions" />
+		</div>
+ 	</div>
+  	
+</ui:composition>

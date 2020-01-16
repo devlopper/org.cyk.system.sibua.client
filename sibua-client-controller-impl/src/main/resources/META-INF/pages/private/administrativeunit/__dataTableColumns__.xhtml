@@ -15,58 +15,42 @@
  		<h:outputText value="#{administrativeUnit.name}" />
  	</p:column>
  	
- 	<p:column headerText="Section" width="100" filterBy="#{administrativeUnit.section}" rendered="#{sectionRendered}">
+ 	<p:column headerText="Section" width="100" filterBy="#{administrativeUnit.section}" rendered="#{__page__.defaultSection == null}">
  		<f:facet name="filter">
- 			<p:autoComplete onchange="PF('#{dataTableWidgetVar}').filter()" placeholder="Rechercher..."
-		    	var="section" itemValue="#{section.code}" itemLabel="#{section}"
-		    	completeMethod="#{sectionController.readByString}" cache="true"
-		    	maxResults="5" queryDelay="500" emptyMessage="-- Aucun résultat --"
-		    >
-		    	<p:ajax event="itemSelect" oncomplete="PF('#{dataTableWidgetVar}').filter()" />
-		    </p:autoComplete>
+ 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
+    			<ui:param name="autoComplete" value="#{sectionAutoComplete}"/>
+    		</ui:decorate>	  
 		</f:facet>
- 		<h:outputText value="#{administrativeUnit.section.code}" />
+ 		<h:outputText value="#{administrativeUnit.section.code}" title="#{administrativeUnit.section.name}"/>
  	</p:column>
  	
  	<p:column headerText="Groupe de service" width="150" filterBy="#{administrativeUnit.serviceGroup}">
  		<f:facet name="filter">
- 			<p:autoComplete onchange="PF('#{dataTableWidgetVar}').filter()" placeholder="Rechercher..."
-		    	var="serviceGroup" itemValue="#{serviceGroup.code}" itemLabel="#{serviceGroup}"
-		    	completeMethod="#{serviceGroupController.readByString}" cache="true"
-		    	maxResults="5" queryDelay="500" emptyMessage="-- Aucun résultat --"
-		    >
-		    	<p:ajax event="itemSelect" oncomplete="PF('#{dataTableWidgetVar}').filter()" />
-		    </p:autoComplete>
+ 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
+    			<ui:param name="autoComplete" value="#{serviceGroupAutoComplete}"/>
+    		</ui:decorate>	  
 		</f:facet>
- 		<h:outputText value="#{administrativeUnit.serviceGroup.code}" />
+ 		<h:outputText value="#{administrativeUnit.serviceGroup.code}" title="#{administrativeUnit.serviceGroup.name}"/>
  		<h:outputText value=" #{administrativeUnit.serviceGroup.name}" rendered="#{param['showName']}"/>
  	</p:column> 	
  	
  	<p:column headerText="CFAP" width="150" filterBy="#{administrativeUnit.functionalClassification}">
  		<f:facet name="filter">
- 			<p:autoComplete onchange="PF('#{dataTableWidgetVar}').filter()" placeholder="Rechercher..."
-		    	var="functionalClassification" itemValue="#{functionalClassification.code}" itemLabel="#{functionalClassification}"
-		    	completeMethod="#{functionalClassificationController.readByString}" cache="true"
-		    	maxResults="5" queryDelay="500" emptyMessage="-- Aucun résultat --"
-		    >
-		    	<p:ajax event="itemSelect" oncomplete="PF('#{dataTableWidgetVar}').filter()" />
-		    </p:autoComplete>
+ 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
+    			<ui:param name="autoComplete" value="#{functionalClassificationAutoComplete}"/>
+    		</ui:decorate>
 		</f:facet>
- 		<h:outputText value="#{administrativeUnit.functionalClassification.code}" />
+ 		<h:outputText value="#{administrativeUnit.functionalClassification.code}" title="#{administrativeUnit.functionalClassification.name}"/>
  		<h:outputText value=" #{administrativeUnit.functionalClassification.name}" rendered="#{param['showName']}"/>
  	</p:column>
  	
  	<p:column headerText="Localisation" width="150" filterBy="#{administrativeUnit.localisation}">
  		<f:facet name="filter">
- 			<p:autoComplete onchange="PF('#{dataTableWidgetVar}').filter()" placeholder="Rechercher..."
-		    	var="localisation" itemValue="#{localisation.code}" itemLabel="#{localisation}"
-		    	completeMethod="#{localisationController.readByString}" cache="true"
-		    	maxResults="5" queryDelay="500" emptyMessage="-- Aucun résultat --"
-		    >
-		    	<p:ajax event="itemSelect" oncomplete="PF('#{dataTableWidgetVar}').filter()" />
-		    </p:autoComplete>
+ 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
+    			<ui:param name="autoComplete" value="#{localisationAutoComplete}"/>
+    		</ui:decorate>
 		</f:facet>
- 		<h:outputText value="#{administrativeUnit.localisation.code}" />
+ 		<h:outputText value="#{administrativeUnit.localisation.code}" title="#{administrativeUnit.localisation.name}"/>
  		<h:outputText value=" #{administrativeUnit.localisation.name}" rendered="#{param['showName']}"/>
  	</p:column>
  	 	

@@ -17,7 +17,7 @@
 	<properties>
 		<microprofile.archive.name>sibua-client</microprofile.archive.name>
 		<jboss-web.context-root>sibua/client</jboss-web.context-root>
-		<cyk.variable.admin>false</cyk.variable.admin>
+		<cyk.variable.admin>true</cyk.variable.admin>
 	</properties>
 	
 	<dependencies>

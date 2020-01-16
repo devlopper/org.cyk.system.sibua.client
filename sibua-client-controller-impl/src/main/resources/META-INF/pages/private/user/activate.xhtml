@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{userActivatePage}">
+    	<ui:define name="centerCenter">.
+	    	<h1><h:outputText value="#{userActivatePage.message}" /></h1>
+	    	<!--
+	    	<p:separator/>
+	    	<p:button value="Consulter" icon="fa fa-eye" outcome="userReadView">
+	    		<f:param name="entityidentifier" value="#{userActivatePage.user.identifier}" />
+	    	</p:button>
+	    	-->
+	    	<ui:fragment rendered="#{empty userActivatePage.user.activationDate}">
+	    		<p:separator/>
+	    		<cyk:commandable value="#{userActivatePage.activateCommandable}" />
+	    	</ui:fragment>
+	    	<ui:include src="../css.xhtml"/>
+    	</ui:define>
+    </cyk:page>
+</html>

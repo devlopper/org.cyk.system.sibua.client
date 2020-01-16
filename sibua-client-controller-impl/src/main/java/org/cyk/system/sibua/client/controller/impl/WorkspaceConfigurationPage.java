@@ -56,8 +56,8 @@ public class WorkspaceConfigurationPage extends AbstractPageContainerManagedImpl
 		PathAsFunctionParameter pathAsFunctionParameter = new PathAsFunctionParameter();
 		pathAsFunctionParameter.setIdentifier("administrativeUnitListView");
 		String string =  UniformResourceIdentifierHelper.build(new UniformResourceIdentifierAsFunctionParameter().setPath(pathAsFunctionParameter));
-		if(section != null && section.getValue() != null)
-			string = string  + "?section="+section.getValue().getCode();
+		//if(section != null && section.getValue() != null)
+		//	string = string  + "?section="+section.getValue().getCode();
 		return string;
 	}
 }

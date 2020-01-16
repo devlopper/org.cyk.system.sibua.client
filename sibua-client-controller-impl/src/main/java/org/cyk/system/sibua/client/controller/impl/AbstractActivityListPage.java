@@ -48,8 +48,7 @@ public abstract class AbstractActivityListPage extends AbstractPageContainerMana
 				if(CollectionHelper.isEmpty(list))
 					setRowCount(0);
 				else {
-					Long count = __inject__(ActivityController.class).count(new Properties()
-							.setQueryIdentifier(ActivityPersistence.COUNT_BY_FILTERS).setFilters(filter));
+					Long count = __inject__(ActivityController.class).count(new Properties().setQueryIdentifier(ActivityPersistence.COUNT_BY_FILTERS).setFilters(filter));
 					setRowCount(count == null ? 0 : count.intValue());	
 				}
 				return list;

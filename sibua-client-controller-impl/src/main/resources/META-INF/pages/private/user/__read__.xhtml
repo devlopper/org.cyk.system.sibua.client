@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"      
+    xmlns:h="http://java.sun.com/jsf/html">
+	
+		<ui:decorate template="__oneTemplate__.xhtml">
+  			<ui:define name="typeLabel">
+  				<h:outputText value="Je suis" />
+  			</ui:define>
+  			<ui:define name="typeControl">
+  				<h:outputText value=" #{userPrintPage.user.type.name}" />
+  			</ui:define>
+  		
+  			<ui:define name="registrationNumberLabel">
+  				<h:outputText value="Matricule" />
+  			</ui:define>
+  			<ui:define name="registrationNumberControl">
+  				<h:outputText value=" #{userPrintPage.user.registrationNumber}" />
+  			</ui:define>	
+  		
+  			<ui:define name="civilityLabel">
+  				<h:outputText value="Civilité" />
+  			</ui:define>
+  			<ui:define name="civilityControl">
+  				<h:outputText value=" #{userPrintPage.user.civility.name}" />
+  			</ui:define>	
+  		
+  			<ui:define name="firstNameLabel">
+  				<h:outputText value="Nom" />
+  			</ui:define>
+  			<ui:define name="firstNameControl">
+  				<h:outputText value=" #{userPrintPage.user.firstName}" />
+  			</ui:define>	
+  		
+  			<ui:define name="lastNamesLabel">
+  				<h:outputText value="Prénom(s)" />
+  			</ui:define>
+  			<ui:define name="lastNamesControl">
+  				<h:outputText value=" #{userPrintPage.user.lastNames}" />
+  			</ui:define>	
+  		
+  			<ui:define name="electronicMailAddressLabel">
+  				<h:outputText value="Adresse de courriel électronique" />
+  			</ui:define>
+  			<ui:define name="electronicMailAddressControl">
+  				<h:outputText value=" #{userPrintPage.user.electronicMailAddress}" />
+  			</ui:define>	
+  		
+  			<ui:define name="postalAddressLabel">
+  				<h:outputText value="Adresse postale" />
+  			</ui:define>
+  			<ui:define name="postalAddressControl">
+  				<h:outputText value=" #{userPrintPage.user.postalAddress}" />
+  			</ui:define>	
+  		
+  			<ui:define name="mobilePhoneNumberLabel">
+  				<h:outputText value="Numéro de téléphone mobile" />
+  			</ui:define>
+  			<ui:define name="mobilePhoneNumberControl">
+  				<h:outputText value=" #{userPrintPage.user.mobilePhoneNumber}" />
+  			</ui:define>	
+  		
+  			<ui:define name="deskPhoneNumberLabel">
+  				<h:outputText value="Numéro de téléphone bureau" />
+  			</ui:define>
+  			<ui:define name="deskPhoneNumberControl">
+  				<h:outputText value=" #{userPrintPage.user.deskPhoneNumber}" />
+  			</ui:define>	
+  		
+  			<ui:define name="deskPostLabel">
+  				<h:outputText value="Poste bureau" />
+  			</ui:define>
+  			<ui:define name="deskPostControl">
+  				<h:outputText value=" #{userPrintPage.user.deskPost}" />
+  			</ui:define>	
+  		
+  			<ui:define name="certificateReferenceLabel">
+  				<h:outputText value="Référence" />
+  			</ui:define>
+  			<ui:define name="certificateReferenceControl">
+  				<h:outputText value=" #{userPrintPage.user.certificateReference}" />
+  			</ui:define>		
+  			<ui:define name="certificateFileControl">
+  				
+  			</ui:define>				    		
+  		</ui:decorate>
+  	
+</ui:composition>

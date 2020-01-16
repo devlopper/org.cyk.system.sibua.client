@@ -70,7 +70,7 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 				administrativeUnit.select(__inject__(AdministrativeUnitController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier")));
 			}
 			if(administrativeUnit.getValue() != null)
-				selectedActivities = __inject__(ActivityController.class).read(new Properties().setFilters(new FilterDto()
+				selectedActivities = __inject__(ActivityController.class).read(new Properties().setIsPageable(Boolean.FALSE).setFilters(new FilterDto()
 					.addField(Activity.FIELD_ADMINISTRATIVE_UNIT, administrativeUnit.getValue().getCode())));
 			availableActivities = new LazyDataModel<Activity>() {
 				private static final long serialVersionUID = 1L;
@@ -87,7 +87,7 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 						filter.addField(Activity.FIELD_CODE, selectedActivities.stream().map(Activity::getCode).collect(Collectors.toSet()));
 					List<Activity> list = (List<Activity>) __inject__(ActivityController.class)
 							.read(new Properties().setQueryIdentifier(ActivityPersistence.READ_WHERE_CODE_NOT_IN_AND_ADMINISTRATIVEUNIT_DOES_NOT_EXIST_BY_FILTERS)
-									.setFilters(filter).setIsPageable(Boolean.TRUE).setFrom(first).setCount(pageSize));
+									.setFilters(filter).setIsPageable(Boolean.FALSE).setFrom(first).setCount(pageSize));
 					if(CollectionHelper.isEmpty(list))
 						setRowCount(0);
 					else {

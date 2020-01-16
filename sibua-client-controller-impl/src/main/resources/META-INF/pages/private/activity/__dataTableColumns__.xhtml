@@ -7,7 +7,38 @@
 	<!--
 	<ui:include src="__dataTableColumnToggler__.xhtml"/>
 	-->
-	<p:column headerText="Code" width="150" filterBy="#{activity.code}">
+	
+	<p:column headerText="#" width="40">
+		<h:outputText value="#{rowIndex+1}" />
+	</p:column>
+	
+	<p:column headerText="Section" width="200" filterBy="#{activity.action.program.section}" rendered="#{__page__.defaultSection == null}">
+ 		<f:facet name="filter">
+			<p:autoComplete onchange="PF('activitiesDataTable').filter()" placeholder="Rechercher..."
+		    	var="section" itemValue="#{section.code}" itemLabel="#{section}"
+		    	completeMethod="#{sectionController.readByString}" cache="true" 
+		    	maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
+		    >
+		    	<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />	
+		    </p:autoComplete>
+		</f:facet>
+ 		<h:outputText value="#{activity.action.program.section}" />
+ 	</p:column>
+ 	
+ 	<p:column headerText="Unité administrative" width="200" filterBy="#{activity.administrativeUnit}">
+ 		<f:facet name="filter">
+			<p:autoComplete onchange="PF('activitiesDataTable').filter()" placeholder="Rechercher..."
+		    	var="administrativeUnit" itemValue="#{administrativeUnit.code}" itemLabel="#{administrativeUnit}"
+		    	completeMethod="#{administrativeUnitController.readByString}" cache="true" 
+		    	maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
+		    >
+		    	<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />	
+		    </p:autoComplete>
+		</f:facet>
+ 		<h:outputText value="#{activity.administrativeUnit}" />
+ 	</p:column>
+	
+	<p:column headerText="Code" width="110" filterBy="#{activity.code}">
 		<h:outputText value="#{activity.code}" />
 	</p:column>
  	
@@ -39,19 +70,6 @@
 		    </p:autoComplete>
 		</f:facet>
  		<h:outputText value="#{activity.action.program}" />
- 	</p:column>
- 	
- 	<p:column headerText="Section" width="200" filterBy="#{activity.action.program.section}">
- 		<f:facet name="filter">
-			<p:autoComplete onchange="PF('activitiesDataTable').filter()" placeholder="Rechercher..."
-		    	var="section" itemValue="#{section.code}" itemLabel="#{section}"
-		    	completeMethod="#{sectionController.readByString}" cache="true" 
-		    	maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
-		    >
-		    	<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />	
-		    </p:autoComplete>
-		</f:facet>
- 		<h:outputText value="#{activity.action.program.section}" />
  	</p:column>
  	 	
  	<!--
