@@ -150,7 +150,7 @@ public class AdministrativeUnitEditActivitiesPageOLD extends AbstractPageContain
 			@Override
 			public void processOnSelect(AdministrativeUnit administrativeUnit) {
 				activities.setTarget((List<Activity>) __inject__(ActivityController.class)
-						.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT, CollectionHelper.listOf(administrativeUnit.getCode())))
+						.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT_GESTIONNAIRE, CollectionHelper.listOf(administrativeUnit.getCode())))
 								.setIsPageable(Boolean.FALSE)));	
 				if(activities.getTarget() == null)
 					activities.setTarget(new ArrayList<Activity>());
@@ -182,7 +182,7 @@ public class AdministrativeUnitEditActivitiesPageOLD extends AbstractPageContain
 					activities.setSource(new ArrayList<>());
 				
 				activities.setTarget((List<Activity>) __inject__(ActivityController.class)
-						.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT, CollectionHelper.listOf(administrativeUnit.getValue().getCode())))
+						.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT_GESTIONNAIRE, CollectionHelper.listOf(administrativeUnit.getValue().getCode())))
 								.setIsPageable(Boolean.FALSE)));	
 				if(activities.getTarget() == null)
 					activities.setTarget(new ArrayList<Activity>());

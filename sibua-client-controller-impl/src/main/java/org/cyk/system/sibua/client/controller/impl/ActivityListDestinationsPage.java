@@ -58,7 +58,7 @@ public class ActivityListDestinationsPage extends AbstractPageContainerManagedIm
 						activities = null;
 					}else {					
 						activities = __inject__(ActivityController.class)
-								.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT, CollectionHelper.listOf(administrativeUnit.getCode())))
+								.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT_GESTIONNAIRE, CollectionHelper.listOf(administrativeUnit.getCode())))
 										.setFields(Activity.FIELD_CODE+","+Activity.FIELD_NAME+","+Activity.FIELD_DESTINATIONS)
 										.setIsPageable(Boolean.FALSE));										
 					}				

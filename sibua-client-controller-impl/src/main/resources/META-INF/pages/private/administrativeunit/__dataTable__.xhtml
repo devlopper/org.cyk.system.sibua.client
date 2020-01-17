@@ -42,25 +42,17 @@
     	>
     			
    		<f:facet name="header">
-      		<p:toolbar>        					
-    			<!--
+      		<p:toolbar>        					    		
     			<f:facet name="left">
-        			<p:button value="Activités" icon="fa fa-link" outcome="administrativeUnitEditActivitiesView">
-        				<f:param name="section" value="#{sectionIdentifier}" />
-        			</p:button>
-        			<p:button value="Destinations" outcome="activityEditDestinationsView">
+        			<p:button value="Créer" icon="fa fa-plus" outcome="administrativeUnitEditView">
         				<f:param name="section" value="#{sectionIdentifier}" />
         			</p:button>
     			</f:facet>
-    			-->
+    		
     			<f:facet name="right">
     				<p:commandButton icon="fa fa-file-excel-o" value="Exporter en Excel" ajax="false">
     					<p:dataExporter type="xls" target="dataTable" fileName="unite_administrative_section_#{sectionIdentifier}" />
     					<f:param name="showName" value="true" />
-    					<f:param name="export" value="true" />
-    				</p:commandButton>
-    				<p:commandButton icon="fa fa-file-pdf-o" value="Exporter en Pdf" ajax="false">
-    					<p:dataExporter type="pdf" target="dataTable" fileName="unite_administrative_section_#{sectionIdentifier}" />
     					<f:param name="export" value="true" />
     				</p:commandButton>
     				<!--

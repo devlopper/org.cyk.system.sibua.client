@@ -3,7 +3,8 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
     xmlns:f="http://java.sun.com/jsf/core"      
-    xmlns:h="http://java.sun.com/jsf/html">
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
 	
 	<ui:param name="sectionIdentifier" value="#{empty __page__.defaultSection.identifier ? '' : __page__.defaultSection.identifier}"/>
 	
@@ -13,18 +14,21 @@
 		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"					
 		currentPageReportTemplate="{totalRecords} trouvées. Page {currentPage}/{totalPages}"
 		widgetVar="activitiesDataTable" rowIndexVar="rowIndex" filterDelay="2000"
+		selection="#{__page__.selectedActivities}" 
     	>
     			
    		<f:facet name="header">
       		<p:toolbar>        					   			
+    			<f:facet name="left">
+    				<p:commandButton icon="fa fa-pencil" value="Modifier" action="#{__page__.openEditDialog}" update=":form:editableActivitiesDialogOutputPanel">
+    					<p:ajax update=":form:editableActivitiesDialogOutputPanel" oncomplete="PF('editableActivitiesDialog').show();" />		
+    				</p:commandButton>
+    			</f:facet>   			
+    			
     			<f:facet name="right">
     				<p:commandButton icon="fa fa-file-excel-o" value="Exporter en Excel" ajax="false">
     					<p:dataExporter type="xls" target="dataTable" fileName="activite_section_#{sectionIdentifier}" />
     					<f:param name="showName" value="true" />
-    					<f:param name="export" value="true" />
-    				</p:commandButton>
-    				<p:commandButton icon="fa fa-file-pdf-o" value="Exporter en Pdf" ajax="false">
-    					<p:dataExporter type="pdf" target="dataTable" fileName="activite_section_#{sectionIdentifier}" />
     					<f:param name="export" value="true" />
     				</p:commandButton>
     			</f:facet>   			
@@ -35,5 +39,47 @@
  			<ui:param name="dataTableWidgetVar" value="activitiesDataTable"/>
  		</ui:include>
    	</p:dataTable>
+  	
+  	<p:outputPanel id="editableActivitiesDialogOutputPanel">
+  		<p:dialog id="editableActivitiesDialog" header="Modification de rattachement" modal="true" widgetVar="editableActivitiesDialog" fitViewport="true" 
+				styleClass="cyk-activity-edit-dialog" closeOnEscape="true" draggable="false" dynamic="true" resizable="false">
+	  		<p:dataTable id="editableActivitiesDialogDataTable" value="#{__page__.selectedActivities}" var="activity" rowIndexVar="rowIndex">
+	  			<p:column headerText="#" width="40">
+	  				<h:outputText value="#{rowIndex+1}" />
+	  			</p:column>
+	  			<p:column headerText="Code" width="110">
+					<h:outputText value="#{activity.code}" />
+				</p:column> 	
+			 	<p:column headerText="Libellé">
+			 		<h:outputText value="#{activity.name}" />
+			 	</p:column>
+			 	<p:column headerText="Programme" width="200">
+			 		<h:outputText value="#{activity.action.program}" />
+			 	</p:column>
+			 	
+			 	<p:column width="200">
+			 		<f:facet name="header">
+			 			<h:outputText value="Service Bénéficiaire" />
+			 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
+			    			<ui:param name="autoComplete" value="#{__page__.administrativeUnitBeneficiaire}"/>
+			    		</ui:decorate>
+			 		</f:facet>
+			 		<h:outputText value="#{activity.administrativeUnitBeneficiaire}" />
+			 	</p:column>
+			 	
+			 	<p:column width="200">
+			 		<f:facet name="header">
+			 			<h:outputText value="Service Gestrionnaire" />
+			 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
+			    			<ui:param name="autoComplete" value="#{__page__.administrativeUnit}"/>
+			    		</ui:decorate>			    		
+			 		</f:facet>
+			 		<h:outputText value="#{activity.administrativeUnit}" />
+			 	</p:column>
+	  		</p:dataTable>
+	  		<p:separator/>
+	  		<cyk:commandable value="#{__page__.saveCommandable}" />
+	  	</p:dialog>
+  	</p:outputPanel>
   	
 </ui:composition>

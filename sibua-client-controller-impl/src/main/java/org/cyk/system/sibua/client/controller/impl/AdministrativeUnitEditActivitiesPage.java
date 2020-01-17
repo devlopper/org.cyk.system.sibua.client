@@ -71,7 +71,7 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 			}
 			if(administrativeUnit.getValue() != null)
 				selectedActivities = __inject__(ActivityController.class).read(new Properties().setIsPageable(Boolean.FALSE).setFilters(new FilterDto()
-					.addField(Activity.FIELD_ADMINISTRATIVE_UNIT, administrativeUnit.getValue().getCode())));
+					.addField(Activity.FIELD_ADMINISTRATIVE_UNIT_GESTIONNAIRE, administrativeUnit.getValue().getCode())));
 			availableActivities = new LazyDataModel<Activity>() {
 				private static final long serialVersionUID = 1L;
 

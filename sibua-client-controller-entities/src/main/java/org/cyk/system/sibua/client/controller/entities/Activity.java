@@ -15,6 +15,8 @@ public class Activity extends AbstractDataIdentifiableSystemStringIdentifiableBu
 
 	private Section section;
 	private AdministrativeUnit administrativeUnit;
+	private AdministrativeUnit administrativeUnitGestionnaire;
+	private AdministrativeUnit administrativeUnitBeneficiaire;
 	
 	private Program program;
 	private Action action;
@@ -38,6 +40,8 @@ public class Activity extends AbstractDataIdentifiableSystemStringIdentifiableBu
 	
 	public static final String FIELD_SECTION = "section";
 	public static final String FIELD_ADMINISTRATIVE_UNIT = "administrativeUnit";
+	public static final String FIELD_ADMINISTRATIVE_UNIT_GESTIONNAIRE = "administrativeUnitGestionnaire";
+	public static final String FIELD_ADMINISTRATIVE_UNIT_BENEFICIAIRE = "administrativeUnitBeneficiaire";
 	public static final String FIELD_PROGRAM = "program";
 	public static final String FIELD_ACTION = "action";
 	public static final String FIELD_DESTINATIONS = "destinations";
