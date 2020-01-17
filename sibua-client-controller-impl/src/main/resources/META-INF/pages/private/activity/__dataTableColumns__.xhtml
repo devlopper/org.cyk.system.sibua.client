@@ -73,7 +73,7 @@
  		<h:outputText value="#{activity.administrativeUnitBeneficiaire}" />
  	</p:column>
  	
- 	<p:column headerText="Service Gestrionnaire" width="200" filterBy="#{activity.administrativeUnit}">
+ 	<p:column headerText="Service Gestionnaire" width="200" filterBy="#{activity.administrativeUnit}">
  		<f:facet name="filter">
 			<p:autoComplete onchange="PF('activitiesDataTable').filter()" placeholder="Rechercher..."
 		    	var="administrativeUnit" itemValue="#{administrativeUnit.code}" itemLabel="#{administrativeUnit}"
@@ -83,7 +83,10 @@
 		    	<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />	
 		    </p:autoComplete>
 		</f:facet>
- 		<h:outputText value="#{activity.administrativeUnit}" />
+ 		<h:outputText value="#{activity.administrativeUnit.code}" />
+		<h:outputText value="-" />
+		<h:outputText value="#{activity.administrativeUnit.section.code}" />
+		<h:outputText value=" #{activity.administrativeUnit.name}" />
  	</p:column>
  	 	
  	<!--

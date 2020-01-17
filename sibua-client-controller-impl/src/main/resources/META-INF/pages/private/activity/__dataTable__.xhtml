@@ -47,7 +47,7 @@
 	  			<p:column headerText="#" width="40">
 	  				<h:outputText value="#{rowIndex+1}" />
 	  			</p:column>
-	  			<p:column headerText="Code" width="110">
+	  			<p:column headerText="Code" width="100">
 					<h:outputText value="#{activity.code}" />
 				</p:column> 	
 			 	<p:column headerText="Libellé">
@@ -57,7 +57,7 @@
 			 		<h:outputText value="#{activity.action.program}" />
 			 	</p:column>
 			 	
-			 	<p:column width="200">
+			 	<p:column width="300">
 			 		<f:facet name="header">
 			 			<h:outputText value="Service Bénéficiaire" />
 			 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
@@ -67,14 +67,17 @@
 			 		<h:outputText value="#{activity.administrativeUnitBeneficiaire}" />
 			 	</p:column>
 			 	
-			 	<p:column width="200">
+			 	<p:column width="300">
 			 		<f:facet name="header">
-			 			<h:outputText value="Service Gestrionnaire" />
+			 			<h:outputText value="Service Gestionnaire" />
 			 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
 			    			<ui:param name="autoComplete" value="#{__page__.administrativeUnit}"/>
 			    		</ui:decorate>			    		
 			 		</f:facet>
-			 		<h:outputText value="#{activity.administrativeUnit}" />
+			 		<h:outputText value="#{activity.administrativeUnit.code}" />
+			 		<h:outputText value="-" />
+			 		<h:outputText value="#{activity.administrativeUnit.section.code}" />
+			 		<h:outputText value=" #{activity.administrativeUnit.name}" />
 			 	</p:column>
 	  		</p:dataTable>
 	  		<p:separator/>

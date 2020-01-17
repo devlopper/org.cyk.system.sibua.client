@@ -2,19 +2,23 @@ package org.cyk.system.sibua.client.controller.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
 import org.cyk.system.sibua.client.controller.api.ActivityController;
+import org.cyk.system.sibua.client.controller.api.AdministrativeUnitController;
 import org.cyk.system.sibua.client.controller.entities.Activity;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnitActivity;
 import org.cyk.system.sibua.server.persistence.api.ActivityPersistence;
+import org.cyk.system.sibua.server.persistence.api.AdministrativeUnitPersistence;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
 import org.cyk.utility.__kernel__.map.MapHelper;
+import org.cyk.utility.__kernel__.object.ReadListener;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
@@ -49,9 +53,43 @@ public abstract class AbstractActivityListPage extends AbstractPageContainerMana
 		administrativeUnit = AutoCompleteEntityBuilder.build(AdministrativeUnit.class);
 		administrativeUnit.setIdentifier("ua01");
 		administrativeUnit.setConverter(__inject__(ObjectConverter.class));
+		administrativeUnit.setListener(new AutoCompleteEntity.Listener<AdministrativeUnit>() {
+			@Override
+			public Collection<AdministrativeUnit> listenComplete(AutoCompleteEntity<AdministrativeUnit> autoCompleteEntity,String queryString) {
+				return __inject__(AdministrativeUnitController.class).read(new Properties().setQueryIdentifier(AdministrativeUnitPersistence.READ_BY_FILTERS)
+						.setFilters(new FilterDto()
+								/*.addField(AdministrativeUnit.FIELD_CODE, queryString)*/.addField(AdministrativeUnit.FIELD_NAME, queryString))
+						.setFields("identifier,code,name,section")
+						);
+			}
+		});
+		administrativeUnit.setReadItemLabelListener(new ReadListener() {
+			@Override
+			public Object read(Object object) {
+				AdministrativeUnit administrativeUnit = (AdministrativeUnit) object;
+				if(administrativeUnit == null)
+					return null;
+				String sectionCode = administrativeUnit.getSection() == null ? "???" : administrativeUnit.getSection().getCode();
+				return administrativeUnit.getCode()+"-"+sectionCode+" "+administrativeUnit.getName();
+			}
+		});
+		
 		administrativeUnitBeneficiaire = AutoCompleteEntityBuilder.build(AdministrativeUnit.class);
 		administrativeUnitBeneficiaire.setIdentifier("ua02");
 		administrativeUnitBeneficiaire.setConverter(__inject__(ObjectConverter.class));
+		
+		administrativeUnitBeneficiaire.setListener(new AutoCompleteEntity.Listener<AdministrativeUnit>() {
+			@Override
+			public Collection<AdministrativeUnit> listenComplete(AutoCompleteEntity<AdministrativeUnit> autoCompleteEntity,String queryString) {
+				if(defaultSection == null)
+					return __inject__(AdministrativeUnitController.class).readByString(queryString);
+				return __inject__(AdministrativeUnitController.class).read(new Properties().setQueryIdentifier(AdministrativeUnitPersistence.READ_BY_FILTERS)
+						.setFilters(new FilterDto().addField(AdministrativeUnit.FIELD_SECTION, List.of(defaultSection.getCode()))
+								/*.addField(AdministrativeUnit.FIELD_CODE, queryString)*/.addField(AdministrativeUnit.FIELD_NAME, queryString))
+						.setFields("identifier,code,name")
+						);
+			}
+		});
 		
 		activities = new LazyDataModel<Activity>() {
 			private static final long serialVersionUID = 1L;
