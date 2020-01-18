@@ -89,8 +89,7 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 			@Override
 			public List<AdministrativeUnit> load(int first, int pageSize, String sortField, SortOrder sortOrder,Map<String, Object> filters) {
 				FilterDto filter = new FilterDto();
-				filter.addField(AdministrativeUnit.FIELD_CODE, MapHelper.readByKey(filters, AdministrativeUnit.FIELD_CODE));
-				filter.addField(AdministrativeUnit.FIELD_NAME, MapHelper.readByKey(filters, AdministrativeUnit.FIELD_NAME));
+				filter.addField("administrativeUnit", MapHelper.readByKey(filters, "administrativeUnit"));
 				String sectionCode = (String) MapHelper.readByKey(filters, AdministrativeUnit.FIELD_SECTION);
 				if(StringHelper.isBlank(sectionCode))
 					sectionCode = defaultSection == null ? section.getValue() == null ? null : section.getValue().getCode() : defaultSection.getCode();
@@ -129,8 +128,9 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 		.setFields(AdministrativeUnit.FIELD_IDENTIFIER+","+AdministrativeUnit.FIELD_CODE+","+AdministrativeUnit.FIELD_NAME
 				+","+AdministrativeUnit.FIELD_SECTION+","+AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION
 				+","+AdministrativeUnit.FIELD_SERVICE_GROUP+","+AdministrativeUnit.FIELD_LOCALISATION
-				+","+AdministrativeUnit.FIELD_ACTIVITY_DESTINATIONS+","+AdministrativeUnit.FIELD_ACTIVITIES+","+AdministrativeUnit.FIELD_DESTINATIONS
+				/*+","+AdministrativeUnit.FIELD_ACTIVITY_DESTINATIONS+","+AdministrativeUnit.FIELD_ACTIVITIES+","+AdministrativeUnit.FIELD_DESTINATIONS
 				+","+AdministrativeUnit.FIELD_CHILDREN
+				*/
 				)
 		.setFilters(filter).setIsPageable(Boolean.TRUE).setFrom(first).setCount(pageSize);
 	}

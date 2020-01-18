@@ -20,8 +20,12 @@
    		<f:facet name="header">
       		<p:toolbar>        					   			
     			<f:facet name="left">
-    				<p:commandButton icon="fa fa-pencil" value="Modifier" action="#{__page__.openEditDialog}" update=":form:editableActivitiesDialogOutputPanel">
-    					<p:ajax update=":form:editableActivitiesDialogOutputPanel" oncomplete="PF('editableActivitiesDialog').show();" />		
+    				<p:commandButton icon="fa fa-pencil" value="Modification en masse" action="#{__page__.openEditDialog}" update=":form:editableActivitiesDialogOutputPanel">
+    					<p:ajax update=":form:editableActivitiesDialogOutputPanel" oncomplete="PF('editableActivitiesDialog').show();" />	
+    					<f:param name="group" value="true" />		
+    				</p:commandButton>
+    				<p:commandButton icon="fa fa-pencil" value="Modification en details" action="#{__page__.openEditDialog}" update=":form:editableActivitiesDialogOutputPanel">
+    					<p:ajax update=":form:editableActivitiesDialogOutputPanel" oncomplete="PF('editableActivitiesDialog').show();" />   						
     				</p:commandButton>
     			</f:facet>   			
     			
@@ -47,37 +51,103 @@
 	  			<p:column headerText="#" width="40">
 	  				<h:outputText value="#{rowIndex+1}" />
 	  			</p:column>
-	  			<p:column headerText="Code" width="100">
-					<h:outputText value="#{activity.code}" />
-				</p:column> 	
-			 	<p:column headerText="Libellé">
-			 		<h:outputText value="#{activity.name}" />
+	  			<p:column headerText="Section" width="200" rendered="#{__page__.defaultSection == null}">
+			 		<ui:include src="../outputText_code_name.xhtml">
+						<ui:param name="code" value="#{activity.action.program.section.code}"/>
+						<ui:param name="name" value="#{activity.action.program.section.name}"/>
+					</ui:include>
+			 	</p:column>
+			 	<p:column headerText="Activité">
+			 		<ui:include src="../outputText_code_name.xhtml">
+						<ui:param name="code" value="#{activity.code}"/>
+						<ui:param name="name" value="#{activity.name}"/>
+					</ui:include>
 			 	</p:column>
 			 	<p:column headerText="Programme" width="200">
-			 		<h:outputText value="#{activity.action.program}" />
+			 		<ui:include src="../outputText_code_name.xhtml">
+						<ui:param name="code" value="#{activity.action.program.code}"/>
+						<ui:param name="name" value="#{activity.action.program.name}"/>
+					</ui:include>
 			 	</p:column>
 			 	
 			 	<p:column width="300">
 			 		<f:facet name="header">
 			 			<h:outputText value="Service Bénéficiaire" />
-			 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
-			    			<ui:param name="autoComplete" value="#{__page__.administrativeUnitBeneficiaire}"/>
-			    		</ui:decorate>
-			 		</f:facet>
-			 		<h:outputText value="#{activity.administrativeUnitBeneficiaire}" />
+			 			<ui:fragment rendered="#{__page__.groupModification}">
+			 				<ui:decorate template="/input/select/one/autoComplete.xhtml">
+				    			<ui:param name="autoComplete" value="#{__page__.administrativeUnitBeneficiaire}"/>
+				    		</ui:decorate>
+			 			</ui:fragment>			 			
+			 		</f:facet>			 		
+			 		<h:outputText value="#{activity.administrativeUnitBeneficiaire}" rendered="#{__page__.groupModification}"/>
+			 		
+			 		<p:autoComplete
+						value="#{activity.administrativeUnitBeneficiaire}" placeholder="Rechercher..." var="item" itemValue="#{item}" 
+							itemLabel="#{__page__.administrativeUnitBeneficiaireFilter.readItemLabelListener.read(item)}"
+						converter="#{objectConverter}" completeMethod="#{__page__.administrativeUnitBeneficiaireFilter.complete}" 
+						maxResults="#{__page__.administrativeUnitBeneficiaireFilter.numberOfResults}" 
+						queryDelay="#{__page__.administrativeUnitBeneficiaireFilter.queryDelay}" 
+						emptyMessage="-- Aucun résultat --" 
+						widgetVar="#{__page__.administrativeUnitBeneficiaireFilter.widgetVar}#{rowIndex}"
+						rendered="#{not __page__.groupModification}"						
+					>						
+						<ui:decorate template="/ajax.xhtml">
+							<ui:param name="ajax" value="#{__page__.administrativeUnitBeneficiaireFilter.ajaxQuery}"/>
+						</ui:decorate>
+						<!--
+						<ui:decorate template="/ajax.xhtml">
+							<ui:param name="ajax" value="#{__page__.administrativeUnitBeneficiaireFilter.ajaxItemSelect}"/>
+						</ui:decorate>
+						<ui:decorate template="/ajax.xhtml">
+							<ui:param name="ajax" value="#{__page__.administrativeUnitBeneficiaireFilter.ajaxItemUnselect}"/>
+						</ui:decorate>
+						-->
+						<ui:decorate template="/ajax.xhtml">
+							<ui:param name="ajax" value="#{__page__.administrativeUnitBeneficiaireFilter.ajaxMoreText}"/>
+						</ui:decorate>						
+					</p:autoComplete>			 		
 			 	</p:column>
 			 	
 			 	<p:column width="300">
 			 		<f:facet name="header">
 			 			<h:outputText value="Service Gestionnaire" />
-			 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
-			    			<ui:param name="autoComplete" value="#{__page__.administrativeUnit}"/>
-			    		</ui:decorate>			    		
+			 			<ui:fragment rendered="#{__page__.groupModification}">
+				 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
+				    			<ui:param name="autoComplete" value="#{__page__.administrativeUnit}"/>
+				    		</ui:decorate>
+				    	</ui:fragment>			    		
 			 		</f:facet>
-			 		<h:outputText value="#{activity.administrativeUnit.code}" />
-			 		<h:outputText value="-" />
-			 		<h:outputText value="#{activity.administrativeUnit.section.code}" />
-			 		<h:outputText value=" #{activity.administrativeUnit.name}" />
+			 		<ui:fragment rendered="#{__page__.groupModification}">
+				 		<h:outputText value="#{activity.administrativeUnit.code}" />
+				 		<h:outputText value="-" />
+				 		<h:outputText value="#{activity.administrativeUnit.section.code}" />
+				 		<h:outputText value=" #{activity.administrativeUnit.name}" />
+			 		</ui:fragment>
+			 		<p:autoComplete
+						value="#{activity.administrativeUnit}" placeholder="Rechercher..." var="item" itemValue="#{item}" 
+						itemLabel="#{__page__.administrativeUnitFilter.readItemLabelListener.read(item)}"
+						converter="#{objectConverter}" completeMethod="#{__page__.administrativeUnitFilter.complete}" 
+						maxResults="#{__page__.administrativeUnitFilter.numberOfResults}" 
+						queryDelay="#{__page__.administrativeUnitFilter.queryDelay}" 
+						emptyMessage="-- Aucun résultat --" 
+						widgetVar="#{__page__.administrativeUnitFilter.widgetVar}#{rowIndex}"
+						rendered="#{not __page__.groupModification}"						
+					>						
+						<ui:decorate template="/ajax.xhtml">
+							<ui:param name="ajax" value="#{__page__.administrativeUnitFilter.ajaxQuery}"/>
+						</ui:decorate>
+						<!--
+						<ui:decorate template="/ajax.xhtml">
+							<ui:param name="ajax" value="#{__page__.administrativeUnitBeneficiaireFilter.ajaxItemSelect}"/>
+						</ui:decorate>
+						<ui:decorate template="/ajax.xhtml">
+							<ui:param name="ajax" value="#{__page__.administrativeUnitBeneficiaireFilter.ajaxItemUnselect}"/>
+						</ui:decorate>
+						-->
+						<ui:decorate template="/ajax.xhtml">
+							<ui:param name="ajax" value="#{__page__.administrativeUnitFilter.ajaxMoreText}"/>
+						</ui:decorate>						
+					</p:autoComplete>
 			 	</p:column>
 	  		</p:dataTable>
 	  		<p:separator/>

@@ -17,6 +17,9 @@ public class Activity extends AbstractDataIdentifiableSystemStringIdentifiableBu
 	private AdministrativeUnit administrativeUnit;
 	private AdministrativeUnit administrativeUnitGestionnaire;
 	private AdministrativeUnit administrativeUnitBeneficiaire;
+	private String natDepCode;
+	private String catUsbCode;
+	private String catAtvCode;
 	
 	private Program program;
 	private Action action;
@@ -46,5 +49,9 @@ public class Activity extends AbstractDataIdentifiableSystemStringIdentifiableBu
 	public static final String FIELD_ACTION = "action";
 	public static final String FIELD_DESTINATIONS = "destinations";
 	public static final String FIELD_DESTINATION = "destination";
+	
+	public static final String FIELD_NAT_DEP_CODE = "natDepCode";
+	public static final String FIELD_CAT_USB_CODE = "catUsbCode";
+	public static final String FIELD_CAT_ATV_CODE = "catAtvCode";
 	
 }

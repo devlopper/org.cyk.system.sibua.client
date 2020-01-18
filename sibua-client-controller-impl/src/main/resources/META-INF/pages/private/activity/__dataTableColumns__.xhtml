@@ -22,76 +22,60 @@
 		    	<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />	
 		    </p:autoComplete>
 		</f:facet>
- 		<h:outputText value="#{activity.action.program.section}" />
+		<ui:include src="../outputText_code_name.xhtml">
+			<ui:param name="code" value="#{activity.action.program.section.code}"/>
+			<ui:param name="name" value="#{activity.action.program.section.name}"/>
+		</ui:include>
  	</p:column>
  	
-	<p:column headerText="Code" width="110" filterBy="#{activity.code}">
-		<h:outputText value="#{activity.code}" />
+	<p:column headerText="Activité" filterBy="#{activity.activity}">
+		<ui:include src="../outputText_code_name.xhtml">
+			<ui:param name="code" value="#{activity.code}"/>
+			<ui:param name="name" value="#{activity.name}"/>
+		</ui:include>
 	</p:column>
- 	
+ 	<!--
  	<p:column headerText="Libellé" filterBy="#{activity.name}">
  		<h:outputText value="#{activity.name}" />
  	</p:column>
- 	
- 	<!--
- 	<p:column headerText="Action" width="200" filterBy="#{activity.action}">
- 		<f:facet name="filter">
-			<p:autoComplete onchange="PF('activitiesDataTable').filter()" placeholder="Rechercher..."
-		    	var="action" itemValue="#{action.code}" itemLabel="#{action}"
-		    	completeMethod="#{actionController.readByString}" cache="true" 
-		    	maxResults="5" queryDelay="1000" emptyMessage="Aucun résultat"
-		    >
-		    	<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />
-		    </p:autoComplete>
-		</f:facet>
- 		<h:outputText value="#{activity.action}" />
- 	</p:column>
  	-->
+ 	<p:column headerText="Catégorie" width="110" filterBy="#{activity.catAtvCode}">
+ 		<h:outputText value="#{activity.catAtvCode}" />
+ 	</p:column>
+ 	
  	<p:column headerText="Programme" width="200" filterBy="#{activity.action.program}">
  		<f:facet name="filter">
-			<p:autoComplete onchange="PF('activitiesDataTable').filter()" placeholder="Rechercher..."
-		    	var="program" itemValue="#{action.program.code}" itemLabel="#{program}"
-		    	completeMethod="#{programController.readByString}" cache="true" 
-		    	maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
-		    >
-		    	<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />
-		    </p:autoComplete>
+			<ui:decorate template="/input/select/one/autoComplete.xhtml">
+				<ui:param name="autoComplete" value="#{__page__.programFilter}"/>
+			</ui:decorate>
 		</f:facet>
- 		<h:outputText value="#{activity.action.program}" />
+		<ui:include src="../outputText_code_name.xhtml">
+			<ui:param name="code" value="#{activity.action.program.code}"/>
+			<ui:param name="name" value="#{activity.action.program.name}"/>
+		</ui:include>
  	</p:column>
  	
- 	<p:column headerText="Service Bénéficiaire" width="200" filterBy="#{activity.administrativeUnitBeneficiaire}">
+ 	<p:column headerText="Service Bénéficiaire" filterBy="#{activity.administrativeUnitBeneficiaire}">
  		<f:facet name="filter">
-			<p:autoComplete onchange="PF('activitiesDataTable').filter()" placeholder="Rechercher..."
-		    	var="administrativeUnit" itemValue="#{administrativeUnit.code}" itemLabel="#{administrativeUnit}"
-		    	completeMethod="#{administrativeUnitController.readByString}" cache="true" 
-		    	maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
-		    >
-		    	<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />	
-		    </p:autoComplete>
+ 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
+				<ui:param name="autoComplete" value="#{__page__.administrativeUnitBeneficiaireFilter}"/>
+			</ui:decorate>
 		</f:facet>
- 		<h:outputText value="#{activity.administrativeUnitBeneficiaire}" />
+ 		<ui:include src="../outputText_code_name.xhtml">
+			<ui:param name="code" value="#{activity.administrativeUnitBeneficiaire.code}"/>
+			<ui:param name="name" value="#{activity.administrativeUnitBeneficiaire.name}"/>
+		</ui:include>
  	</p:column>
  	
- 	<p:column headerText="Service Gestionnaire" width="200" filterBy="#{activity.administrativeUnit}">
+ 	<p:column headerText="Service Gestionnaire" filterBy="#{activity.administrativeUnit}">
  		<f:facet name="filter">
-			<p:autoComplete onchange="PF('activitiesDataTable').filter()" placeholder="Rechercher..."
-		    	var="administrativeUnit" itemValue="#{administrativeUnit.code}" itemLabel="#{administrativeUnit}"
-		    	completeMethod="#{administrativeUnitController.readByString}" cache="true" 
-		    	maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
-		    >
-		    	<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />	
-		    </p:autoComplete>
+ 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
+				<ui:param name="autoComplete" value="#{__page__.administrativeUnitFilter}"/>
+			</ui:decorate>
 		</f:facet>
- 		<h:outputText value="#{activity.administrativeUnit.code}" />
+ 		<h:outputText value="#{activity.administrativeUnit.code}" styleClass="cyk-code"/>
 		<h:outputText value="-" />
-		<h:outputText value="#{activity.administrativeUnit.section.code}" />
+		<h:outputText value="#{activity.administrativeUnit.section.code}" styleClass="cyk-code" style="color:blue;"/>
 		<h:outputText value=" #{activity.administrativeUnit.name}" />
  	</p:column>
- 	 	
- 	<!--
- 	<ui:include src="__dataTableColumnActions__.xhtml"/>
-  	
-  	<ui:include src="__dataTableRowExpansion__.xhtml"/>
-  	-->
 </ui:composition>

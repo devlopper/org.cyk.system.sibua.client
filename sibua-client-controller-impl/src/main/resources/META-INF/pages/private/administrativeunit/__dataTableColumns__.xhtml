@@ -7,21 +7,23 @@
 	
 	<ui:include src="__dataTableColumnToggler__.xhtml"/>
 	
-	<p:column headerText="Code" width="150" filterBy="#{administrativeUnit.code}">
-		<h:outputText value="#{administrativeUnit.code}" />
-	</p:column>
- 	
- 	<p:column headerText="Libellé" filterBy="#{administrativeUnit.name}">
- 		<h:outputText value="#{administrativeUnit.name}" />
- 	</p:column>
- 	
- 	<p:column headerText="Section" width="100" filterBy="#{administrativeUnit.section}" rendered="#{__page__.defaultSection == null}">
+	<p:column headerText="Section" width="200" filterBy="#{administrativeUnit.section}" rendered="#{__page__.defaultSection == null}">
  		<f:facet name="filter">
  			<ui:decorate template="/input/select/one/autoComplete.xhtml">
     			<ui:param name="autoComplete" value="#{sectionAutoComplete}"/>
     		</ui:decorate>	  
 		</f:facet>
- 		<h:outputText value="#{administrativeUnit.section.code}" title="#{administrativeUnit.section.name}"/>
+		<ui:include src="../outputText_code_name.xhtml">
+			<ui:param name="code" value="#{administrativeUnit.section.code}"/>
+			<ui:param name="name" value="#{administrativeUnit.section.name}"/>
+		</ui:include>
+ 	</p:column>
+	
+ 	<p:column headerText="Unité administrative" filterBy="#{administrativeUnit.administrativeUnit}">
+ 		<ui:include src="../outputText_code_name.xhtml">
+			<ui:param name="code" value="#{administrativeUnit.code}"/>
+			<ui:param name="name" value="#{administrativeUnit.name}"/>
+		</ui:include>
  	</p:column>
  	
  	<p:column headerText="Groupe de service" width="150" filterBy="#{administrativeUnit.serviceGroup}">
@@ -30,8 +32,10 @@
     			<ui:param name="autoComplete" value="#{serviceGroupAutoComplete}"/>
     		</ui:decorate>	  
 		</f:facet>
- 		<h:outputText value="#{administrativeUnit.serviceGroup.code}" title="#{administrativeUnit.serviceGroup.name}"/>
- 		<h:outputText value=" #{administrativeUnit.serviceGroup.name}" rendered="#{param['showName']}"/>
+		<ui:include src="../outputText_code_name.xhtml">
+			<ui:param name="code" value="#{administrativeUnit.serviceGroup.code}"/>
+			<ui:param name="name" value="#{administrativeUnit.serviceGroup.name}"/>
+		</ui:include>
  	</p:column> 	
  	
  	<p:column headerText="CFAP" width="150" filterBy="#{administrativeUnit.functionalClassification}">
@@ -40,8 +44,10 @@
     			<ui:param name="autoComplete" value="#{functionalClassificationAutoComplete}"/>
     		</ui:decorate>
 		</f:facet>
- 		<h:outputText value="#{administrativeUnit.functionalClassification.code}" title="#{administrativeUnit.functionalClassification.name}"/>
- 		<h:outputText value=" #{administrativeUnit.functionalClassification.name}" rendered="#{param['showName']}"/>
+		<ui:include src="../outputText_code_name.xhtml">
+			<ui:param name="code" value="#{administrativeUnit.functionalClassification.code}"/>
+			<ui:param name="name" value="#{administrativeUnit.functionalClassification.name}"/>
+		</ui:include>
  	</p:column>
  	
  	<p:column headerText="Localisation" width="150" filterBy="#{administrativeUnit.localisation}">
@@ -50,14 +56,12 @@
     			<ui:param name="autoComplete" value="#{localisationAutoComplete}"/>
     		</ui:decorate>
 		</f:facet>
- 		<h:outputText value="#{administrativeUnit.localisation.code}" title="#{administrativeUnit.localisation.name}"/>
- 		<h:outputText value=" #{administrativeUnit.localisation.name}" rendered="#{param['showName']}"/>
+		<ui:include src="../outputText_code_name.xhtml">
+			<ui:param name="code" value="#{administrativeUnit.localisation.code}"/>
+			<ui:param name="name" value="#{administrativeUnit.localisation.name}"/>
+		</ui:include>
  	</p:column>
- 	 	
- 	<!--
- 	<p:column headerText="Localisation géographique" width="150"><h:outputText value="#{administrativeUnit.localisation.name}" /></p:column>
- 	-->
- 	
+
  	<ui:include src="__dataTableColumnActions__.xhtml"/>
   	
   	<ui:include src="__dataTableRowExpansion__.xhtml"/>
