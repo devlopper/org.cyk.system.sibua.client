@@ -7,7 +7,7 @@
 	
 	<ui:include src="__dataTableColumnToggler__.xhtml"/>
 	
-	<p:column headerText="Section" width="200" filterBy="#{administrativeUnit.section}" rendered="#{__page__.defaultSection == null}">
+	<p:column headerText="Section" filterBy="#{administrativeUnit.section}" rendered="#{__page__.defaultSection == null}" >
  		<f:facet name="filter">
  			<ui:decorate template="/input/select/one/autoComplete.xhtml">
     			<ui:param name="autoComplete" value="#{sectionAutoComplete}"/>
@@ -16,17 +16,23 @@
 		<ui:include src="../outputText_code_name.xhtml">
 			<ui:param name="code" value="#{administrativeUnit.section.code}"/>
 			<ui:param name="name" value="#{administrativeUnit.section.name}"/>
+			<ui:param name="nameRendered" value="false"/>
 		</ui:include>
  	</p:column>
 	
- 	<p:column headerText="Unité administrative" filterBy="#{administrativeUnit.administrativeUnit}">
+ 	<p:column headerText="Unité administrative" filterBy="#{administrativeUnit.administrativeUnit}" width="60%">
+ 		<!--
+ 		<f:facet name="filter">
+ 			<p:inputText placeholder="Rechercher..." onchange="PF('administrativeUnitsDataTable').filter();"/>
+ 		</f:facet>
+ 		-->
  		<ui:include src="../outputText_code_name.xhtml">
 			<ui:param name="code" value="#{administrativeUnit.code}"/>
 			<ui:param name="name" value="#{administrativeUnit.name}"/>
 		</ui:include>
  	</p:column>
  	
- 	<p:column headerText="Groupe de service" width="150" filterBy="#{administrativeUnit.serviceGroup}">
+ 	<p:column headerText="Groupe de service" filterBy="#{administrativeUnit.serviceGroup}">
  		<f:facet name="filter">
  			<ui:decorate template="/input/select/one/autoComplete.xhtml">
     			<ui:param name="autoComplete" value="#{serviceGroupAutoComplete}"/>
@@ -38,7 +44,7 @@
 		</ui:include>
  	</p:column> 	
  	
- 	<p:column headerText="CFAP" width="150" filterBy="#{administrativeUnit.functionalClassification}">
+ 	<p:column headerText="CFAP" filterBy="#{administrativeUnit.functionalClassification}" visible="false">
  		<f:facet name="filter">
  			<ui:decorate template="/input/select/one/autoComplete.xhtml">
     			<ui:param name="autoComplete" value="#{functionalClassificationAutoComplete}"/>
@@ -50,7 +56,7 @@
 		</ui:include>
  	</p:column>
  	
- 	<p:column headerText="Localisation" width="150" filterBy="#{administrativeUnit.localisation}">
+ 	<p:column headerText="Localisation" filterBy="#{administrativeUnit.localisation}" visible="false">
  		<f:facet name="filter">
  			<ui:decorate template="/input/select/one/autoComplete.xhtml">
     			<ui:param name="autoComplete" value="#{localisationAutoComplete}"/>

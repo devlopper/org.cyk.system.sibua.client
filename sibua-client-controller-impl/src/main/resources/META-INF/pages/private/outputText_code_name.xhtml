@@ -5,7 +5,7 @@
     xmlns:f="http://java.sun.com/jsf/core"      
     xmlns:h="http://java.sun.com/jsf/html">
 
-	<h:outputText value="#{code}" styleClass="cyk-code"/>
- 	<h:outputText value=" #{name}"/>
+	<h:outputText value="#{code}" title="#{name}" styleClass="cyk-code"/>
+ 	<h:outputText value=" #{name}" rendered="#{nameRendered == null or nameRendered}"/>
 
 </ui:composition>

@@ -5,8 +5,8 @@
     xmlns:f="http://java.sun.com/jsf/core"      
     xmlns:h="http://java.sun.com/jsf/html">
 
-	<p:column width="100" exportable="false">
-		<p:menuButton value="Actions">
+	<p:column headerText="Actions" width="50" exportable="false">
+		<p:menuButton title="Actions">
     		<p:menuitem value="Rattachement" icon="fa fa-link" outcome="administrativeUnitEditActivitiesView">
     			<f:param name="entityidentifier" value="#{administrativeUnit.identifier}" />
     			<f:param name="section" value="#{sectionIdentifier}" />

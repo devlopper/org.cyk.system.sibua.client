@@ -1,7 +1,9 @@
 package org.cyk.system.sibua.client.controller.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,11 +23,15 @@ import org.cyk.utility.__kernel__.constant.ConstantEmpty;
 import org.cyk.utility.__kernel__.map.MapHelper;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
+import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
 import org.cyk.utility.__kernel__.value.ValueHelper;
+import org.cyk.utility.client.controller.component.command.Commandable;
+import org.cyk.utility.client.controller.component.command.CommandableBuilder;
+import org.cyk.utility.client.controller.web.ComponentHelper;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntity;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntityBuilder;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.SelectionOne;
-import org.cyk.utility.server.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -47,8 +53,12 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 	protected Collection<FunctionalClassification> functionalClassifications;
 	protected Collection<ServiceGroup> serviceGroups;
 	protected Collection<Localisation> localisations;
+	
 	protected LazyDataModel<AdministrativeUnit> administrativeUnits;
+	protected List<AdministrativeUnit> selectedAdministrativeUnits,__selectedAdministrativeUnits__;
+	protected Map<String,AdministrativeUnit> administrativeUnitsMap = new HashMap<>();
 	protected Boolean isShowAll,export;
+	protected Commandable deleteCommandable;
 	
 	@Override
 	protected void __listenPostConstruct__() {
@@ -103,7 +113,7 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 					setRowCount(0);
 				else {
 					Long count = __inject__(AdministrativeUnitController.class).count(new Properties()
-							.setQueryIdentifier(AdministrativeUnitPersistence.COUNT_BY_FILTERS_CODES_LIKE).setFilters(filter));
+							.setQueryIdentifier(AdministrativeUnitPersistence.COUNT_BY_FILTERS_LIKE).setFilters(filter));
 					setRowCount(count == null ? 0 : count.intValue());	
 				}
 				return list;
@@ -113,18 +123,31 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 			public Object getRowKey(AdministrativeUnit administrativeUnit) {
 				if(administrativeUnit == null)
 					return null;
+				administrativeUnitsMap.put(administrativeUnit.getIdentifier(), administrativeUnit);
 				return administrativeUnit.getIdentifier();
 			}
 			
 			@Override
 			public AdministrativeUnit getRowData(String identifier) {
-				return __inject__(AdministrativeUnitController.class).readBySystemIdentifier(identifier);
+				return administrativeUnitsMap.get(identifier);
 			}
 		};
+		
+		CommandableBuilder deleteCommandableBuilder = __inject__(CommandableBuilder.class);
+		deleteCommandableBuilder.setName("Oui").setCommandFunctionActionClass(SystemActionCustom.class).addCommandFunctionTryRunRunnable(
+			new Runnable() {
+				@Override
+				public void run() {
+					delete();
+				}
+			}
+		);
+		deleteCommandableBuilder.addUpdatables(__inject__(ComponentHelper.class).getGlobalMessagesTargetsIdentifiers());
+		deleteCommandable = deleteCommandableBuilder.execute().getOutput();
 	}
 	
 	protected Properties __getProperties__(Object filter,Object first,Object pageSize) {
-		return new Properties().setQueryIdentifier(AdministrativeUnitPersistence.READ_BY_FILTERS_CODES_LIKE)
+		return new Properties().setQueryIdentifier(AdministrativeUnitPersistence.READ_BY_FILTERS_LIKE)
 		.setFields(AdministrativeUnit.FIELD_IDENTIFIER+","+AdministrativeUnit.FIELD_CODE+","+AdministrativeUnit.FIELD_NAME
 				+","+AdministrativeUnit.FIELD_SECTION+","+AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION
 				+","+AdministrativeUnit.FIELD_SERVICE_GROUP+","+AdministrativeUnit.FIELD_LOCALISATION
@@ -140,4 +163,24 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 		return "Liste des unités administratives"+(defaultSection == null ? ConstantEmpty.STRING : " de la section "+defaultSection);
 	}
 	
+	public void openDeleteDialog() {
+		if(CollectionHelper.isEmpty(selectedAdministrativeUnits))
+			return;
+		if(__selectedAdministrativeUnits__ == null)
+			__selectedAdministrativeUnits__ = new ArrayList<>();
+		if(__selectedAdministrativeUnits__ != null)
+			__selectedAdministrativeUnits__.clear();
+		__selectedAdministrativeUnits__ = new ArrayList<AdministrativeUnit>();		
+		__selectedAdministrativeUnits__.addAll(selectedAdministrativeUnits);
+	}
+	
+	public void delete() {
+		if(CollectionHelper.isEmpty(__selectedAdministrativeUnits__))
+			return;
+		__inject__(AdministrativeUnitController.class).deleteMany(__selectedAdministrativeUnits__);
+		selectedAdministrativeUnits.clear();
+		selectedAdministrativeUnits = null;
+		__selectedAdministrativeUnits__.clear();
+		__selectedAdministrativeUnits__ = null;
+	}
 }

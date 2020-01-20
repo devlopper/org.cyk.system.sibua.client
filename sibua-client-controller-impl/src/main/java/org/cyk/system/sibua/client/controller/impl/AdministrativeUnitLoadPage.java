@@ -53,7 +53,7 @@ import org.cyk.utility.client.controller.web.jsf.primefaces.model.SelectionOne;
 import org.cyk.utility.notification.NotificationBuilder;
 import org.cyk.utility.notification.NotificationSeverityError;
 import org.cyk.utility.notification.NotificationSeverityWarning;
-import org.cyk.utility.server.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;

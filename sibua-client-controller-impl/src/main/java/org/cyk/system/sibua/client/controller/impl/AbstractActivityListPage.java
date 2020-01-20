@@ -20,7 +20,8 @@ import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
 import org.cyk.utility.__kernel__.map.MapHelper;
 import org.cyk.utility.__kernel__.object.ReadListener;
-import org.cyk.utility.__kernel__.persistence.PersistenceHelper;
+import org.cyk.utility.__kernel__.persistence.query.QueryHelper;
+import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
@@ -30,7 +31,6 @@ import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.web.ComponentHelper;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntity;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntityBuilder;
-import org.cyk.utility.server.persistence.query.filter.FilterDto;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -216,7 +216,7 @@ public abstract class AbstractActivityListPage extends AbstractPageContainerMana
 						);
 			}else
 				return __inject__(AdministrativeUnitController.class).read(new Properties().setQueryIdentifier(
-					PersistenceHelper.getQueryIdentifierReadWhereBusinessIdentifierOrNameContains(AdministrativeUnit.class))
+					QueryHelper.getIdentifierReadWhereBusinessIdentifierOrNameContains(AdministrativeUnit.class))
 					.setFilters(new FilterDto().addField(AdministrativeUnit.FIELD_CODE, queryString).addField(AdministrativeUnit.FIELD_NAME, queryString))
 					.setFields("identifier,code,name,section")
 					);
