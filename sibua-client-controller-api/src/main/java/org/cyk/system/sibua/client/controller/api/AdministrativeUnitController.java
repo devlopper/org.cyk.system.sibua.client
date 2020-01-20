@@ -10,6 +10,7 @@ import org.cyk.system.sibua.server.representation.api.AdministrativeUnitRepresen
 import org.cyk.utility.__kernel__.array.ArrayHelper;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.identifier.resource.ProxyGetter;
+import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.client.controller.ControllerEntity;
 
 public interface AdministrativeUnitController extends ControllerEntity<AdministrativeUnit> {
@@ -37,4 +38,19 @@ public interface AdministrativeUnitController extends ControllerEntity<Administr
 			return;
 		generateCodesBySections(CollectionHelper.listOf(sections));
 	}
+	
+	/**/
+	
+	default void mergeByCodes(List<String> administrativeUnitsSourcesCodes,String administrativeUnitDestinationCode) {
+		if(CollectionHelper.isEmpty(administrativeUnitsSourcesCodes) || StringHelper.isBlank(administrativeUnitDestinationCode))
+			return;
+		ProxyGetter.getInstance().get(AdministrativeUnitRepresentation.class).mergeByCodes(administrativeUnitsSourcesCodes,administrativeUnitDestinationCode);
+	}
+	
+	default void mergeByCodes(List<AdministrativeUnit> administrativeUnitsSources,AdministrativeUnit administrativeUnitDestination) {
+		if(CollectionHelper.isEmpty(administrativeUnitsSources) || administrativeUnitDestination == null)
+			return;
+		mergeByCodes(administrativeUnitsSources.stream().map(AdministrativeUnit::getCode).collect(Collectors.toList()),administrativeUnitDestination.getCode());
+	}
+	
 }

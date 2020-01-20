@@ -32,6 +32,7 @@ import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEn
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntityBuilder;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.SelectionOne;
 import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -58,7 +59,12 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 	protected List<AdministrativeUnit> selectedAdministrativeUnits,__selectedAdministrativeUnits__;
 	protected Map<String,AdministrativeUnit> administrativeUnitsMap = new HashMap<>();
 	protected Boolean isShowAll,export;
-	protected Commandable deleteCommandable;
+	protected Commandable dialogActionCommandable;
+	
+	protected String dialogAction;
+	protected String dialogTitle;
+	protected String dialogMessage;
+	protected AdministrativeUnit administrativeUnit;
 	
 	@Override
 	protected void __listenPostConstruct__() {
@@ -133,17 +139,17 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 			}
 		};
 		
-		CommandableBuilder deleteCommandableBuilder = __inject__(CommandableBuilder.class);
-		deleteCommandableBuilder.setName("Oui").setCommandFunctionActionClass(SystemActionCustom.class).addCommandFunctionTryRunRunnable(
+		CommandableBuilder dialogActionCommandableBuilder = __inject__(CommandableBuilder.class);
+		dialogActionCommandableBuilder.setName("Oui").setCommandFunctionActionClass(SystemActionCustom.class).addCommandFunctionTryRunRunnable(
 			new Runnable() {
 				@Override
 				public void run() {
-					delete();
+					act();
 				}
 			}
 		);
-		deleteCommandableBuilder.addUpdatables(__inject__(ComponentHelper.class).getGlobalMessagesTargetsIdentifiers());
-		deleteCommandable = deleteCommandableBuilder.execute().getOutput();
+		dialogActionCommandableBuilder.addUpdatables(__inject__(ComponentHelper.class).getGlobalMessagesTargetsIdentifiers());
+		dialogActionCommandable = dialogActionCommandableBuilder.execute().getOutput();
 	}
 	
 	protected Properties __getProperties__(Object filter,Object first,Object pageSize) {
@@ -163,21 +169,37 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 		return "Liste des unités administratives"+(defaultSection == null ? ConstantEmpty.STRING : " de la section "+defaultSection);
 	}
 	
-	public void openDeleteDialog() {
+	public void openDialog(String type) {
 		if(CollectionHelper.isEmpty(selectedAdministrativeUnits))
 			return;
+		dialogAction = type;
+		if("delete".equals(type)) {
+			dialogTitle = "Suppression d'unité administrative";
+			dialogMessage = "Voulez vous supprimer les unités administratives suivantes ?";
+		}else if("merge".equals(type)) {
+			dialogTitle = "Fusion d'unité administrative";
+			dialogMessage = "Voulez vous fusionner les unités administratives suivantes ?";
+		}
 		if(__selectedAdministrativeUnits__ == null)
 			__selectedAdministrativeUnits__ = new ArrayList<>();
 		if(__selectedAdministrativeUnits__ != null)
 			__selectedAdministrativeUnits__.clear();
 		__selectedAdministrativeUnits__ = new ArrayList<AdministrativeUnit>();		
 		__selectedAdministrativeUnits__.addAll(selectedAdministrativeUnits);
+		Ajax.oncomplete("PF('dialog').show();");
 	}
 	
-	public void delete() {
+	public void act() {
 		if(CollectionHelper.isEmpty(__selectedAdministrativeUnits__))
 			return;
-		__inject__(AdministrativeUnitController.class).deleteMany(__selectedAdministrativeUnits__);
+		if("delete".equals(dialogAction)) {
+			__inject__(AdministrativeUnitController.class).deleteMany(__selectedAdministrativeUnits__);
+		}else if("merge".equals(dialogAction)) {
+			if(administrativeUnit == null)
+				return;
+			__inject__(AdministrativeUnitController.class).mergeByCodes(__selectedAdministrativeUnits__, administrativeUnit);
+		}
+		dialogAction = null;		
 		selectedAdministrativeUnits.clear();
 		selectedAdministrativeUnits = null;
 		__selectedAdministrativeUnits__.clear();

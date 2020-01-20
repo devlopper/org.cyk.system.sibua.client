@@ -23,8 +23,15 @@
         			<p:button value="Créer" icon="fa fa-plus" outcome="administrativeUnitEditView">
         				<f:param name="section" value="#{sectionIdentifier}" />
         			</p:button>
-        			<p:commandButton icon="fa fa-remove" value="Supprimer" action="#{__page__.openDeleteDialog}" update=":form:dialogOutputPanel">
-    					<p:ajax update=":form:dialogOutputPanel" oncomplete="PF('dialog').show();" />	
+        			<p:commandButton icon="fa fa-remove" value="Supprimer" action="#{__page__.openDialog('delete')}" update=":form:dialogOutputPanel">
+    					<!--
+    					<p:ajax update=":form:dialogOutputPanel" oncomplete="PF('dialog').show();" />
+    					-->
+    				</p:commandButton>
+    				<p:commandButton icon="fa fa-arrows" value="Fusionner" action="#{__page__.openDialog('merge')}" update=":form:dialogOutputPanel">
+    					<!--
+    					<p:ajax update=":form:dialogOutputPanel" oncomplete="PF('dialog').show();" />
+    					-->
     				</p:commandButton>
     			</f:facet>
     		
@@ -55,14 +62,25 @@
    	</p:dataTable>
    	
    	<p:outputPanel id="dialogOutputPanel">
-  		<p:dialog id="dialog" header="Suppression d'unité administrative" modal="true" widgetVar="dialog" fitViewport="true" 
+  		<p:dialog id="dialog" header="#{__page__.dialogTitle}" modal="true" widgetVar="dialog" fitViewport="true" 
 				styleClass="cyk-administrative-unit-dialog" closeOnEscape="true" draggable="false" dynamic="true" resizable="false">
 			
-			<p:staticMessage severity="warn" summary="Avertissement" detail="Voulez vous supprimer les unités administratives suivantes ?" />
+			<p:staticMessage severity="warn" summary="Avertissement" detail="#{__page__.dialogMessage}" />
 			<p:separator/>
-			<cyk:commandable value="#{__page__.deleteCommandable}" />
-			<p:commandButton type="button" value="Non" onclick="PF('dialog').hide()"/>
 			
+			<ui:fragment rendered="#{__page__.dialogAction eq 'merge'}">
+				<span>
+					<p:outputLabel for="ua" value="Unité administrative finale" />
+					<p:selectOneMenu id="ua" value="#{__page__.administrativeUnit}" converter="#{objectConverter}">
+						<f:selectItems value="#{__page__.selectedAdministrativeUnits}" var="dua" itemValue="#{dua}" itemLabel="#{dua}" />
+					</p:selectOneMenu>		
+				</span>						
+				<p:separator/>
+			</ui:fragment>				
+			
+			<cyk:commandable value="#{__page__.dialogActionCommandable}" />
+			<p:commandButton type="button" value="Non" onclick="PF('dialog').hide()"/>
+			<p:separator/>
 	  		<p:dataTable id="dialogDataTable" value="#{__page__.selectedAdministrativeUnits}" var="administrativeUnit" rowIndexVar="rowIndex">
 	  			<p:column headerText="#" width="40">
 	  				<h:outputText value="#{rowIndex+1}" />
