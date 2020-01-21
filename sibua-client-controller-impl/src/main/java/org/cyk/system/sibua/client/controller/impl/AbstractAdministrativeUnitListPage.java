@@ -4,23 +4,25 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
+import org.cyk.system.sibua.client.controller.api.ActivityController;
 import org.cyk.system.sibua.client.controller.api.AdministrativeUnitController;
-import org.cyk.system.sibua.client.controller.api.FunctionalClassificationController;
-import org.cyk.system.sibua.client.controller.api.LocalisationController;
-import org.cyk.system.sibua.client.controller.api.SectionController;
-import org.cyk.system.sibua.client.controller.api.ServiceGroupController;
+import org.cyk.system.sibua.client.controller.entities.Activity;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
 import org.cyk.system.sibua.client.controller.entities.FunctionalClassification;
 import org.cyk.system.sibua.client.controller.entities.Localisation;
 import org.cyk.system.sibua.client.controller.entities.Section;
 import org.cyk.system.sibua.client.controller.entities.ServiceGroup;
+import org.cyk.system.sibua.server.persistence.api.ActivityPersistence;
 import org.cyk.system.sibua.server.persistence.api.AdministrativeUnitPersistence;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
 import org.cyk.utility.__kernel__.map.MapHelper;
+import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
@@ -30,8 +32,6 @@ import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.web.ComponentHelper;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntity;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntityBuilder;
-import org.cyk.utility.client.controller.web.jsf.primefaces.model.SelectionOne;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
 import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.LazyDataModel;
@@ -49,11 +49,12 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 	private AutoCompleteEntity<FunctionalClassification> functionalClassificationAutoComplete;
 	private AutoCompleteEntity<Localisation> localisationAutoComplete;
 	
-	protected SelectionOne<Section> section;
-	protected Collection<Section> sections;
-	protected Collection<FunctionalClassification> functionalClassifications;
-	protected Collection<ServiceGroup> serviceGroups;
-	protected Collection<Localisation> localisations;
+	//protected SelectionOne<Section> section;
+	//protected Collection<Section> sections;
+	//protected Collection<FunctionalClassification> functionalClassifications;
+	//protected Collection<ServiceGroup> serviceGroups;
+	//protected Collection<Localisation> localisations;
+	protected Collection<Activity> activities;
 	
 	protected LazyDataModel<AdministrativeUnit> administrativeUnits;
 	protected List<AdministrativeUnit> selectedAdministrativeUnits,__selectedAdministrativeUnits__;
@@ -75,6 +76,7 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 		localisationAutoComplete = AutoCompleteEntityBuilder.build(Localisation.class, "administrativeUnitsDataTable");
 		
 		export = ValueHelper.convertToBoolean(Faces.getRequestParameter("export"));
+		/*
 		section = new SelectionOne<Section>(Section.class);		
 		section.setAreChoicesGettable(defaultSection == null);
 		section.setListener(new SelectionOne.Listener<Section>() {
@@ -98,7 +100,7 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 		}catch(Exception exception) {
 			exception.printStackTrace();
 		}
-
+		*/
 		administrativeUnits = new LazyDataModel<AdministrativeUnit>() {
 			private static final long serialVersionUID = 1L;
 
@@ -108,7 +110,7 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 				filter.addField("administrativeUnit", MapHelper.readByKey(filters, "administrativeUnit"));
 				String sectionCode = (String) MapHelper.readByKey(filters, AdministrativeUnit.FIELD_SECTION);
 				if(StringHelper.isBlank(sectionCode))
-					sectionCode = defaultSection == null ? section.getValue() == null ? null : section.getValue().getCode() : defaultSection.getCode();
+					sectionCode = defaultSection == null ? null : defaultSection.getCode();
 				filter.addField(AdministrativeUnit.FIELD_SECTION, sectionCode);				
 				filter.addField(AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION, MapHelper.readByKey(filters, AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION));
 				filter.addField(AdministrativeUnit.FIELD_SERVICE_GROUP, MapHelper.readByKey(filters, AdministrativeUnit.FIELD_SERVICE_GROUP));
@@ -177,9 +179,38 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 			dialogTitle = "Suppression d'unité administrative";
 			dialogMessage = "Voulez vous supprimer les unités administratives suivantes ?";
 		}else if("merge".equals(type)) {
+			if(selectedAdministrativeUnits.size() < 1)
+				return;
 			dialogTitle = "Fusion d'unité administrative";
 			dialogMessage = "Voulez vous fusionner les unités administratives suivantes ?";
 		}
+		selectedAdministrativeUnits.forEach(new Consumer<AdministrativeUnit>() {
+			@Override
+			public void accept(AdministrativeUnit administrativeUnit) {
+				/*
+				Collection<Activity> activities = new LinkedHashSet<Activity>();
+				CollectionHelper.add(activities, Boolean.TRUE, __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_BY_FILTERS_LIKE)
+						.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
+						.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE)));
+				
+				CollectionHelper.add(activities, Boolean.TRUE, __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_BY_FILTERS_LIKE)
+						.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
+						.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT_BENEFICIAIRE, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE)));
+				
+				administrativeUnit.setActivities(new ArrayList<>(activities));
+				*/
+				if(administrativeUnit.getActivities() == null)
+					administrativeUnit.setActivities((List<Activity>) __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_BY_FILTERS_LIKE)
+						.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
+						.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE)));
+				
+				if(administrativeUnit.getActivitiesBeneficiaire() == null)
+					administrativeUnit.setActivitiesBeneficiaire((List<Activity>) __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_BY_FILTERS_LIKE)
+						.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
+						.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT_BENEFICIAIRE, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE)));
+			}
+		});
+		
 		if(__selectedAdministrativeUnits__ == null)
 			__selectedAdministrativeUnits__ = new ArrayList<>();
 		if(__selectedAdministrativeUnits__ != null)

@@ -35,6 +35,7 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 	private List<AdministrativeUnit> parents;
 	private List<AdministrativeUnit> children;
 	private List<Activity> activities;
+	private List<Activity> activitiesBeneficiaire;
 	private List<Destination> destinations;
 	private List<ActivityDestination> activityDestinations;
 	
