@@ -39,11 +39,19 @@
  		<h:outputText value="#{activity.name}" />
  	</p:column>
  	-->
- 	<p:column headerText="Catégorie" width="110" filterBy="#{activity.catAtvCode}">
+ 	<p:column headerText="Catégorie" width="110" filterBy="#{activity.catAtvCode}" visible="false">
  		<h:outputText value="#{activity.catAtvCode}" />
  	</p:column>
  	
- 	<p:column headerText="Programme" width="200" filterBy="#{activity.action.program}">
+ 	<p:column id="nuc" headerText="N.U.C." width="60" >
+ 		<f:facet name="header">
+ 			<h:outputText value="N.U.C." />
+ 			<p:tooltip value="Nombre d'unité(s) de coût(s)" for="nuc" />
+ 		</f:facet>
+ 		<h:outputText value="#{activity.numberOfCostUnits}" />
+ 	</p:column>
+ 	
+ 	<p:column headerText="Programme" width="200" filterBy="#{activity.action.program}" visible="false">
  		<f:facet name="filter">
 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
 				<ui:param name="autoComplete" value="#{__page__.programFilter}"/>
@@ -77,5 +85,9 @@
 		<h:outputText value="-" />
 		<h:outputText value="#{activity.administrativeUnit.section.code}" styleClass="cyk-code" style="color:blue;"/>
 		<h:outputText value=" #{activity.administrativeUnit.name}" />
+ 	</p:column>
+ 	
+ 	<p:column width="50" headerText="Actions" exportable="false">
+ 		<p:commandButton icon="fa fa-eye" action="#{__page__.openDialog(activity)}" update=":form:dialogOutputPanel"/>
  	</p:column>
 </ui:composition>

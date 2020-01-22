@@ -14,7 +14,7 @@
 		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"					
 		currentPageReportTemplate="{totalRecords} trouvées. Page {currentPage}/{totalPages}"
 		widgetVar="administrativeUnitsDataTable" rowIndexVar="rowIndex" filterDelay="2000" selection="#{__page__.selectedAdministrativeUnits}"
-		
+		rowStyleClass="#{administrativeUnit.numberOfActivities == 0 and administrativeUnit.numberOfActivitiesBeneficiaire == 0 ? 'cyk-administrative-unit-no-activities' : 'ui-state-default'}"
     	>
     			
    		<f:facet name="header">
@@ -33,6 +33,7 @@
     					<p:ajax update=":form:dialogOutputPanel" oncomplete="PF('dialog').show();" />
     					-->
     				</p:commandButton>
+    				<p:commandButton icon="fa fa-eye" value="Consulter" action="#{__page__.openDialog('read')}" update=":form:dialogOutputPanel"/>
     			</f:facet>
     		
     			<f:facet name="right">
@@ -63,39 +64,6 @@
    	
    	<p:outputPanel id="dialogOutputPanel">
    		<ui:include src="__dataTableDialog__.xhtml"/>
-   		<!--
-  		<p:dialog id="dialog" header="#{__page__.dialogTitle}" modal="true" widgetVar="dialog" fitViewport="true" 
-				styleClass="cyk-administrative-unit-dialog" closeOnEscape="true" draggable="false" dynamic="true" resizable="false">
-			
-			<p:staticMessage severity="warn" summary="Avertissement" detail="#{__page__.dialogMessage}" />
-			<p:separator/>
-			
-			<ui:fragment rendered="#{__page__.dialogAction eq 'merge'}">
-				<span>
-					<p:outputLabel for="ua" value="Unité administrative finale" />
-					<p:selectOneMenu id="ua" value="#{__page__.administrativeUnit}" converter="#{objectConverter}">
-						<f:selectItems value="#{__page__.selectedAdministrativeUnits}" var="dua" itemValue="#{dua}" itemLabel="#{dua}" />
-					</p:selectOneMenu>		
-				</span>						
-				<p:separator/>
-			</ui:fragment>				
-			
-			<cyk:commandable value="#{__page__.dialogActionCommandable}" />
-			<p:commandButton type="button" value="Non" onclick="PF('dialog').hide()"/>
-			<p:separator/>
-	  		<p:dataTable id="dialogDataTable" value="#{__page__.selectedAdministrativeUnits}" var="administrativeUnit" rowIndexVar="rowIndex">
-	  			<p:column headerText="#" width="40">
-	  				<h:outputText value="#{rowIndex+1}" />
-	  			</p:column>
-	  			<p:column headerText="Unité administrative">
-	  				<ui:include src="../outputText_code_name.xhtml">
-						<ui:param name="code" value="#{administrativeUnit.code}"/>
-						<ui:param name="name" value="#{administrativeUnit.name}"/>
-					</ui:include>
-	  			</p:column>
-	  		</p:dataTable>
-	  	</p:dialog>
-	  	-->
 	</p:outputPanel>
 
 </ui:composition>

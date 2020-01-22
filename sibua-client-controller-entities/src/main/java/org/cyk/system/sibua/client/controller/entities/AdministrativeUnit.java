@@ -31,6 +31,8 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 	private Integer orderNumber;
 	private AdministrativeUnit parent;
 	private String __name__;
+	private Integer numberOfActivities;
+	private Integer numberOfActivitiesBeneficiaire;
 	
 	private List<AdministrativeUnit> parents;
 	private List<AdministrativeUnit> children;
@@ -165,7 +167,6 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 	/**/
 	
 	public Collection<Object[]> getActivitiesAndDestinations() {
-		System.out.println("AdministrativeUnit.getActivitiesAndDestinations() : "+activities+" : "+destinations);
 		if(CollectionHelper.isEmpty(activities) || CollectionHelper.isEmpty(destinations))
 			return null;		
 		Collection<Object[]> collection = new ArrayList<>();
@@ -196,4 +197,6 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 	public static final String FIELD_CHILDREN = "children";
 	public static final String FIELD_DESTINATIONS = "destinations";
 	public static final String FIELD_ACTIVITY_DESTINATIONS = "activityDestinations";
+	public static final String FIELD_NUMBER_OF_ACTIVITIES = "numberOfActivities";
+	public static final String FIELD_NUMBER_OF_ACTIVITIES_BENEFICIAIRE = "numberOfActivitiesBeneficiaire";
 }

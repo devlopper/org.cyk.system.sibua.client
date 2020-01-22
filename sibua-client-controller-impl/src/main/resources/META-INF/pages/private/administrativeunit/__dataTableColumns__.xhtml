@@ -32,6 +32,15 @@
 		</ui:include>
  	</p:column>
  	
+ 	<p:column id="na" width="60" exportable="false">
+ 		<f:facet name="header">
+ 			<h:outputText value="N.A." />
+ 			<p:tooltip for="na" value="Nombre d'activité(s)"/>
+ 		</f:facet>
+ 		<h:outputText id="nav" value="#{administrativeUnit.numberOfActivities} | #{administrativeUnit.numberOfActivitiesBeneficiaire}"/>
+ 		<p:tooltip for="nav" value="Gestionnaire de #{administrativeUnit.numberOfActivities} | Bénéficiaire de #{administrativeUnit.numberOfActivitiesBeneficiaire}"/>
+ 	</p:column>
+ 	
  	<p:column headerText="Groupe de service" filterBy="#{administrativeUnit.serviceGroup}">
  		<f:facet name="filter">
  			<ui:decorate template="/input/select/one/autoComplete.xhtml">

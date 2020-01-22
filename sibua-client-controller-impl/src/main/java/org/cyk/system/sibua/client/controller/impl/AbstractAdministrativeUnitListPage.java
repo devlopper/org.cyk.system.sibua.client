@@ -3,11 +3,12 @@ package org.cyk.system.sibua.client.controller.impl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import org.cyk.system.sibua.client.controller.api.ActivityController;
 import org.cyk.system.sibua.client.controller.api.AdministrativeUnitController;
@@ -159,6 +160,7 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 		.setFields(AdministrativeUnit.FIELD_IDENTIFIER+","+AdministrativeUnit.FIELD_CODE+","+AdministrativeUnit.FIELD_NAME
 				+","+AdministrativeUnit.FIELD_SECTION+","+AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION
 				+","+AdministrativeUnit.FIELD_SERVICE_GROUP+","+AdministrativeUnit.FIELD_LOCALISATION
+				+","+AdministrativeUnit.FIELD_NUMBER_OF_ACTIVITIES+","+AdministrativeUnit.FIELD_NUMBER_OF_ACTIVITIES_BENEFICIAIRE
 				/*+","+AdministrativeUnit.FIELD_ACTIVITY_DESTINATIONS+","+AdministrativeUnit.FIELD_ACTIVITIES+","+AdministrativeUnit.FIELD_DESTINATIONS
 				+","+AdministrativeUnit.FIELD_CHILDREN
 				*/
@@ -176,38 +178,48 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 			return;
 		dialogAction = type;
 		if("delete".equals(type)) {
-			dialogTitle = "Suppression d'unité administrative";
-			dialogMessage = "Voulez vous supprimer les unités administratives suivantes ?";
+			dialogTitle = "Suppression";
+			dialogMessage = "supprimer";
 		}else if("merge".equals(type)) {
-			if(selectedAdministrativeUnits.size() < 1)
+			if(selectedAdministrativeUnits.size() <= 1)
 				return;
-			dialogTitle = "Fusion d'unité administrative";
-			dialogMessage = "Voulez vous fusionner les unités administratives suivantes ?";
+			dialogTitle = "Fusion";
+			dialogMessage = "fusionner";
+		}else if("read".equals(type)) {
+			dialogTitle = "Consultation";
 		}
+		dialogTitle = dialogTitle + " d'unité(s) administrative(s)";
+		dialogMessage = "Voulez vous "+dialogMessage+" les unités administratives ci-dessus ?";
 		selectedAdministrativeUnits.forEach(new Consumer<AdministrativeUnit>() {
 			@Override
 			public void accept(AdministrativeUnit administrativeUnit) {
-				/*
-				Collection<Activity> activities = new LinkedHashSet<Activity>();
-				CollectionHelper.add(activities, Boolean.TRUE, __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_BY_FILTERS_LIKE)
-						.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
-						.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE)));
-				
-				CollectionHelper.add(activities, Boolean.TRUE, __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_BY_FILTERS_LIKE)
-						.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
-						.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT_BENEFICIAIRE, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE)));
-				
-				administrativeUnit.setActivities(new ArrayList<>(activities));
-				*/
-				if(administrativeUnit.getActivities() == null)
-					administrativeUnit.setActivities((List<Activity>) __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_BY_FILTERS_LIKE)
-						.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
-						.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE)));
-				
-				if(administrativeUnit.getActivitiesBeneficiaire() == null)
-					administrativeUnit.setActivitiesBeneficiaire((List<Activity>) __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_BY_FILTERS_LIKE)
-						.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
-						.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT_BENEFICIAIRE, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE)));
+				if(administrativeUnit.getActivities() == null) {
+					List<Activity> activities = (List<Activity>) __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_WHERE_IS_GESTIONNAIRE_OR_BENEFICIAIRE_BY_ADMINISTRATIVE_UNITS_CODES)
+							.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
+							.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT_GESTIONNAIRE_OR_BENEFICIAIRE, List.of(administrativeUnit.getCode())))
+							.setIsPageable(Boolean.FALSE));
+					if(CollectionHelper.isNotEmpty(activities)) {
+						List<Activity> gestionnaires = (List<Activity>) __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_BY_FILTERS_LIKE)
+								.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
+								.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE));
+						
+						List<Activity> beneficiaires = (List<Activity>) __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_BY_FILTERS_LIKE)
+								.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
+								.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT_BENEFICIAIRE, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE));
+					
+						for(Activity activity : activities) {
+							activity.setIsGestionnaire(CollectionHelper.contains(gestionnaires, activity));
+							activity.setIsBeneficiaire(CollectionHelper.contains(beneficiaires, activity));
+						}
+						
+						administrativeUnit.setActivities(activities.stream().sorted(new Comparator<Activity>() {
+							@Override
+							public int compare(Activity o1, Activity o2) {
+								return o1.getIsGestionnaire() ? -1 : 1;
+							}							
+						}).collect(Collectors.toList()));
+					}
+				}
 			}
 		});
 		
@@ -236,4 +248,5 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 		__selectedAdministrativeUnits__.clear();
 		__selectedAdministrativeUnits__ = null;
 	}
+			
 }

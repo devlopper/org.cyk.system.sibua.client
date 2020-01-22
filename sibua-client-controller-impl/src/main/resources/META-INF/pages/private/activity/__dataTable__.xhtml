@@ -35,6 +35,8 @@
     					<f:param name="showName" value="true" />
     					<f:param name="export" value="true" />
     				</p:commandButton>
+    				<p:commandButton id="toggler" type="button" value="Colonnes" icon="fa fa-columns" />
+       				<p:columnToggler datasource="dataTable" trigger="toggler" />
     			</f:facet>   			
     		</p:toolbar>
   		</f:facet>
@@ -152,6 +154,72 @@
 	  		</p:dataTable>
 	  		<p:separator/>
 	  		<cyk:commandable value="#{__page__.saveCommandable}" />
+	  	</p:dialog>
+  	</p:outputPanel>
+  	
+  	<p:outputPanel id="dialogOutputPanel">
+  		<p:dialog id="dialog" header="Unité(s) de coût(s)" modal="true" widgetVar="dialog" fitViewport="true" 
+				closeOnEscape="true" draggable="false" dynamic="true" resizable="false">
+	  		<p:dataTable id="activityUnitCostsDataTable" value="#{__page__.activityCostUnits}" var="activityCostUnit" rowIndexVar="rowIndex">
+	  			<p:columnGroup type="header">
+	  				<p:row>
+		  				<p:column headerText="#" width="30" rowspan="2" colspan="1"/>
+		  				<p:column headerText="Unité de coût" rowspan="2" colspan="1" width="40%"/>
+		  				<p:column headerText="Financement" colspan="2"/>
+		  				<p:column headerText="Arbitrage" colspan="2"/>
+		  				<p:column headerText="Budget" colspan="2"/>
+		  				<p:column headerText="Procedure" rowspan="2" colspan="1" width="5%"/>
+		  				<p:column headerText="Exempte" rowspan="2" colspan="1" width="5%"/>
+		  			</p:row>
+		  			
+		  			<p:row>
+		  				<p:column>
+		  					<f:facet name="header">
+							     <h:outputText value="A.E." title="Autorisation d'engagement"/>
+							</f:facet> 
+		  				</p:column>
+		  				<p:column headerText="C.P."/>
+		  				
+		  				<p:column headerText="A.E."/>
+		  				<p:column headerText="C.P."/>
+		  				
+		  				<p:column headerText="A.E."/>
+		  				<p:column headerText="C.P."/>
+		  			</p:row>
+		  			
+	  			</p:columnGroup>
+		  				  			
+	  			<p:column>
+	  				<h:outputText value="#{rowIndex+1}" />
+	  			</p:column>
+	  			<p:column>
+			 		<h:outputText value="#{activityCostUnit.costUnit}" />
+			 	</p:column>
+			 	<p:column>
+			 		<h:outputText value="#{activityCostUnit.financementAE}" />
+			 	</p:column>
+			 	<p:column>
+			 		<h:outputText value="#{activityCostUnit.financementCP}" />
+			 	</p:column>
+			 	<p:column>
+			 		<h:outputText value="#{activityCostUnit.arbitrageAE}" />
+			 	</p:column>
+			 	<p:column>
+			 		<h:outputText value="#{activityCostUnit.arbitrageCP}" />
+			 	</p:column>
+			 	<p:column>
+			 		<h:outputText value="#{activityCostUnit.budgetAE}" />
+			 	</p:column>
+			 	<p:column>
+			 		<h:outputText value="#{activityCostUnit.budgetCP}" />
+			 	</p:column>
+			 	<p:column>
+			 		<h:outputText value="#{activityCostUnit.procedure}" />
+			 	</p:column>
+			 	<p:column>
+			 		<h:outputText value="#{activityCostUnit.exempted}" />
+			 	</p:column>
+	  		</p:dataTable>
 	  	</p:dialog>
   	</p:outputPanel>
   	

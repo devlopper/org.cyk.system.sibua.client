@@ -9,11 +9,14 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import org.cyk.system.sibua.client.controller.api.ActivityController;
+import org.cyk.system.sibua.client.controller.api.ActivityCostUnitController;
 import org.cyk.system.sibua.client.controller.api.AdministrativeUnitController;
 import org.cyk.system.sibua.client.controller.entities.Activity;
+import org.cyk.system.sibua.client.controller.entities.ActivityCostUnit;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
 import org.cyk.system.sibua.client.controller.entities.Program;
 import org.cyk.system.sibua.client.controller.entities.Section;
+import org.cyk.system.sibua.server.persistence.api.ActivityCostUnitPersistence;
 import org.cyk.system.sibua.server.persistence.api.ActivityPersistence;
 import org.cyk.system.sibua.server.persistence.api.AdministrativeUnitPersistence;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
@@ -31,6 +34,7 @@ import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.web.ComponentHelper;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntity;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntityBuilder;
+import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -53,6 +57,8 @@ public abstract class AbstractActivityListPage extends AbstractPageContainerMana
 	protected List<Activity> selectedActivities,__selectedActivities__;
 	protected AutoCompleteEntity<AdministrativeUnit> administrativeUnit;
 	protected AutoCompleteEntity<AdministrativeUnit> administrativeUnitBeneficiaire;
+	
+	protected Collection<ActivityCostUnit> activityCostUnits;
 	
 	protected Boolean overrideAdministrativeUnit,overrideAdministrativeUnitBeneficiaire;;
 	protected Commandable saveCommandable;
@@ -147,7 +153,7 @@ public abstract class AbstractActivityListPage extends AbstractPageContainerMana
 	protected Properties __getProperties__(Object filter,Object first,Object pageSize) {
 		return new Properties().setQueryIdentifier(ActivityPersistence.READ_BY_FILTERS_LIKE)
 		.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME+","+Activity.FIELD_ACTION
-				+","+Activity.FIELD_ADMINISTRATIVE_UNIT+","+Activity.FIELD_CAT_ATV_CODE)
+				+","+Activity.FIELD_ADMINISTRATIVE_UNIT+","+Activity.FIELD_CAT_ATV_CODE+","+Activity.FIELD_NUMBER_OF_COST_UNITS)
 		.setFilters(filter).setIsPageable(Boolean.TRUE).setFrom(first).setCount(pageSize);
 	}
 	
@@ -194,6 +200,17 @@ public abstract class AbstractActivityListPage extends AbstractPageContainerMana
 		selectedActivities = null;
 		__selectedActivities__.clear();
 		__selectedActivities__ = null;
+	}
+	
+	public void openDialog(Activity activity) {
+		if(activity == null || StringHelper.isBlank(activity.getCode()))
+			return;
+		activityCostUnits = __inject__(ActivityCostUnitController.class).read(new Properties()
+				.setQueryIdentifier(ActivityCostUnitPersistence.READ_BY_ACTIVITIES_CODES)
+				.setFilters(new FilterDto().addField(ActivityCostUnit.FIELD_ACTIVITY, List.of(activity.getCode()))						
+				)
+			);
+		Ajax.oncomplete("PF('dialog').show();");
 	}
 	
 	/**/

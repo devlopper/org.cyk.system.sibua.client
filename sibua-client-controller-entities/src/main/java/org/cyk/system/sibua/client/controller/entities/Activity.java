@@ -20,10 +20,14 @@ public class Activity extends AbstractDataIdentifiableSystemStringIdentifiableBu
 	private String natDepCode;
 	private String catUsbCode;
 	private String catAtvCode;
+	private Integer numberOfCostUnits;
+	private Boolean isGestionnaire;
+	private Boolean isBeneficiaire;
 	
 	private Program program;
 	private Action action;
 	private List<Destination> destinations;
+	private List<CostUnit> costUnits;
 	private Destination destination;
 	
 	@Override
@@ -45,10 +49,15 @@ public class Activity extends AbstractDataIdentifiableSystemStringIdentifiableBu
 	public static final String FIELD_ADMINISTRATIVE_UNIT = "administrativeUnit";
 	public static final String FIELD_ADMINISTRATIVE_UNIT_GESTIONNAIRE = "administrativeUnitGestionnaire";
 	public static final String FIELD_ADMINISTRATIVE_UNIT_BENEFICIAIRE = "administrativeUnitBeneficiaire";
+	public static final String FIELD_ADMINISTRATIVE_UNIT_GESTIONNAIRE_OR_BENEFICIAIRE = "administrativeUnitGestionnaireOrBeneficiaire";
 	public static final String FIELD_PROGRAM = "program";
 	public static final String FIELD_ACTION = "action";
 	public static final String FIELD_DESTINATIONS = "destinations";
 	public static final String FIELD_DESTINATION = "destination";
+	public static final String FIELD_COST_UNITS = "costUnits";
+	public static final String FIELD_NUMBER_OF_COST_UNITS = "numberOfCostUnits";
+	public static final String FIELD_IS_GESTIONNAIRE = "isGestionnaire";
+	public static final String FIELD_IS_BENEFICIAIRE = "isBeneficiaire";
 	
 	public static final String FIELD_NAT_DEP_CODE = "natDepCode";
 	public static final String FIELD_CAT_USB_CODE = "catUsbCode";
