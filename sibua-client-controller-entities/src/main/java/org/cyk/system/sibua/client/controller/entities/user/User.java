@@ -36,6 +36,8 @@ public class User extends AbstractDataIdentifiableSystemStringImpl implements Se
 	private String activationDate;
 	private String validationDate;
 	
+	private String accessToken;
+	
 	private List<Section> sections;
 	private List<AdministrativeUnit> administrativeUnits;
 	private List<File> files;

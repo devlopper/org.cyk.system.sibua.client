@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{userCreditManagerEditPage}">
+    	<ui:define name="centerCenter">.
+    		<ui:decorate template="../__oneTemplate__withoutOutputLabel.xhtml">
+    			<ui:define name="type">
+    				<p:message for="type" />
+    				<ui:decorate template="/input/select/one/menu.xhtml">
+		    			<ui:param name="selection" value="#{userCreditManagerEditPage.userType}"/>
+		    			<ui:param name="selectableInputId" value="type"/>
+		    		</ui:decorate>
+		    		<p:tooltip value="Je suis" for="type" /> 
+    				<p:watermark value="Je suis" for="type"/>	    				
+    			</ui:define>
+    		
+    			<ui:define name="registrationNumber">
+    				<p:message for="registrationNumber" />
+    				<div class="ui-inputgroup">
+    					<span class="ui-inputgroup-addon"><i class="fa fa-link"/></span>
+    					<p:inputText id="registrationNumber" value="#{userCreditManagerEditPage.user.registrationNumber}"/> 
+    				</div>
+    				<p:tooltip value="Matricule" for="registrationNumber" /> 
+    				<p:watermark value="Matricule" for="registrationNumber"/> 				
+    			</ui:define>
+    		
+    			<ui:define name="civility">
+    				<p:message for="civility" />
+    				<ui:decorate template="/input/select/one/menu.xhtml">
+		    			<ui:param name="selection" value="#{userCreditManagerEditPage.civility}"/>
+		    			<ui:param name="selectableInputId" value="civility"/>
+		    		</ui:decorate>   
+		    		<p:tooltip value="Civilité" for="civility" /> 
+    				<p:watermark value="Civilité" for="civility"/>					
+    			</ui:define>	
+    		
+    			<ui:define name="firstName">
+    				<p:message for="firstName" />
+    				<div class="ui-inputgroup">
+    					<span class="ui-inputgroup-addon"><i class="fa fa-user"/></span>
+    					<p:inputText id="firstName" value="#{userCreditManagerEditPage.user.firstName}" required="true" requiredMessage="Valeur obligatoire"/>
+    				</div>
+    				<p:tooltip value="Nom" for="firstName" />
+    				<p:watermark value="Nom" for="firstName"/>	
+    			</ui:define>	
+    		
+    			<ui:define name="lastNames">
+    				<p:message for="lastNames" />
+    				<p:inputText id="lastNames" value="#{userCreditManagerEditPage.user.lastNames}" required="true" requiredMessage="Valeur obligatoire"/>
+    				<p:tooltip value="Prénom(s)" for="lastNames" />
+    				<p:watermark value="Prénom(s)" for="lastNames"/>	    				
+    			</ui:define>	
+    		
+    			<ui:define name="electronicMailAddress">
+    				<p:message for="electronicMailAddress" />
+    				<div class="ui-inputgroup">
+    					<span class="ui-inputgroup-addon"><i class="fa fa-at"/></span>
+    					<p:inputText id="electronicMailAddress" value="#{userCreditManagerEditPage.user.electronicMailAddress}" required="true" requiredMessage="Valeur obligatoire"/> 
+    				</div>
+    				<p:tooltip value="Adresse email" for="electronicMailAddress" />
+    				<p:watermark value="Adresse email" for="electronicMailAddress"/>	   				
+    			</ui:define>	
+    		
+    			<ui:define name="postalAddress">
+    				<p:message for="postalAddress" />
+    				<div class="ui-inputgroup">
+    					<span class="ui-inputgroup-addon"><i class="fa fa-envelope"/></span>
+    					<p:inputText id="postalAddress" value="#{userCreditManagerEditPage.user.postalAddress}"/>
+    				</div>
+    				<p:tooltip value="Adresse postale" for="postalAddress" />
+    				<p:watermark value="Adresse postale" for="postalAddress"/>	  				
+    			</ui:define>	
+    		
+    			<ui:define name="mobilePhoneNumber">
+    				<p:message for="mobilePhoneNumber" />
+    				<div class="ui-inputgroup">
+    					<span class="ui-inputgroup-addon"><i class="fa fa-mobile-phone"/></span>
+    					<p:inputText id="mobilePhoneNumber" value="#{userCreditManagerEditPage.user.mobilePhoneNumber}"/>  
+    				</div>
+    				<p:tooltip value="Numéro de téléphone mobile" for="mobilePhoneNumber" />
+    				<p:watermark value="Numéro de téléphone mobile" for="mobilePhoneNumber"/>	  	  				
+    			</ui:define>	
+    		
+    			<ui:define name="deskPhoneNumber">
+    				<p:message for="deskPhoneNumber" />
+    				<div class="ui-inputgroup">
+    					<span class="ui-inputgroup-addon"><i class="fa fa-phone"/></span>
+    					<p:inputText id="deskPhoneNumber" value="#{userCreditManagerEditPage.user.deskPhoneNumber}"/> 
+    				</div>
+    				<p:tooltip value="Numéro de téléphone bureau" for="deskPhoneNumber" />
+    				<p:watermark value="Numéro de téléphone bureau" for="deskPhoneNumber"/>	  				
+    			</ui:define>	
+    		
+    			<ui:define name="deskPost">
+    				<p:message for="deskPost" />
+    				<div class="ui-inputgroup">
+    					<span class="ui-inputgroup-addon"><i class="fa fa-tag"/></span>
+    					<p:inputText id="deskPost" value="#{userCreditManagerEditPage.user.deskPost}"/>
+    				</div>  
+    				<p:tooltip value="Poste bureau" for="deskPost" />
+    				<p:watermark value="Poste bureau" for="deskPost"/>	  				
+    			</ui:define>	
+    		
+    			<ui:define name="administrativeUnitLabel">
+    				<p:outputLabel for="administrativeUnit" value="Unité administrative" />
+    			</ui:define>
+    			<ui:define name="administrativeUnitControl">
+    				<ui:decorate template="/input/select/one/autoComplete.xhtml">
+		    			<ui:param name="autoComplete" value="#{userCreditManagerEditPage.administrativeUnit}"/>
+		    		</ui:decorate>
+    				<p:message for="administrativeUnit" />
+    				<p:tooltip value="Unité administrative" for="administrativeUnit" />
+    				<p:watermark value="Unité administrative" for="administrativeUnit"/>
+    			</ui:define>	
+    		
+    			<ui:define name="administrativeUnitCertificateReferenceLabel">
+    				<p:outputLabel for="administrativeUnitCertificateReference" value="Référence" />
+    			</ui:define>
+    			<ui:define name="administrativeUnitCertificateReferenceControl">
+    				<p:inputText id="administrativeUnitCertificateReference" value="#{userCreditManagerEditPage.user.certificateReference}"/>
+    				<p:message for="administrativeUnitCertificateReference" />
+    				<p:tooltip value="Référence" for="administrativeUnitCertificateReference" />
+    				<p:watermark value="Référence" for="administrativeUnitCertificateReference"/>
+    			</ui:define>	
+    		
+    			<ui:define name="administrativeUnitCertificateFileControl">
+    				<p:fileUpload id="administrativeUnitCertificateFile" value="#{userCreditManagerEditPage.administrativeUnitCertificateUploadedFile}" mode="simple" skinSimple="true" label="Fichier"/>
+    			</ui:define>
+    			    			 			    		
+    		</ui:decorate>
+    		
+    		<p:separator/>
+	    	<cyk:commandable value="#{userCreditManagerEditPage.createCommandable}" />
+	    	<ui:include src="../../css.xhtml"/>		
+    	</ui:define>
+    </cyk:page>
+</html>
