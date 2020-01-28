@@ -10,17 +10,17 @@
 	
     <cyk:page value="#{userNotifyAccessTokenPage}">
     	<ui:define name="centerCenter">.
-    		<div class="ui-g">
+    		<p:outputPanel id="outputPanel" styleClass="ui-g" >
     			<div class="ui-g-12">
     				<div class="ui-g-11">
     					<p:message for="electronicmailaddress" />
-    					<p:inputText id="electronicmailaddress" value="#{userNotifyAccessTokenPage.accessToken}" required="true" requiredMessage="Valeur obligatoire"/>
+    					<p:inputText id="electronicmailaddress" value="#{userNotifyAccessTokenPage.electronicMailAddress}" required="true" requiredMessage="Valeur obligatoire"/>
     				</div>
     				<div class="ui-g-1">
-    					<p:commandButton value="Renvoyer" icon="fa fa-send" action="#{userNotifyAccessTokenPage.open}" update="#{componentHelper.globalMessagesTargetInlineComponentClientIdentifier}"/>
+    					<p:commandButton value="Renvoyer" icon="fa fa-send" action="#{userNotifyAccessTokenPage.open}" update=":form:outputPanel,#{componentHelper.globalMessagesTargetInlineComponentClientIdentifier}"/>
     				</div>
     			</div>
-    		</div>   		
+    		</p:outputPanel>   		
 	    	<ui:include src="../css.xhtml"/>
     	</ui:define>
     </cyk:page>

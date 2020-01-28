@@ -11,6 +11,7 @@ import org.cyk.system.sibua.client.controller.entities.user.User;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
 import org.cyk.utility.__kernel__.properties.Properties;
+import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.user.interface_.message.Message;
 import org.cyk.utility.__kernel__.user.interface_.message.MessageRenderer;
 import org.cyk.utility.__kernel__.user.interface_.message.RenderType;
@@ -24,12 +25,14 @@ import lombok.Setter;
 public class UserOpenPage extends AbstractPageContainerManagedImpl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String identifier;
+	private User user;
 	private String accessToken;
 	
 	@Override
 	protected void __listenPostConstruct__() {
 		super.__listenPostConstruct__();
+		if(StringHelper.isNotBlank(Faces.getRequestParameter("entityidentifier")))
+			user = __inject__(UserController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier"));
 		identifier = Faces.getRequestParameter("entityidentifier");
 	}
 	

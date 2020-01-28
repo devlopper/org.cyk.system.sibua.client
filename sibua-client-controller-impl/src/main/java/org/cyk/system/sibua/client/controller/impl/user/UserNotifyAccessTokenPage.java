@@ -33,7 +33,7 @@ public class UserNotifyAccessTokenPage extends AbstractPageContainerManagedImpl 
 				MessageRenderer.getInstance().render(new Message().setSummary("Adresse mail inconnue").setSeverity(Severity.ERROR), RenderType.INLINE);
 				return null;
 			}
-			__inject__(UserController.class).notifyAccessToken(electronicMailAddress);
+			__inject__(UserController.class).notifyAccessToken(user.getIdentifier());
 		} catch (Exception exception) {
 			MessageRenderer.getInstance().render(new Message().setSummary(exception.toString()).setSeverity(Severity.ERROR), RenderType.INLINE);
 			return null;

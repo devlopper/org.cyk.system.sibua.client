@@ -12,6 +12,7 @@ import org.cyk.system.sibua.client.controller.entities.user.User;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
 import org.cyk.utility.__kernel__.icon.Icon;
 import org.cyk.utility.__kernel__.identifier.resource.PathAsFunctionParameter;
+import org.cyk.utility.__kernel__.identifier.resource.QueryAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierHelper;
 import org.cyk.utility.__kernel__.properties.Properties;
@@ -29,6 +30,7 @@ public class UserCreditManagerReadPage extends AbstractPageContainerManagedImpl 
 	private static final long serialVersionUID = 1L;
 
 	private User user;
+	private String severity,summary,detail;
 	private Commandable deleteCommandable,sendCommandable;
 	
 	@Override
@@ -38,6 +40,15 @@ public class UserCreditManagerReadPage extends AbstractPageContainerManagedImpl 
 		//UserFile userFile = CollectionHelper.getFirst(user.getUserFiles());
 		//if(userFile != null)
 		//	user.setCertificateReference(userFile.getReference());
+		
+		summary = "Notification";
+		if(StringHelper.isBlank(user.getSendingDate())) {
+			severity = "warn";
+			detail = "Veuillez transmettre votre fiche d'identification.";
+		}else {
+			severity = "info";
+			detail = "Votre fiche d'identification est en cours de traitement.";
+		}
 		
 		CommandableBuilder deleteCommandableBuilder = __inject__(CommandableBuilder.class);
 		deleteCommandableBuilder.setName("Supprimer").setCommandFunctionActionClass(SystemActionCustom.class).addCommandFunctionTryRunRunnable(
@@ -79,7 +90,6 @@ public class UserCreditManagerReadPage extends AbstractPageContainerManagedImpl 
 	
 	public void delete() {
 		__inject__(UserController.class).delete(user);
-		__inject__(UserController.class).delete(user);
 		UniformResourceIdentifierAsFunctionParameter p = new UniformResourceIdentifierAsFunctionParameter();
 		p.setRequest(__getRequest__());
 		p.setPath(new PathAsFunctionParameter());
@@ -93,11 +103,12 @@ public class UserCreditManagerReadPage extends AbstractPageContainerManagedImpl 
 	
 	public void send() {
 		__inject__(UserController.class).update(user,new Properties().setFields("sendingDate"));
-		__inject__(UserController.class).delete(user);
 		UniformResourceIdentifierAsFunctionParameter p = new UniformResourceIdentifierAsFunctionParameter();
 		p.setRequest(__getRequest__());
 		p.setPath(new PathAsFunctionParameter());
 		p.getPath().setIdentifier("userNotifySendView");
+		p.setQuery(new QueryAsFunctionParameter());
+		p.getQuery().setValue("entityidentifier="+user.getIdentifier());
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect(UniformResourceIdentifierHelper.build(p));
 		} catch (IOException e) {

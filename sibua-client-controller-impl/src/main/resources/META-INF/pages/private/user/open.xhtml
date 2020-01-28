@@ -10,34 +10,30 @@
 	
     <cyk:page value="#{userOpenPage}">
     	<ui:define name="centerCenter">.
-    		<!--
     		<pre>
-    			Un message vous a été envoyé dans la boite identifiée par l'adresse mail saisie.
-    			Utiliser votre <b>jeton d'accès</b> pour ouvrir votre fiche d'identification.
-    		</pre>
-    		-->
-    		<pre>
-    			<ui:fragment rendered="#{not empty userOpenPage.identifier}">Votre fiche d'identification a été bien enregistrée.</ui:fragment>
+    			<ui:fragment rendered="#{userOpenPage.user != null}">Votre fiche d'identification a été bien enregistrée.</ui:fragment>
     			Un message vous a été envoyé dans la boite identifiée par l'adresse mail saisie.
     			Utiliser votre <b>jeton d'accès</b> pour ouvrir votre fiche d'identification afin de la transmettre.
-    			<ui:fragment rendered="#{not empty userOpenPage.identifier}">Jeton d'accès : <span style="color: blue;font-weight: bold;">#{userOpenPage.accessToken}</span></ui:fragment>    			
+    			<ui:fragment rendered="#{userOpenPage.user != null}">Jeton d'accès : <span style="color: blue;font-weight: bold;">#{userOpenPage.user.accessToken}</span></ui:fragment>    			
     		</pre>
-    		<div class="ui-g">
+    		<p:outputPanel id="outputPanel" class="ui-g">
     			<div class="ui-g-12">
     				<div class="ui-g-11">
     					<p:message for="accesstoken" />
     					<p:inputText id="accesstoken" value="#{userOpenPage.accessToken}" required="true" requiredMessage="Valeur obligatoire"/>
     				</div>
     				<div class="ui-g-1">
-    					<p:commandButton value="Ouvrir" icon="fa fa-folder-open" action="#{userOpenPage.open}" update="#{componentHelper.globalMessagesTargetInlineComponentClientIdentifier}"/>
+    					<p:commandButton value="Ouvrir" icon="fa fa-folder-open" action="#{userOpenPage.open}" update=":form:outputPanel,#{componentHelper.globalMessagesTargetInlineComponentClientIdentifier}"/>
     				</div>
     			</div>
-    		</div>   	
+    		</p:outputPanel>
     			
     		<style>
 	    		pre {
 				    font-size: 24px;
 				    font-family: "Times New Roman", Times, serif;
+				    text-align: center;
+				    vertical-align: middle;
 				}
 	    	</style>	
     		

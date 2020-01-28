@@ -147,7 +147,7 @@
     		<p:separator/>
 	    	
 	    	<cyk:commandable value="#{userCreditManagerEditPage.createCommandable}" />
-	    	<p:button value="Fermer" icon="fa fa-close" outcome="userCreditManagerReadView">
+	    	<p:button value="Fermer" icon="fa fa-close" outcome="userCreditManagerReadView" rendered="#{not empty userCreditManagerEditPage.user.identifier}">
 	    		<f:param name="entityidentifier" value="#{userCreditManagerEditPage.user.identifier}" />
 	    	</p:button>
 	    	

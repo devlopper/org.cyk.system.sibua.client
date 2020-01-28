@@ -10,6 +10,7 @@
 	
     <cyk:page value="#{userCreditManagerReadPage}">
     	<ui:define name="centerCenter">.
+    		<p:staticMessage severity="#{userCreditManagerReadPage.severity}" summary="#{userCreditManagerReadPage.summary}" detail="#{userCreditManagerReadPage.detail}"/>
     		<ui:decorate template="../__oneTemplate__withoutOutputLabel.xhtml">
     			<ui:define name="type">
     				<h:outputText value="#{userCreditManagerReadPage.user.type}" />		    		    				
@@ -96,6 +97,20 @@
     		
     		<p:separator/>
     		
+    		<div class="ui-g">
+    			<div class="ui-g-12">
+    				<div class="ui-g-4">
+    					<h:outputText value="Date de création : #{userCreditManagerReadPage.user.creationDate}" rendered="#{not empty userCreditManagerReadPage.user.creationDate}"/>
+    				</div>
+    				<div class="ui-g-4">
+    					<h:outputText value="Date de transmission : #{userCreditManagerReadPage.user.sendingDate}" rendered="#{not empty userCreditManagerReadPage.user.sendingDate}"/>
+    				</div>
+    				<div class="ui-g-4">
+    					<h:outputText value="Date de validation : #{userCreditManagerReadPage.user.validationDate}" rendered="#{not empty userCreditManagerReadPage.user.validationDate}"/>
+    				</div>
+    			</div>
+    		</div>
+
     		<p:toolbar>
     			<f:facet name="left">
     				<ui:fragment rendered="#{empty userCreditManagerReadPage.user.sendingDate}">
