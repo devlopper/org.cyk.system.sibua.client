@@ -9,6 +9,42 @@
 		<from-view-id>*</from-view-id>
 		
 		<navigation-case>
+			<from-outcome>userCreditManagerEditView</from-outcome>
+			<to-view-id>/private/user/edit/creditmanager.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>userCreditManagerReadView</from-outcome>
+			<to-view-id>/private/user/read/creditmanager.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>userNotifyAccessTokenView</from-outcome>
+			<to-view-id>/private/user/notifyaccesstoken.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>userNotifySendView</from-outcome>
+			<to-view-id>/private/user/notifysend.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>userNotifyView</from-outcome>
+			<to-view-id>/private/user/notify.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>userOpenView</from-outcome>
+			<to-view-id>/private/user/open.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>userCreateView</from-outcome>
 			<to-view-id>/private/user/create.jsf</to-view-id>
 			<redirect />

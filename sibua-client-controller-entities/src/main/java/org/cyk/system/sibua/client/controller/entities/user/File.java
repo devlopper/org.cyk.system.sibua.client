@@ -8,9 +8,8 @@ import org.cyk.utility.client.controller.data.AbstractDataIdentifiableSystemStri
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
-@Getter @Setter @NoArgsConstructor @Accessors(chain=true)
+@Getter @Setter @NoArgsConstructor //@Accessors(chain=true)
 public class File extends AbstractDataIdentifiableSystemStringImpl implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -19,5 +18,6 @@ public class File extends AbstractDataIdentifiableSystemStringImpl implements Se
 	private String name;
 	private String sha1;
 	private UserFileType type;
+	private String reference;
 	
 }

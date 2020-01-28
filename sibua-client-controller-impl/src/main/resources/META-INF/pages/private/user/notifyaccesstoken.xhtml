@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{userNotifyAccessTokenPage}">
+    	<ui:define name="centerCenter">.
+    		<div class="ui-g">
+    			<div class="ui-g-12">
+    				<div class="ui-g-11">
+    					<p:message for="electronicmailaddress" />
+    					<p:inputText id="electronicmailaddress" value="#{userNotifyAccessTokenPage.accessToken}" required="true" requiredMessage="Valeur obligatoire"/>
+    				</div>
+    				<div class="ui-g-1">
+    					<p:commandButton value="Renvoyer" icon="fa fa-send" action="#{userNotifyAccessTokenPage.open}" update="#{componentHelper.globalMessagesTargetInlineComponentClientIdentifier}"/>
+    				</div>
+    			</div>
+    		</div>   		
+	    	<ui:include src="../css.xhtml"/>
+    	</ui:define>
+    </cyk:page>
+</html>

@@ -16,7 +16,10 @@
     			</ui:define>
     		
     			<ui:define name="registrationNumber">
-    				<h:outputText value="#{userCreditManagerReadPage.user.registrationNumber}" />				
+    				<div class="ui-inputgroup">
+    					<span class="ui-inputgroup-addon"><i class="fa fa-link"/></span>
+    					<h:outputText value="#{userCreditManagerReadPage.user.registrationNumber}" />
+    				</div> 						
     			</ui:define>
     		
     			<ui:define name="civility">
@@ -24,7 +27,10 @@
     			</ui:define>	
     		
     			<ui:define name="firstName">
-    				<h:outputText value="#{userCreditManagerReadPage.user.firstName}" />
+    				<div class="ui-inputgroup">
+    					<span class="ui-inputgroup-addon"><i class="fa fa-user"/></span>
+    					<h:outputText value="#{userCreditManagerReadPage.user.firstName}" />
+    				</div>    				
     			</ui:define>	
     		
     			<ui:define name="lastNames">
@@ -32,7 +38,10 @@
     			</ui:define>	
     		
     			<ui:define name="electronicMailAddress">
-    				<h:outputText value="#{userCreditManagerReadPage.user.electronicMailAddress}" />	   				
+    				<div class="ui-inputgroup">
+    					<span class="ui-inputgroup-addon"><i class="fa fa-at"/></span>
+    					<h:outputText value="#{userCreditManagerReadPage.user.electronicMailAddress}" /> 
+    				</div>    					   				
     			</ui:define>	
     		
     			<ui:define name="postalAddress">
@@ -67,23 +76,44 @@
     				<h:outputText value="Unité administrative" />
     			</ui:define>
     			<ui:define name="administrativeUnitControl">
-    				<h:outputText value="#{userCreditManagerReadPage.administrativeUnit}" />
+    				<h:outputText value="#{userCreditManagerReadPage.user.administrativeUnit}" />
     			</ui:define>	
     		
     			<ui:define name="administrativeUnitCertificateReferenceLabel">
-    				<h:outputText value="Référence" />
+    				<h:outputText value="Référence de l'acte de nomination" />
     			</ui:define>
     			<ui:define name="administrativeUnitCertificateReferenceControl">
-    				<h:outputText value="#{userCreditManagerReadPage.user.certificateReference}"/>
+    				<h:outputText value="#{userCreditManagerReadPage.user.userFiles.get(0).reference}"
+    					rendered="#{not empty userCreditManagerReadPage.user.userFiles}" />
+    				<p:button value="Voir" icon="fa fa-eye" href="#{userCreditManagerReadPage.user.administrativeCertificateUniformResourceIdentifier}" target="_blank"
+    					rendered="#{not empty userCreditManagerReadPage.user.administrativeCertificateUniformResourceIdentifier}" />
     			</ui:define>
     		
     			<ui:define name="administrativeUnitCertificateFileControl">
     				
-    			</ui:define>
-    			    			 			    		
+    			</ui:define>    			    			 			    		
     		</ui:decorate>
     		
     		<p:separator/>
+    		
+    		<p:toolbar>
+    			<f:facet name="left">
+    				<ui:fragment rendered="#{empty userCreditManagerReadPage.user.sendingDate}">
+		    			<p:button value="Modifier" icon="fa fa-edit" outcome="userCreditManagerEditView">
+			    			<f:param name="actionidentifier" value="update" />
+			    			<f:param name="entityidentifier" value="#{userCreditManagerReadPage.user.identifier}" />
+			    		</p:button>
+			    		
+			    		<cyk:commandable value="#{userCreditManagerReadPage.sendCommandable}" />
+			    		
+			    		<cyk:commandable value="#{userCreditManagerReadPage.deleteCommandable}" />
+		    		</ui:fragment>
+    			</f:facet>
+    			<f:facet name="right">
+    				<p:button value="Imprimer" icon="fa fa-print" href="#{userCreditManagerReadPage.user.reportUniformResourceIdentifier}" target="_blank"/>  					
+    			</f:facet>    			
+    		</p:toolbar>
+    		
 	    	<ui:include src="../../css.xhtml"/>		
     	</ui:define>
     </cyk:page>

@@ -14,7 +14,9 @@ public class UserFile extends AbstractDataIdentifiableSystemStringImpl implement
 	private static final long serialVersionUID = 1L;
 
 	private User user;
+	private File file;
 	private UserFileType type;
 	private byte[] bytes;
-		
+	private String reference;
+	
 }

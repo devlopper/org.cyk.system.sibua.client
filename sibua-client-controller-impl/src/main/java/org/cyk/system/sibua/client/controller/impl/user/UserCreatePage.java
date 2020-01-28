@@ -1,10 +1,12 @@
 package org.cyk.system.sibua.client.controller.impl.user;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -15,10 +17,12 @@ import org.cyk.system.sibua.client.controller.entities.user.Civility;
 import org.cyk.system.sibua.client.controller.entities.user.File;
 import org.cyk.system.sibua.client.controller.entities.user.User;
 import org.cyk.system.sibua.client.controller.entities.user.UserType;
-import org.cyk.system.sibua.client.controller.impl.MenuBuilderMapInstantiatorImpl;
 import org.cyk.system.sibua.server.persistence.entities.user.UserFileType;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
-import org.cyk.utility.__kernel__.file.FileHelper;
+import org.cyk.utility.__kernel__.identifier.resource.PathAsFunctionParameter;
+import org.cyk.utility.__kernel__.identifier.resource.QueryAsFunctionParameter;
+import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierAsFunctionParameter;
+import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierHelper;
 import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
 import org.cyk.utility.client.controller.component.command.Commandable;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
@@ -44,8 +48,8 @@ public class UserCreatePage extends AbstractPageContainerManagedImpl implements 
 	
 	private List<UserCreateFunctionTab> functionTabs = new ArrayList<>();
 	
-	private File administrativeUnitCertificateFile=new File().setType(UserFileType.ADMINISTRATIVE_CERTIFICATE)
-			,budgetaryCertificateFile=new File().setType(UserFileType.BUDGETARY_CERTIFICATE);
+	private File administrativeUnitCertificateFile
+			,budgetaryCertificateFile;
 	private UploadedFile administrativeUnitCertificateUploadedFile,budgetaryCertificateUploadedFile;
 	private UploadedFile signatureFile;
 	
@@ -84,11 +88,6 @@ public class UserCreatePage extends AbstractPageContainerManagedImpl implements 
 	}
 	
 	@Override
-	protected Object __getMenuBuilderMapKey__() {
-		return MenuBuilderMapInstantiatorImpl.NONE;
-	}
-	
-	@Override
 	protected String __getWindowTitleValue__() {
 		return "Création d'une fiche d'identification";
 	}
@@ -98,6 +97,19 @@ public class UserCreatePage extends AbstractPageContainerManagedImpl implements 
 		addFile(administrativeUnitCertificateUploadedFile, administrativeUnitCertificateFile);
 		addFile(budgetaryCertificateUploadedFile, budgetaryCertificateFile);
 		__inject__(UserController.class).create(user);
+		
+		UniformResourceIdentifierAsFunctionParameter p = new UniformResourceIdentifierAsFunctionParameter();
+		p.setRequest(__getRequest__());
+		p.setPath(new PathAsFunctionParameter());
+		p.getPath().setIdentifier("userNotifyView");
+		p.setQuery(new QueryAsFunctionParameter());
+		p.getQuery().setValue("entityidentifier="+user.getIdentifier());
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(UniformResourceIdentifierHelper.build(p));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void addFile(UploadedFile uploadedFile,File file) {
@@ -105,7 +117,7 @@ public class UserCreatePage extends AbstractPageContainerManagedImpl implements 
 			return;
 		if(user.getFiles() == null)
 			user.setFiles(new ArrayList<>());
-		user.getFiles().add(file.setBytes(uploadedFile.getContents()).setExtension(FileHelper.getExtension(uploadedFile.getFileName())));		
+		//user.getFiles().add(file.setBytes(uploadedFile.getContents()).setExtension(FileHelper.getExtension(uploadedFile.getFileName())));		
 	}
 	
 	public Boolean isHasFunctionCategoryCode(String selectedFunctionCategoryCode) {

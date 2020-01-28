@@ -8,19 +8,23 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
 	
-    <cyk:page value="#{userNotifyPage}">
+    <cyk:page value="#{userCreditManagerCreateNotificationPage}">
     	<ui:define name="centerCenter">.
     		<p:panel header="Notification">
     			<pre>
 	    			Votre fiche d'identification a été bien enregistrée.
-	    			Un mail vous a été envoyé dans la boite mail identifiée par l'adresse mail saisie.
-	    			Utiliser votre <b>jeton d'accès</b> pour ouvrir votre fiche d'identification afin de la transmettre.
-	    			Jeton d'accès : <span style="color: blue;">#{userNotifyPage.user.accessToken}</span>
+	    			Utiliser votre jeton d'accès pour ouvrir votre fiche d'identification afin de la transmettre.
+	    			Jeton d'accès : <span style="color: blue;">#{userCreditManagerCreateNotificationPage.user.accessToken}</span> 
 	    		</pre>
     		</p:panel>	    		
-	    	<ui:include src="../css.xhtml"/>	
+	    	<ui:include src="../../css.xhtml"/>	
 	    	
-	    	
+	    	<style>
+	    		pre {
+				    font-size: 24px;
+				    font-family: "Times New Roman", Times, serif;
+				}
+	    	</style>	
     	</ui:define>
     </cyk:page>
 </html>

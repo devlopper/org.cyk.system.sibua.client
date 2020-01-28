@@ -14,7 +14,7 @@ public class UserType extends AbstractDataIdentifiableSystemStringIdentifiableBu
 
 	@Override
 	public String toString() {
-		return getCode()+" "+getName();
+		return getName();
 	}
-		
+
 }

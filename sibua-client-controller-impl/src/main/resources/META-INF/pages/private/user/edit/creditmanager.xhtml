@@ -121,23 +121,36 @@
     			</ui:define>	
     		
     			<ui:define name="administrativeUnitCertificateReferenceLabel">
-    				<p:outputLabel for="administrativeUnitCertificateReference" value="Référence" />
+    				<p:outputLabel for="administrativeUnitCertificateReference" value="Référence de l'acte de nomination" />
     			</ui:define>
     			<ui:define name="administrativeUnitCertificateReferenceControl">
-    				<p:inputText id="administrativeUnitCertificateReference" value="#{userCreditManagerEditPage.user.certificateReference}"/>
+    				<p:inputText id="administrativeUnitCertificateReference" value="#{userCreditManagerEditPage.administrativeUnitCertificateFile.reference}"/>
     				<p:message for="administrativeUnitCertificateReference" />
     				<p:tooltip value="Référence" for="administrativeUnitCertificateReference" />
     				<p:watermark value="Référence" for="administrativeUnitCertificateReference"/>
     			</ui:define>	
     		
     			<ui:define name="administrativeUnitCertificateFileControl">
-    				<p:fileUpload id="administrativeUnitCertificateFile" value="#{userCreditManagerEditPage.administrativeUnitCertificateUploadedFile}" mode="simple" skinSimple="true" label="Fichier"/>
+    				<p:fileUpload id="administrativeUnitCertificateFile" value="#{userCreditManagerEditPage.administrativeUnitCertificateUploadedFile}" 
+    					mode="simple" skinSimple="true" label="Fichier"/>
+    				<p:outputPanel id="administrativeUnitCertificateFileControlOutputPanel">
+    					<p:button value="Voir l'acte courant" icon="fa fa-eye" href="#{userCreditManagerEditPage.user.administrativeCertificateUniformResourceIdentifier}" 
+    					target="_blank" rendered="#{not empty userCreditManagerEditPage.user.administrativeCertificateUniformResourceIdentifier}"/>
+    					<p:commandButton title="Supprimer" icon="fa fa-remove" action="#{userCreditManagerEditPage.removeAdministrativeCertificateFile}" 
+    						update="administrativeUnitCertificateFileControlOutputPanel" 
+    						rendered="#{not empty userCreditManagerEditPage.user.administrativeCertificateUniformResourceIdentifier}"/>
+    				</p:outputPanel>    				
     			</ui:define>
     			    			 			    		
     		</ui:decorate>
     		
     		<p:separator/>
+	    	
 	    	<cyk:commandable value="#{userCreditManagerEditPage.createCommandable}" />
+	    	<p:button value="Fermer" icon="fa fa-close" outcome="userCreditManagerReadView">
+	    		<f:param name="entityidentifier" value="#{userCreditManagerEditPage.user.identifier}" />
+	    	</p:button>
+	    	
 	    	<ui:include src="../../css.xhtml"/>		
     	</ui:define>
     </cyk:page>

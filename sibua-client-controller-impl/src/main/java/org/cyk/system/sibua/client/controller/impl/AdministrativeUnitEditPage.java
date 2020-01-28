@@ -6,21 +6,17 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.cyk.system.sibua.client.controller.api.AdministrativeUnitController;
-import org.cyk.system.sibua.client.controller.api.SectionController;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
 import org.cyk.system.sibua.client.controller.entities.FunctionalClassification;
 import org.cyk.system.sibua.client.controller.entities.Localisation;
 import org.cyk.system.sibua.client.controller.entities.Section;
 import org.cyk.system.sibua.client.controller.entities.ServiceGroup;
-import org.cyk.utility.__kernel__.collection.CollectionHelper;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
 import org.cyk.utility.client.controller.component.command.Commandable;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.web.ComponentHelper;
-import org.cyk.utility.client.controller.web.jsf.primefaces.AbstractPageContainerManagedImpl;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.SelectionOne;
 import org.omnifaces.util.Faces;
 
@@ -33,53 +29,31 @@ public class AdministrativeUnitEditPage extends AbstractPageContainerManagedImpl
 
 	private AdministrativeUnit administrativeUnit;
 	private String name;
-	private SelectionOne<AdministrativeUnit> parent;
 	private SelectionOne<Section> section;
-	private Section __section__;
 	private SelectionOne<ServiceGroup> serviceGroup;
 	private SelectionOne<FunctionalClassification> functionalClassification;
 	private SelectionOne<Localisation> localisation;
-	
+	private ServiceGroup tempServiceGroup;
 	private Commandable saveCommandable;
 	
 	@Override
 	protected void __listenPostConstruct__() {
 		super.__listenPostConstruct__();
 		try{
-			if(StringHelper.isBlank(Faces.getRequestParameter("section"))) {
-				
-			}else {
-				__section__ = __inject__(SectionController.class).readBySystemIdentifier(Faces.getRequestParameter("section"));
-			}
-		
 			if(StringHelper.isBlank(Faces.getRequestParameter("entityidentifier"))) {
 				administrativeUnit = new AdministrativeUnit();	
-				administrativeUnit.setSection(__section__);
+				administrativeUnit.setSection(defaultSection);
 			}else {
 				administrativeUnit = __inject__(AdministrativeUnitController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier"),
 						new Properties().setFields(AdministrativeUnit.FIELD_IDENTIFIER+","+AdministrativeUnit.FIELD_CODE+","+AdministrativeUnit.FIELD_NAME
-								+","+AdministrativeUnit.FIELD_SECTION+","+AdministrativeUnit.FIELD_PARENT+","+AdministrativeUnit.FIELD_SERVICE_GROUP+","
+								+","+AdministrativeUnit.FIELD_SECTION+","+AdministrativeUnit.FIELD_SERVICE_GROUP+","
 								+AdministrativeUnit.FIELD_LOCALISATION+","+AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION));
+				tempServiceGroup = administrativeUnit.getServiceGroup();
 			}
 			
 			name = administrativeUnit.getName();
-			parent = new SelectionOne<AdministrativeUnit>(AdministrativeUnit.class);		
-			parent.setValue(administrativeUnit.getParent());
-			parent.setAreChoicesGettable(Boolean.FALSE);
-			
+		
 			section = new SelectionOne<Section>(Section.class);		
-			section.setListener(new SelectionOne.Listener<Section>() {
-				@Override
-				public void processOnSelect(Section section) {
-					if(section == null) {
-						parent.setValue(null);
-					}else {					
-						parent.setChoices(__inject__(AdministrativeUnitController.class)
-								.read(new Properties().setFilters(new FilterDto().addField(AdministrativeUnit.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
-										.setIsPageable(Boolean.FALSE)));
-					}				
-				}
-			});
 			section.select(administrativeUnit.getSection());
 			
 			serviceGroup = new SelectionOne<ServiceGroup>(ServiceGroup.class);
@@ -88,10 +62,12 @@ public class AdministrativeUnitEditPage extends AbstractPageContainerManagedImpl
 			functionalClassification.setValue(administrativeUnit.getFunctionalClassification());
 			localisation = new SelectionOne<Localisation>(Localisation.class);	
 			localisation.setValue(administrativeUnit.getLocalisation());
-			parent.setValue(administrativeUnit.getParent());
 		}catch(Exception exception) {
 			exception.printStackTrace();
 		}
+		
+		
+		
 		
 		CommandableBuilder saveCommandableBuilder = __inject__(CommandableBuilder.class);
 		saveCommandableBuilder.setName("Enregistrer").setCommandFunctionActionClass(SystemActionCustom.class).addCommandFunctionTryRunRunnable(
@@ -122,8 +98,9 @@ public class AdministrativeUnitEditPage extends AbstractPageContainerManagedImpl
 			__inject__(AdministrativeUnitController.class).create(administrativeUnit);
 		}else {
 			__inject__(AdministrativeUnitController.class).update(administrativeUnit,new Properties().setFields(AdministrativeUnit.FIELD_SECTION
-					+","+AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION+","+AdministrativeUnit.FIELD_LOCALISATION+","+AdministrativeUnit.FIELD_SERVICE_GROUP
-					+","+AdministrativeUnit.FIELD_NAME+","+AdministrativeUnit.FIELD_DESTINATIONS));	
+					+","+AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION+","+AdministrativeUnit.FIELD_LOCALISATION
+					+(administrativeUnit.getServiceGroup().equals(tempServiceGroup) ? "" : (","+AdministrativeUnit.FIELD_SERVICE_GROUP))
+					+","+AdministrativeUnit.FIELD_NAME));	
 		}
 	}
 	

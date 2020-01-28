@@ -34,12 +34,13 @@ public class MenuBuilderMapInstantiatorImpl extends org.cyk.utility.client.contr
 			sessionMenuBuilder.addItems(activity);
 		}else if(IDENTIFICATION.equals(key)) {
 			sessionMenuBuilder.addItems(
-					__inject__(MenuItemBuilder.class).setCommandableName("Acteur").setCommandableIcon(Icon.USERS)
+					__inject__(MenuItemBuilder.class).setCommandableName("Fiche identifiaction").setCommandableIcon(Icon.USERS)
 					.addChild(
-							__inject__(MenuItemBuilder.class).setCommandableName("Identification").setCommandableNavigationIdentifier("userCreateView").setCommandableIcon(Icon.FILE)
-							,__inject__(MenuItemBuilder.class).setCommandableName("Activation").setCommandableNavigationIdentifier("userActivateView").setCommandableIcon(Icon.FLASH)
-							,__inject__(MenuItemBuilder.class).setCommandableName("Consultation").setCommandableNavigationIdentifier("userReadView").setCommandableIcon(Icon.EYE)
-							,__inject__(MenuItemBuilder.class).setCommandableName("Edition").setCommandableNavigationIdentifier("userPrintView").setCommandableIcon(Icon.PRINT)
+							__inject__(MenuItemBuilder.class).setCommandableName("Créer").setCommandableNavigationIdentifier("userCreditManagerEditView").setCommandableIcon(Icon.FILE)
+							//,__inject__(MenuItemBuilder.class).setCommandableName("Activation").setCommandableNavigationIdentifier("userActivateView").setCommandableIcon(Icon.FLASH)
+							,__inject__(MenuItemBuilder.class).setCommandableName("Ouvrir").setCommandableNavigationIdentifier("userOpenView").setCommandableIcon(Icon.FOLDER_OPEN)
+							,__inject__(MenuItemBuilder.class).setCommandableName("Renvoyer jeton d'accès").setCommandableNavigationIdentifier("userNotifyAccessTokenView").setCommandableIcon(Icon.SEND)
+							//,__inject__(MenuItemBuilder.class).setCommandableName("Edition").setCommandableNavigationIdentifier("userPrintView").setCommandableIcon(Icon.PRINT)
 							//,__inject__(MenuItemBuilder.class).setCommandableName("Validation").setCommandableNavigationIdentifier("userValidateView").setCommandableIcon(Icon.EYE)
 							//,__inject__(MenuItemBuilder.class).setCommandableName("Compte").setCommandableNavigationIdentifier("userEditAccountView").setCommandableIcon(Icon.SUITCASE)
 							)

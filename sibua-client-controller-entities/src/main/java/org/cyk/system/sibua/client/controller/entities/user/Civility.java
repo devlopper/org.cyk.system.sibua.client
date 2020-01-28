@@ -14,7 +14,7 @@ public class Civility extends AbstractDataIdentifiableSystemStringIdentifiableBu
 
 	@Override
 	public String toString() {
-		return getCode()+" "+getName();
+		return getName();
 	}
-		
+
 }

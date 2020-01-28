@@ -31,7 +31,7 @@ public class UserCreateFunctionTab extends AbstractObject implements Serializabl
 	
 	public UserCreateFunctionTab(String name,UserFileType userFileType) {
 		this.name = name;
-		file=new File().setType(userFileType);
+		//file=new File().setType(userFileType);
 		administrativeUnits = AutoCompleteEntityBuilder.build(AdministrativeUnit.class);
 		localisations = AutoCompleteEntityBuilder.build(Localisation.class);	
 		sections = AutoCompleteEntityBuilder.build(Section.class);
