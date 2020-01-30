@@ -17,4 +17,11 @@ public interface UserController extends ControllerEntity<User> {
 		notifyAccessToken(CollectionHelper.listOf(usersIdentifiers));
 	}
 	
+	void notifyAccessTokenByElectronicMailAddresses(Collection<String> electronicMailAddresses);
+	
+	default void notifyAccessTokenByElectronicMailAddresses(String...electronicMailAddresses) {
+		if(ArrayHelper.isEmpty(electronicMailAddresses))
+			return;
+		notifyAccessTokenByElectronicMailAddresses(CollectionHelper.listOf(electronicMailAddresses));
+	}
 }

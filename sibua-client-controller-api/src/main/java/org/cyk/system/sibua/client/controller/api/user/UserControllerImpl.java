@@ -22,5 +22,12 @@ public class UserControllerImpl extends AbstractControllerEntityImpl<User> imple
 			return;
 		ProxyGetter.getInstance().get(UserRepresentation.class).notifyAccessToken((List<String>) usersIdentifiers);
 	}
+
+	@Override
+	public void notifyAccessTokenByElectronicMailAddresses(Collection<String> electronicMailAddresses) {
+		if(CollectionHelper.isEmpty(electronicMailAddresses))
+			return;
+		ProxyGetter.getInstance().get(UserRepresentation.class).notifyAccessTokenByElectronicMailAddresses((List<String>) electronicMailAddresses);
+	}
 	
 }

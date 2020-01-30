@@ -118,6 +118,16 @@
     				<p:message for="administrativeUnit" />
     				<p:tooltip value="Unité administrative" for="administrativeUnit" />
     				<p:watermark value="Unité administrative" for="administrativeUnit"/>
+    			</ui:define>
+    			
+    			<ui:define name="administrativeUnitFunctionLabel">
+    				<p:outputLabel for="administrativeUnitFunction" value="Fonction administrative" />
+    			</ui:define>
+    			<ui:define name="administrativeUnitFunctionControl">
+    				<p:inputText id="administrativeUnitFunction" value="#{userCreditManagerEditPage.user.administrativeUnitFunction}"/>
+    				<p:message for="administrativeUnitFunction" />
+    				<p:tooltip value="Fonction administrative" for="administrativeUnitFunction" />
+    				<p:watermark value="Fonction administrative" for="administrativeUnitFunction"/>
     			</ui:define>	
     		
     			<ui:define name="administrativeUnitCertificateReferenceLabel">
@@ -126,8 +136,8 @@
     			<ui:define name="administrativeUnitCertificateReferenceControl">
     				<p:inputText id="administrativeUnitCertificateReference" value="#{userCreditManagerEditPage.administrativeUnitCertificateFile.reference}"/>
     				<p:message for="administrativeUnitCertificateReference" />
-    				<p:tooltip value="Référence" for="administrativeUnitCertificateReference" />
-    				<p:watermark value="Référence" for="administrativeUnitCertificateReference"/>
+    				<p:tooltip value="Référence de l'acte de nomination" for="administrativeUnitCertificateReference" />
+    				<p:watermark value="Référence de l'acte de nomination" for="administrativeUnitCertificateReference"/>
     			</ui:define>	
     		
     			<ui:define name="administrativeUnitCertificateFileControl">
