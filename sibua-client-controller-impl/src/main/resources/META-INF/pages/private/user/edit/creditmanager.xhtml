@@ -10,7 +10,7 @@
 	
     <cyk:page value="#{userCreditManagerEditPage}">
     	<ui:define name="centerCenter">.
-    		<ui:decorate template="../__oneTemplate__withoutOutputLabel.xhtml">
+    		<ui:decorate template="../__oneTemplate__withoutOutputLabel_v01.xhtml">
     			<ui:define name="type">
     				<p:message for="type" />
     				<ui:decorate template="/input/select/one/menu.xhtml">
@@ -156,7 +156,7 @@
     		
     		<p:separator/>
 	    	
-	    	<cyk:commandable value="#{userCreditManagerEditPage.createCommandable}" />
+	    	<cyk:commandable value="#{userCreditManagerEditPage.saveCommandable}" />
 	    	<p:button value="Fermer" icon="fa fa-close" outcome="userCreditManagerReadView" rendered="#{not empty userCreditManagerEditPage.user.identifier}">
 	    		<f:param name="entityidentifier" value="#{userCreditManagerEditPage.user.identifier}" />
 	    	</p:button>

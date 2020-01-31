@@ -11,7 +11,7 @@
     <cyk:page value="#{userCreditManagerReadPage}">
     	<ui:define name="centerCenter">.
     		<p:staticMessage severity="#{userCreditManagerReadPage.severity}" summary="#{userCreditManagerReadPage.summary}" detail="#{userCreditManagerReadPage.detail}"/>
-    		<ui:decorate template="../__oneTemplate__withoutOutputLabel.xhtml">
+    		<ui:decorate template="../__oneTemplate__withoutOutputLabel_v01.xhtml">
     			<ui:define name="type">
     				<h:outputText value="#{userCreditManagerReadPage.user.type}" />		    		    				
     			</ui:define>
@@ -120,6 +120,9 @@
 
     		<p:toolbar>
     			<f:facet name="left">
+    				
+    			</f:facet>
+    			<f:facet name="right">
     				<ui:fragment rendered="#{empty userCreditManagerReadPage.user.sendingDate}">
 		    			<p:button value="Modifier" icon="fa fa-edit" outcome="userCreditManagerEditView">
 			    			<f:param name="actionidentifier" value="update" />
@@ -130,9 +133,7 @@
 			    		
 			    		<cyk:commandable value="#{userCreditManagerReadPage.deleteCommandable}" />
 		    		</ui:fragment>
-    			</f:facet>
-    			<f:facet name="right">
-    				<p:button value="Imprimer" icon="fa fa-print" href="#{userCreditManagerReadPage.user.reportUniformResourceIdentifier}" target="_blank"/>  					
+    				<p:button value="Imprimer" icon="fa fa-print" href="#{userCreditManagerReadPage.user.reportUniformResourceIdentifier}" target="_blank"/>
     			</f:facet>    			
     		</p:toolbar>
     		

@@ -58,7 +58,7 @@ public class UserCreditManagerEditPage extends AbstractPageContainerManagedImpl 
 	private UploadedFile administrativeUnitCertificateUploadedFile,budgetaryCertificateUploadedFile;
 	private UploadedFile signatureFile;
 	private String action;
-	private Commandable createCommandable;
+	private Commandable saveCommandable;
 	
 	@Override
 	protected void __listenPostConstruct__() {
@@ -96,18 +96,18 @@ public class UserCreditManagerEditPage extends AbstractPageContainerManagedImpl 
 			administrativeUnitCertificateFile.setType(UserFileType.ADMINISTRATIVE_CERTIFICATE);
 		}
 		
-		CommandableBuilder createCommandableBuilder = __inject__(CommandableBuilder.class);
-		createCommandableBuilder.setName("Enregistrer").setCommandFunctionActionClass(SystemActionCustom.class).addCommandFunctionTryRunRunnable(
+		CommandableBuilder saveCommandableBuilder = __inject__(CommandableBuilder.class);
+		saveCommandableBuilder.setName("Enregistrer").setCommandFunctionActionClass(SystemActionCustom.class).addCommandFunctionTryRunRunnable(
 			new Runnable() {
 				@Override
 				public void run() {
-					create();
+					save();
 				}
 			}
 		);
 		
-		createCommandable = createCommandableBuilder.execute().getOutput();
-		createCommandable.getProperties().setAjax(Boolean.FALSE);
+		saveCommandable = saveCommandableBuilder.execute().getOutput();
+		saveCommandable.getProperties().setAjax(Boolean.FALSE);
 	}
 	
 	@Override
@@ -129,7 +129,7 @@ public class UserCreditManagerEditPage extends AbstractPageContainerManagedImpl 
 		return null;
 	}
 	
-	public void create() {
+	public void save() {
 		user.setType(userType.getValue());
 		user.setCivility(civility.getValue());
 		user.setAdministrativeUnit((AdministrativeUnit) administrativeUnit.getValue());
@@ -151,8 +151,8 @@ public class UserCreditManagerEditPage extends AbstractPageContainerManagedImpl 
 				e.printStackTrace();
 			}
 		}else if("update".equals(action)) {
-			__inject__(UserController.class).update(user,new Properties().setFields("type,civility,administrativeUnit,registrationNumber,firstName,lastNames"
-					+ ",electronicMailAddress,mobilePhoneNumber,deskPhoneNumber,deskPost,postalAddress"));
+			__inject__(UserController.class).update(user,new Properties().setFields("type,civility,administrativeUnit,administrativeUnitFunction,registrationNumber"
+					+ ",firstName,lastNames,electronicMailAddress,mobilePhoneNumber,deskPhoneNumber,deskPost,postalAddress,files"));
 			
 			UniformResourceIdentifierAsFunctionParameter p = new UniformResourceIdentifierAsFunctionParameter();
 			p.setRequest(__getRequest__());
@@ -165,8 +165,7 @@ public class UserCreditManagerEditPage extends AbstractPageContainerManagedImpl 
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
-		
+		}		
 	}
 	
 	private void addFile(UploadedFile uploadedFile,File file) {
