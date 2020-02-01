@@ -13,7 +13,6 @@ import javax.inject.Named;
 import org.cyk.system.sibua.client.controller.api.user.UserController;
 import org.cyk.system.sibua.client.controller.api.user.UserFileController;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
-import org.cyk.system.sibua.client.controller.entities.Section;
 import org.cyk.system.sibua.client.controller.entities.user.Civility;
 import org.cyk.system.sibua.client.controller.entities.user.File;
 import org.cyk.system.sibua.client.controller.entities.user.User;
@@ -50,8 +49,6 @@ public class UserCreditManagerEditPage extends AbstractPageContainerManagedImpl 
 	private AutoCompleteEntity<AdministrativeUnit> administrativeUnit;	
 	private Collection<String> selectedFunctionCategoryCodes = new ArrayList<>();
 	
-	private AutoCompleteEntity<Section> section;
-	
 	private List<UserCreateFunctionTab> functionTabs = new ArrayList<>();
 	
 	private File administrativeUnitCertificateFile/*,budgetaryCertificateFile=new File().setType(UserFileType.BUDGETARY_CERTIFICATE)*/;
@@ -65,8 +62,8 @@ public class UserCreditManagerEditPage extends AbstractPageContainerManagedImpl 
 		action = Faces.getRequestParameter("actionidentifier");
 		super.__listenPostConstruct__();
 		try {
-			section = AutoCompleteEntityBuilder.build(Section.class);
 			administrativeUnit = AutoCompleteEntityBuilder.build(AdministrativeUnit.class);		
+			administrativeUnit.setDropdown(Boolean.TRUE);
 			civility = new SelectionOne<Civility>(Civility.class);
 			civility.setMessage("Civilité");
 			userType = new SelectionOne<UserType>(UserType.class);
@@ -151,7 +148,8 @@ public class UserCreditManagerEditPage extends AbstractPageContainerManagedImpl 
 				e.printStackTrace();
 			}
 		}else if("update".equals(action)) {
-			__inject__(UserController.class).update(user,new Properties().setFields("type,civility,administrativeUnit,administrativeUnitFunction,registrationNumber"
+			__inject__(UserController.class).update(user,new Properties().setFields("type,civility,administrativeUnit,administrativeUnitFunction"
+					+ ",administrativeUnitCertificateReference,registrationNumber"
 					+ ",firstName,lastNames,electronicMailAddress,mobilePhoneNumber,deskPhoneNumber,deskPost,postalAddress,files"));
 			
 			UniformResourceIdentifierAsFunctionParameter p = new UniformResourceIdentifierAsFunctionParameter();

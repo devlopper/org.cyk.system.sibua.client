@@ -25,7 +25,7 @@
     				<p:message for="registrationNumber" />
     				<div class="ui-inputgroup">
     					<span class="ui-inputgroup-addon"><i class="fa fa-link"/></span>
-    					<p:inputText id="registrationNumber" value="#{userCreditManagerEditPage.user.registrationNumber}"/> 
+    					<p:inputText id="registrationNumber" value="#{userCreditManagerEditPage.user.registrationNumber}" styleClass="cyk-uppercase"/> 
     				</div>
     				<p:tooltip value="Matricule" for="registrationNumber" /> 
     				<p:watermark value="Matricule" for="registrationNumber"/> 				
@@ -45,7 +45,7 @@
     				<p:message for="firstName" />
     				<div class="ui-inputgroup">
     					<span class="ui-inputgroup-addon"><i class="fa fa-user"/></span>
-    					<p:inputText id="firstName" value="#{userCreditManagerEditPage.user.firstName}" required="true" requiredMessage="Valeur obligatoire"/>
+    					<p:inputText id="firstName" value="#{userCreditManagerEditPage.user.firstName}" required="true" requiredMessage="Valeur obligatoire" styleClass="cyk-uppercase"/>
     				</div>
     				<p:tooltip value="Nom" for="firstName" />
     				<p:watermark value="Nom" for="firstName"/>	
@@ -117,7 +117,7 @@
 		    		</ui:decorate>
     				<p:message for="administrativeUnit" />
     				<p:tooltip value="Unité administrative" for="administrativeUnit" />
-    				<p:watermark value="Unité administrative" for="administrativeUnit"/>
+    				<p:watermark value="Rechercher..." for="administrativeUnit"/>
     			</ui:define>
     			
     			<ui:define name="administrativeUnitFunctionLabel">
@@ -134,7 +134,7 @@
     				<p:outputLabel for="administrativeUnitCertificateReference" value="Référence de l'acte de nomination" />
     			</ui:define>
     			<ui:define name="administrativeUnitCertificateReferenceControl">
-    				<p:inputText id="administrativeUnitCertificateReference" value="#{userCreditManagerEditPage.administrativeUnitCertificateFile.reference}"/>
+    				<p:inputText id="administrativeUnitCertificateReference" value="#{userCreditManagerEditPage.user.administrativeUnitCertificateReference}"/>
     				<p:message for="administrativeUnitCertificateReference" />
     				<p:tooltip value="Référence de l'acte de nomination" for="administrativeUnitCertificateReference" />
     				<p:watermark value="Référence de l'acte de nomination" for="administrativeUnitCertificateReference"/>
@@ -142,7 +142,10 @@
     		
     			<ui:define name="administrativeUnitCertificateFileControl">
     				<p:fileUpload id="administrativeUnitCertificateFile" value="#{userCreditManagerEditPage.administrativeUnitCertificateUploadedFile}" 
-    					mode="simple" skinSimple="true" label="Fichier"/>
+    					mode="simple" skinSimple="true" label="Sélectionner un fichier au format pdf ou image"/>
+    				<!--
+    				<p:tooltip value="Sélectionner un fichier au format pdf ou image" for="administrativeUnitCertificateFile" />
+    				-->
     				<p:outputPanel id="administrativeUnitCertificateFileControlOutputPanel">
     					<p:button value="Voir l'acte courant" icon="fa fa-eye" href="#{userCreditManagerEditPage.user.administrativeCertificateUniformResourceIdentifier}" 
     					target="_blank" rendered="#{not empty userCreditManagerEditPage.user.administrativeCertificateUniformResourceIdentifier}"/>

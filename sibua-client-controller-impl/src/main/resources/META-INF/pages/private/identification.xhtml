@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{userNotifySendPage}">
+    	<ui:define name="centerCenter">.
+    		<p:panel header="Notification">
+    			<pre>
+	    			Votre fiche d'identification a été bien transférée.
+	    			Il est en cours de traitement.
+	    			Nous vous notifierons par message dans la boite identifiée par l'adresse mail saisie.
+	    		</pre>
+	    		<p:separator/>
+	    		<div style="text-align: center;">
+	    			<p:button value="Retour à la fiche d'identification" icon="fa fa-arrow-left" outcome="userCreditManagerReadView">
+		    			<f:param name="entityidentifier" value="#{userNotifySendPage.user.identifier}" />
+		    		</p:button>
+	    		</div>		    		
+    		</p:panel>	    		
+    		<style>
+	    		pre {
+				    font-size: 24px;
+				    font-family: "Times New Roman", Times, serif;
+				}
+	    	</style>
+	    	<ui:include src="../css.xhtml"/>		    	
+    	</ui:define>
+    </cyk:page>
+</html>
