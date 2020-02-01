@@ -21,6 +21,8 @@
     				<div class="ui-g-11">
     					<p:message for="accesstoken" />
     					<p:inputText id="accesstoken" value="#{userOpenPage.accessToken}" required="true" requiredMessage="Valeur obligatoire"/>
+    					<p:watermark value="Jeton d'accès" for="accesstoken"/>
+    					<p:tooltip for="accesstoken" value="Jeton d'accès" />
     				</div>
     				<div class="ui-g-1">
     					<p:commandButton value="Ouvrir" icon="fa fa-folder-open" action="#{userOpenPage.open}" update=":form:outputPanel,#{componentHelper.globalMessagesTargetInlineComponentClientIdentifier}"/>

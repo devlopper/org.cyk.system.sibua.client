@@ -139,13 +139,12 @@
     				<p:tooltip value="Référence de l'acte de nomination" for="administrativeUnitCertificateReference" />
     				<p:watermark value="Référence de l'acte de nomination" for="administrativeUnitCertificateReference"/>
     			</ui:define>	
-    		
+    			
+    			<!--
     			<ui:define name="administrativeUnitCertificateFileControl">
     				<p:fileUpload id="administrativeUnitCertificateFile" value="#{userCreditManagerEditPage.administrativeUnitCertificateUploadedFile}" 
-    					mode="simple" skinSimple="true" label="Sélectionner un fichier au format pdf ou image"/>
-    				<!--
+    					mode="simple" skinSimple="true" label="Sélectionner un fichier au format pdf ou image"/>    				
     				<p:tooltip value="Sélectionner un fichier au format pdf ou image" for="administrativeUnitCertificateFile" />
-    				-->
     				<p:outputPanel id="administrativeUnitCertificateFileControlOutputPanel">
     					<p:button value="Voir l'acte courant" icon="fa fa-eye" href="#{userCreditManagerEditPage.user.administrativeCertificateUniformResourceIdentifier}" 
     					target="_blank" rendered="#{not empty userCreditManagerEditPage.user.administrativeCertificateUniformResourceIdentifier}"/>
@@ -154,7 +153,7 @@
     						rendered="#{not empty userCreditManagerEditPage.user.administrativeCertificateUniformResourceIdentifier}"/>
     				</p:outputPanel>    				
     			</ui:define>
-    			    			 			    		
+    			-->    			 			    		
     		</ui:decorate>
     		
     		<p:separator/>

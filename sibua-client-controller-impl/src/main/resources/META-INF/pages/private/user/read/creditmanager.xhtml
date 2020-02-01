@@ -12,94 +12,63 @@
     	<ui:define name="centerCenter">.
     		<p:staticMessage severity="#{userCreditManagerReadPage.severity}" summary="#{userCreditManagerReadPage.summary}" detail="#{userCreditManagerReadPage.detail}"/>
     		<ui:decorate template="../__oneTemplate__withoutOutputLabel_v01.xhtml">
-    			<ui:define name="type">
-    				<h:outputText value="#{userCreditManagerReadPage.user.type}" />		    		    				
-    			</ui:define>
-    		
-    			<ui:define name="registrationNumber">
-    				<div class="ui-inputgroup">
-    					<span class="ui-inputgroup-addon"><i class="fa fa-link"/></span>
-    					<h:outputText value="#{userCreditManagerReadPage.user.registrationNumber}" />
-    				</div> 						
-    			</ui:define>
-    		
-    			<ui:define name="civility">
-    				<h:outputText value="#{userCreditManagerReadPage.user.civility}" />					
-    			</ui:define>	
-    		
-    			<ui:define name="firstName">
-    				<div class="ui-inputgroup">
-    					<span class="ui-inputgroup-addon"><i class="fa fa-user"/></span>
-    					<h:outputText value="#{userCreditManagerReadPage.user.firstName}" />
-    				</div>    				
-    			</ui:define>	
-    		
-    			<ui:define name="lastNames">
-    				<h:outputText value="#{userCreditManagerReadPage.user.lastNames}" />	    				
-    			</ui:define>	
-    		
-    			<ui:define name="electronicMailAddress">
-    				<div class="ui-inputgroup">
-    					<span class="ui-inputgroup-addon"><i class="fa fa-at"/></span>
-    					<h:outputText value="#{userCreditManagerReadPage.user.electronicMailAddress}" /> 
-    				</div>    					   				
-    			</ui:define>	
-    		
-    			<ui:define name="postalAddress">
-    				<div class="ui-inputgroup">
-    					<span class="ui-inputgroup-addon"><i class="fa fa-envelope"/></span>
-    					<h:outputText value="#{userCreditManagerReadPage.user.postalAddress}" />
-    				</div>				
-    			</ui:define>	
-    		
-    			<ui:define name="mobilePhoneNumber">
-    				<div class="ui-inputgroup">
-    					<span class="ui-inputgroup-addon"><i class="fa fa-mobile-phone"/></span>
-    					<h:outputText value="#{userCreditManagerReadPage.user.mobilePhoneNumber}" />  
-    				</div> 				
-    			</ui:define>	
-    		
-    			<ui:define name="deskPhoneNumber">
-    				<div class="ui-inputgroup">
-    					<span class="ui-inputgroup-addon"><i class="fa fa-phone"/></span>
-    					<h:outputText value="#{userCreditManagerReadPage.user.deskPhoneNumber}" /> 
-    				</div>				
-    			</ui:define>	
-    		
-    			<ui:define name="deskPost">
-    				<div class="ui-inputgroup">
+    			<ui:define name="personalInformationsBody">
+	    			<div class="ui-g-12">
+	    				<span class="ui-inputgroup-addon"><i class="fa fa-user"/></span>
+	    				<h:outputText value=" #{userCreditManagerReadPage.user.civility}" />
+	    				<h:outputText value=" #{userCreditManagerReadPage.user.firstName}" />
+	    				<h:outputText value=" #{userCreditManagerReadPage.user.lastNames}" />
+	    				<h:outputText value=" #{userCreditManagerReadPage.user.type}" />
+	    				<h:outputText value=" #{userCreditManagerReadPage.user.registrationNumber}" />
+	    			</div>
+	    			<div class="ui-g-12">
+	    				<span class="ui-inputgroup-addon"><i class="fa fa-at"/></span>
+	    				<h:outputText value=" #{userCreditManagerReadPage.user.electronicMailAddress}" />
+	    				<span class="ui-inputgroup-addon"><i class="fa fa-envelope"/></span>
+	    				<h:outputText value=" #{userCreditManagerReadPage.user.postalAddress}" />
+	    				<span class="ui-inputgroup-addon"><i class="fa fa-phone"/></span>
+    					<h:outputText value=" #{userCreditManagerReadPage.user.deskPhoneNumber}" />
     					<span class="ui-inputgroup-addon"><i class="fa fa-tag"/></span>
-    					<h:outputText value="#{userCreditManagerReadPage.user.deskPost}" />
-    				</div>    				
-    			</ui:define>	
-    		
-    			<ui:define name="administrativeUnitLabel">
-    				<h:outputText value="Unité administrative" />
-    			</ui:define>
-    			<ui:define name="administrativeUnitControl">
-    				<h:outputText value="#{userCreditManagerReadPage.user.administrativeUnit}" />
-    			</ui:define>	
-    		
-    			<ui:define name="administrativeUnitFunctionLabel">
-    				<h:outputText value="Fonction administrative" />
-    			</ui:define>
-    			<ui:define name="administrativeUnitFunctionControl">
-    				<h:outputText value="#{userCreditManagerReadPage.user.administrativeUnitFunction}" />
-    			</ui:define>
-    		
-    			<ui:define name="administrativeUnitCertificateReferenceLabel">
-    				<h:outputText value="Référence de l'acte de nomination" />
-    			</ui:define>
-    			<ui:define name="administrativeUnitCertificateReferenceControl">
-    				<h:outputText value="#{userCreditManagerReadPage.user.userFiles.get(0).reference}"
-    					rendered="#{not empty userCreditManagerReadPage.user.userFiles}" />
-    				<p:button value="Voir" icon="fa fa-eye" href="#{userCreditManagerReadPage.user.administrativeCertificateUniformResourceIdentifier}" target="_blank"
-    					rendered="#{not empty userCreditManagerReadPage.user.administrativeCertificateUniformResourceIdentifier}" />
-    			</ui:define>
-    		
-    			<ui:define name="administrativeUnitCertificateFileControl">
-    				
-    			</ui:define>    			    			 			    		
+    					<h:outputText value=" #{userCreditManagerReadPage.user.deskPost}" />
+    					<span class="ui-inputgroup-addon"><i class="fa fa-mobile-phone"/></span>
+    					<h:outputText value=" #{userCreditManagerReadPage.user.mobilePhoneNumber}" /> 
+	    			</div>
+	    		</ui:define>
+    			
+    			<ui:define name="serviceBody">
+	    			<div class="ui-g-12">
+	    				<span class="ui-inputgroup-addon"><i class="fa fa-university"/></span>
+	    				<h:outputText value="#{userCreditManagerReadPage.user.administrativeUnitFunction}" />
+	    				<h:outputText value=" de #{userCreditManagerReadPage.user.administrativeUnit}" />
+	    			</div>
+	    			<div class="ui-g-12 ui-inputgroup">
+	    				<span class="ui-inputgroup-addon"><i class="fa fa-file"/></span>
+    					<h:outputText value=" #{userCreditManagerReadPage.user.administrativeUnitCertificateReference} " style="margin-left : 10px;"/>
+	    				<p:outputPanel id="administrativeUnitCertificateFileOutputPanel">
+	    					<ui:fragment rendered="#{userCreditManagerReadPage.administrativeUnitCertificateUserFile == null}">
+	    						<p:commandButton id="uploadAdministrativeUnitCertificateFile" icon="fa fa-upload" 
+	    							action="#{userCreditManagerReadPage.openDialog('uploadAdministrativeUnitCertificateFile')}" 
+	    							update=":form:administrativeUnitCertificateFileOutputPanel" oncomplete="PF('dialog').show();" 
+	    							style="margin-left : 10px;"/>
+	    						<p:tooltip value="Joindre un fichier" for="uploadAdministrativeUnitCertificateFile" />
+	    					</ui:fragment>
+	    					
+	    					<ui:fragment rendered="#{userCreditManagerReadPage.administrativeUnitCertificateUserFile != null}">
+	    						<p:button id="viewAdministrativeUnitCertificateFile" icon="fa fa-eye" 
+	    							href="#{userCreditManagerReadPage.user.administrativeCertificateUniformResourceIdentifier}" target="_blank" 
+	    							style="margin-left : 10px;"/>
+	    						<p:tooltip value="Voir le fichier joint" for="viewAdministrativeUnitCertificateFile" />
+	    						
+	    						<p:commandButton id="deleteAdministrativeUnitCertificateFile" icon="fa fa-remove" 
+	    							action="#{userCreditManagerReadPage.deleteAdministrativeUnitCertificateFile}" 
+    								update=":form:administrativeUnitCertificateFileOutputPanel" 
+    								style="margin-left : 10px;"/>
+    							<p:tooltip value="Supprimer le fichier joint" for="deleteAdministrativeUnitCertificateFile" />
+	    					</ui:fragment>
+	    				</p:outputPanel>	
+	    					    					    					 					
+	    			</div>
+	    		</ui:define>    			 			    		
     		</ui:decorate>
     		
     		<p:separator/>
@@ -119,24 +88,32 @@
     		</div>
 
     		<p:toolbar>
-    			<f:facet name="left">
-    				
-    			</f:facet>
     			<f:facet name="right">
     				<ui:fragment rendered="#{empty userCreditManagerReadPage.user.sendingDate}">
 		    			<p:button value="Modifier" icon="fa fa-edit" outcome="userCreditManagerEditView">
 			    			<f:param name="actionidentifier" value="update" />
 			    			<f:param name="entityidentifier" value="#{userCreditManagerReadPage.user.identifier}" />
-			    		</p:button>
-			    		
-			    		<cyk:commandable value="#{userCreditManagerReadPage.sendCommandable}" />
-			    		
+			    		</p:button>			    		
+			    		<cyk:commandable value="#{userCreditManagerReadPage.sendCommandable}" />			    		
 			    		<cyk:commandable value="#{userCreditManagerReadPage.deleteCommandable}" />
 		    		</ui:fragment>
     				<p:button value="Imprimer" icon="fa fa-print" href="#{userCreditManagerReadPage.user.reportUniformResourceIdentifier}" target="_blank"/>
     			</f:facet>    			
     		</p:toolbar>
     		
+    		<p:outputPanel id="dialogOutputPanel">
+    			<p:dialog id="dialog" widgetVar="dialog" modal="true" resizable="false" closable="true" closeOnEscape="true" draggable="false" 
+    				header="#{userCreditManagerReadPage.dialogTitle}" dynamic="true">    			
+	    			<ui:fragment rendered="#{userCreditManagerReadPage.dialogAction eq 'uploadAdministrativeUnitCertificateFile'}">
+	    				<p:fileUpload id="file" fileUploadListener="#{userCreditManagerReadPage.listenAdministrativeUnitCertificateFileUpload}" 
+		    				label="Sélectionner un fichier au format pdf ou image" multiple="false" mode="advanced" allowTypes="/(\.|\/)(pdf|jpg|jpeg|bmp|gif|png)$/" 
+		    				sizeLimit="2097152" invalidSizeMessage="La taille du fichier ne doit pas être supérieur à deux(2) MB" oncomplete="PF('dialog').hide();"
+		    				uploadLabel="Télécharger" cancelLabel="Annuler"
+		    				update=":form:administrativeUnitCertificateFileOutputPanel"/>
+	    			</ui:fragment>    			
+	    		</p:dialog>
+    		</p:outputPanel>
+	    		    		
 	    	<ui:include src="../../css.xhtml"/>		
     	</ui:define>
     </cyk:page>

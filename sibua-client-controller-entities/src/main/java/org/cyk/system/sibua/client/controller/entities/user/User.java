@@ -41,6 +41,7 @@ public class User extends AbstractDataIdentifiableSystemStringImpl implements Se
 	private String accessToken;
 	private String reportUniformResourceIdentifier;
 	private String administrativeCertificateUniformResourceIdentifier;
+	private String administrativeCertificateUniformResourceIdentifierFormat;
 	
 	private List<Section> sections;
 	private List<AdministrativeUnit> administrativeUnits;

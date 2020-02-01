@@ -104,7 +104,6 @@ public class UserCreditManagerEditPage extends AbstractPageContainerManagedImpl 
 		);
 		
 		saveCommandable = saveCommandableBuilder.execute().getOutput();
-		saveCommandable.getProperties().setAjax(Boolean.FALSE);
 	}
 	
 	@Override
@@ -149,8 +148,8 @@ public class UserCreditManagerEditPage extends AbstractPageContainerManagedImpl 
 			}
 		}else if("update".equals(action)) {
 			__inject__(UserController.class).update(user,new Properties().setFields("type,civility,administrativeUnit,administrativeUnitFunction"
-					+ ",administrativeUnitCertificateReference,registrationNumber"
-					+ ",firstName,lastNames,electronicMailAddress,mobilePhoneNumber,deskPhoneNumber,deskPost,postalAddress,files"));
+					+ ",administrativeUnitCertificateReference,registrationNumber,firstName,lastNames,electronicMailAddress,mobilePhoneNumber"
+					+ ",deskPhoneNumber,deskPost,postalAddress"));
 			
 			UniformResourceIdentifierAsFunctionParameter p = new UniformResourceIdentifierAsFunctionParameter();
 			p.setRequest(__getRequest__());

@@ -15,41 +15,43 @@
 			</div>					
 		</div>
 		
-		<div class="ui-g-12">
-			<div class="ui-g-2">
-				<ui:insert name="civility"><h:outputText value="Civility" /></ui:insert>
+		<ui:insert name="personalInformationsBody">		
+			<div class="ui-g-12">
+				<div class="ui-g-2">
+					<ui:insert name="civility"><h:outputText value="Civility" /></ui:insert>
+				</div>
+				<div class="ui-g-3">
+					<ui:insert name="firstName"><h:outputText value="First Name" /></ui:insert>
+				</div>
+				<div class="ui-g-3">
+					<ui:insert name="lastNames"><h:outputText value="Last Names" /></ui:insert>
+				</div>
+				<div class="ui-g-2">
+					<ui:insert name="type"><h:outputText value="Type" /></ui:insert>
+				</div>
+				<div class="ui-g-2">
+					<ui:insert name="registrationNumber"><h:outputText value="Registration Number" /></ui:insert>
+				</div>		
 			</div>
-			<div class="ui-g-3">
-				<ui:insert name="firstName"><h:outputText value="First Name" /></ui:insert>
-			</div>
-			<div class="ui-g-3">
-				<ui:insert name="lastNames"><h:outputText value="Last Names" /></ui:insert>
-			</div>
-			<div class="ui-g-2">
-				<ui:insert name="type"><h:outputText value="Type" /></ui:insert>
-			</div>
-			<div class="ui-g-2">
-				<ui:insert name="registrationNumber"><h:outputText value="Registration Number" /></ui:insert>
-			</div>		
-		</div>
-		
-		<div class="ui-g-12">
-			<div class="ui-g-3">
-				<ui:insert name="electronicMailAddress"><h:outputText value="Electronic Mail Address" /></ui:insert>
-			</div>
-			<div class="ui-g-3">
-				<ui:insert name="postalAddress"><h:outputText value="Postal Address" /></ui:insert>
-			</div>
- 			<div class="ui-g-2">
- 				<ui:insert name="deskPhoneNumber"><h:outputText value="Desk Phone Number" /></ui:insert>
- 			</div>
- 			<div class="ui-g-2">
- 				<ui:insert name="deskPost"><h:outputText value="Desk Post" /></ui:insert>
- 			</div>
- 			<div class="ui-g-2">
- 				<ui:insert name="mobilePhoneNumber"><h:outputText value="Mobile Phone Number" /></ui:insert>
- 			</div>
-		</div>  	
+			
+			<div class="ui-g-12">
+				<div class="ui-g-3">
+					<ui:insert name="electronicMailAddress"><h:outputText value="Electronic Mail Address" /></ui:insert>
+				</div>
+				<div class="ui-g-3">
+					<ui:insert name="postalAddress"><h:outputText value="Postal Address" /></ui:insert>
+				</div>
+	 			<div class="ui-g-2">
+	 				<ui:insert name="deskPhoneNumber"><h:outputText value="Desk Phone Number" /></ui:insert>
+	 			</div>
+	 			<div class="ui-g-2">
+	 				<ui:insert name="deskPost"><h:outputText value="Desk Post" /></ui:insert>
+	 			</div>
+	 			<div class="ui-g-2">
+	 				<ui:insert name="mobilePhoneNumber"><h:outputText value="Mobile Phone Number" /></ui:insert>
+	 			</div>
+			</div>  	
+		</ui:insert>
   	</div>
   	
   	<div class="ui-g">
@@ -62,35 +64,39 @@
 			</div>					
 		</div>
 		
-		<div class="ui-g-12">
-			<div class="ui-g-2">
-				<ui:insert name="administrativeUnitLabel"><h:outputText value="administrative unit Label" /></ui:insert>
+		<ui:insert name="serviceBody">	
+			<div class="ui-g-12">
+				<div class="ui-g-3">
+					<ui:insert name="administrativeUnitLabel"><h:outputText value="administrative unit Label" /></ui:insert>
+				</div>
+				<div class="ui-g-9">
+					<ui:insert name="administrativeUnitControl"><h:outputText value="administrative unit Control" /></ui:insert>
+				</div>
 			</div>
-			<div class="ui-g-10">
-				<ui:insert name="administrativeUnitControl"><h:outputText value="administrative unit Control" /></ui:insert>
+	
+			<div class="ui-g-12">
+				<div class="ui-g-3">
+					<ui:insert name="administrativeUnitFunctionLabel"><h:outputText value="administrative unit function Label" /></ui:insert>
+				</div>
+				<div class="ui-g-9">
+					<ui:insert name="administrativeUnitFunctionControl"><h:outputText value="administrative unit function Control" /></ui:insert>
+				</div>
 			</div>
-		</div>
-
-		<div class="ui-g-12">
-			<div class="ui-g-2">
-				<ui:insert name="administrativeUnitFunctionLabel"><h:outputText value="administrative unit function Label" /></ui:insert>
-			</div>
-			<div class="ui-g-10">
-				<ui:insert name="administrativeUnitFunctionControl"><h:outputText value="administrative unit function Control" /></ui:insert>
-			</div>
-		</div>
-
- 		<div class="ui-g-12">
- 			<div class="ui-g-2">
- 				<ui:insert name="administrativeUnitCertificateReferenceLabel"><h:outputText value="administrative unit certificate reference Label" /></ui:insert>
- 			</div>
- 			<div class="ui-g-5">
- 				<ui:insert name="administrativeUnitCertificateReferenceControl"><h:outputText value="administrative unit certificate reference Control" /></ui:insert>
- 			</div>
- 			<div class="ui-g-5">
- 				<ui:insert name="administrativeUnitCertificateFileControl"><h:outputText value="administrative unit certificate file Control" /></ui:insert>
- 			</div>
- 		</div>
+	
+	 		<div class="ui-g-12">
+	 			<div class="ui-g-3">
+	 				<ui:insert name="administrativeUnitCertificateReferenceLabel"><h:outputText value="administrative unit certificate reference Label" /></ui:insert>
+	 			</div>
+	 			<div class="ui-g-9">
+	 				<ui:insert name="administrativeUnitCertificateReferenceControl"><h:outputText value="administrative unit certificate reference Control" /></ui:insert>
+	 			</div>
+	 			<!--
+	 			<div class="ui-g-5">
+	 				<ui:insert name="administrativeUnitCertificateFileControl"><h:outputText value="administrative unit certificate file Control" /></ui:insert>
+	 			</div>
+	 			-->
+	 		</div>
+ 		</ui:insert>
  	</div>
 
 </ui:composition>

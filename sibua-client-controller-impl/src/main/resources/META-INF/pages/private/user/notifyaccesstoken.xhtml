@@ -15,6 +15,8 @@
     				<div class="ui-g-11">
     					<p:message for="electronicmailaddress" />
     					<p:inputText id="electronicmailaddress" value="#{userNotifyAccessTokenPage.electronicMailAddress}" required="true" requiredMessage="Valeur obligatoire"/>
+    					<p:watermark value="Adresse email" for="electronicmailaddress"/>
+    					<p:tooltip for="electronicmailaddress" value="Adresse email" />
     				</div>
     				<div class="ui-g-1">
     					<p:commandButton value="Renvoyer" icon="fa fa-send" action="#{userNotifyAccessTokenPage.open}" update=":form:outputPanel,#{componentHelper.globalMessagesTargetInlineComponentClientIdentifier}"/>
