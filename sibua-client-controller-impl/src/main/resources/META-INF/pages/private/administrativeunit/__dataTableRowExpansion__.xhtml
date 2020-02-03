@@ -9,13 +9,13 @@
  		<p:tabView>
  			<p:tab title="Activités" rendered="#{not empty administrativeUnit.activities}">
  				<p:dataList value="#{administrativeUnit.activities}" var="activity" type="ordered">
- 					<h:outputText value="#{activity.code}" styleClass="cyk-code"/>
+ 					<h:outputText value="#{activity.code}" styleClass="cyk-business-identifier"/>
     				<h:outputText value=" #{activity.name}" />
  				</p:dataList>
  			</p:tab>
  			<p:tab title="Arborescence" rendered="#{not empty administrativeUnit.children}">
  				<p:dataList value="#{administrativeUnit.children}" var="child" type="ordered">
- 					<h:outputText value="#{child.code}" styleClass="cyk-code"/>
+ 					<h:outputText value="#{child.code}" styleClass="cyk-business-identifier"/>
     				<h:outputText value=" #{child.name}" />
  				</p:dataList>
  			</p:tab>
@@ -23,18 +23,18 @@
  				<p:dataTable value="#{administrativeUnit.activityDestinations}" var="activityDestination" rendered="#{not empty administrativeUnit.activityDestinations}" rowIndexVar="rowIndex">
     				<p:column width="30"><h:outputText value="#{rowIndex+1}" /></p:column>
     				<p:column headerText="Activité (Budget programme)">
-    					<h:outputText value="#{activityDestination.activity.code}" styleClass="cyk-code"/>
+    					<h:outputText value="#{activityDestination.activity.code}" styleClass="cyk-business-identifier"/>
     					<h:outputText value=" #{activityDestination.activity.name}" />
     				</p:column>
     				<p:column headerText="Destination (Budget moyen)">
-    					<h:outputText value="#{activityDestination.destination.code}" styleClass="cyk-code"/>
+    					<h:outputText value="#{activityDestination.destination.code}" styleClass="cyk-business-identifier"/>
     					<h:outputText value=" #{activityDestination.destination.name}" />
     				</p:column>
     			</p:dataTable>		
  			</p:tab> 			
  			<p:tab title="Destinations" rendered="#{not empty administrativeUnit.destinations}">
  				<p:dataList value="#{administrativeUnit.destinations}" var="destination" type="ordered">
- 					<h:outputText value="#{destination.code}" styleClass="cyk-code"/>
+ 					<h:outputText value="#{destination.code}" styleClass="cyk-business-identifier"/>
     				<h:outputText value=" #{destination.name}" />
  				</p:dataList>
  			</p:tab>

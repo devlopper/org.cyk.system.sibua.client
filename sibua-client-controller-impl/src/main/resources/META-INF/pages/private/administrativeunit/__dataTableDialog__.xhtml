@@ -7,7 +7,7 @@
     xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
 	
  	<p:dialog id="dialog" header="#{__page__.dialogTitle}" modal="true" widgetVar="dialog" fitViewport="true" 
-		styleClass="cyk-administrative-unit-dialog" closeOnEscape="true" draggable="false" dynamic="true" resizable="false">
+		styleClass="cyk-min-width-90-percent cyk-min-height-90-percent" closeOnEscape="true" draggable="false" dynamic="true" resizable="false">
 		
 		<p:dataTable id="dialogDataTable" value="#{__page__.selectedAdministrativeUnits}" var="administrativeUnit" rowIndexVar="rowIndexAdministrativeUnit">
   			<p:columnGroup type="header">

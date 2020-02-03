@@ -32,7 +32,7 @@ public abstract class AbstractUserPage extends AbstractPageContainerManagedImpl 
 				if(StringHelper.isEmpty(user.getActivationDate())) {
 					message = "Veuillez activer votre fiche d'identification afin qu'elle soit traitée.";
 				}else {
-					if(StringHelper.isEmpty(user.getValidationDate()))
+					if(StringHelper.isEmpty(user.getValidationByOrdonnateurDate()))
 						message = "Votre fiche d'identification en cours de traitement.";
 					else
 						message = "Votre fiche d'identification a été traitée.";

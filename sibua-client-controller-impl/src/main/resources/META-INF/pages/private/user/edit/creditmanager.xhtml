@@ -10,6 +10,7 @@
 	
     <cyk:page value="#{userCreditManagerEditPage}">
     	<ui:define name="centerCenter">.
+    		<p:outputPanel id="outputPanel">
     		<ui:decorate template="../__oneTemplate__withoutOutputLabel_v01.xhtml">
     			<ui:define name="type">
     				<p:message for="type" />
@@ -25,7 +26,7 @@
     				<p:message for="registrationNumber" />
     				<div class="ui-inputgroup">
     					<span class="ui-inputgroup-addon"><i class="fa fa-link"/></span>
-    					<p:inputText id="registrationNumber" value="#{userCreditManagerEditPage.user.registrationNumber}" styleClass="cyk-uppercase"/> 
+    					<p:inputText id="registrationNumber" value="#{userCreditManagerEditPage.user.registrationNumber}" styleClass="cyk-text-transform-uppercase"/> 
     				</div>
     				<p:tooltip value="Matricule" for="registrationNumber" /> 
     				<p:watermark value="Matricule" for="registrationNumber"/> 				
@@ -45,7 +46,7 @@
     				<p:message for="firstName" />
     				<div class="ui-inputgroup">
     					<span class="ui-inputgroup-addon"><i class="fa fa-user"/></span>
-    					<p:inputText id="firstName" value="#{userCreditManagerEditPage.user.firstName}" required="true" requiredMessage="Valeur obligatoire" styleClass="cyk-uppercase"/>
+    					<p:inputText id="firstName" value="#{userCreditManagerEditPage.user.firstName}" required="true" requiredMessage="Valeur obligatoire" styleClass="cyk-text-transform-uppercase"/>
     				</div>
     				<p:tooltip value="Nom" for="firstName" />
     				<p:watermark value="Nom" for="firstName"/>	
@@ -155,6 +156,7 @@
     			</ui:define>
     			-->    			 			    		
     		</ui:decorate>
+    		</p:outputPanel>
     		
     		<p:separator/>
 	    	

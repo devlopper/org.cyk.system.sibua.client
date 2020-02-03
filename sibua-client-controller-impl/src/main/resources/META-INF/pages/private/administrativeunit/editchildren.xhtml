@@ -32,7 +32,7 @@
     				<h:outputText value="#{rowIndex+1}" />
     			</p:column>
     			<p:column>
-    				<h:outputText value="#{administrativeUnit.code}" styleClass="cyk-code"/><h:outputText value=" #{administrativeUnit.name}" />
+    				<h:outputText value="#{administrativeUnit.code}" styleClass="cyk-business-identifier"/><h:outputText value=" #{administrativeUnit.name}" />
     			</p:column> 			
     			<p:column width="50">
     				<p:commandButton title="Retirer" icon="fa fa-minus" action="#{administrativeUnitEditChildrenPage.unselectOne(administrativeUnit)}" update=":form:selectedAdministrativeUnits"/>
@@ -40,7 +40,7 @@
     		</p:dataTable>
     		
     		<p:dialog id="administrativeUnitsDialog" header="Sélection des unités administratives" modal="true" widgetVar="dialog" fitViewport="true" 
-				styleClass="cyk-administrative-unit-dialog" closeOnEscape="true" draggable="false" dynamic="false" resizable="false">
+				styleClass="cyk-min-width-90-percent cyk-min-height-90-percent" closeOnEscape="true" draggable="false" dynamic="false" resizable="false">
 				
 				<p:dataTable id="selectableAdministrativeUnits" value="#{administrativeUnitEditChildrenPage.availableAdministrativeUnits}" var="administrativeUnit" rowIndexVar="rowIndex"
 					emptyMessage="Aucune activité trouvée" lazy="true" rows="10" paginator="true" paginatorAlwaysVisible="false"
@@ -52,7 +52,7 @@
 						<h:outputText value="#{rowIndex+1}" />
 					</p:column>
 		  			<p:column headerText="Libellé" filterBy="#{administrativeUnit.name}">
-		  				<h:outputText value="#{administrativeUnit.code}" styleClass="cyk-code"/><h:outputText value=" #{administrativeUnit.name}"/>
+		  				<h:outputText value="#{administrativeUnit.code}" styleClass="cyk-business-identifier"/><h:outputText value=" #{administrativeUnit.name}"/>
 		  			</p:column>		  			
 		  			
 		  			<p:column headerText="Groupe de service" width="400" filterBy="#{administrativeUnit.serviceGroup}">
@@ -65,7 +65,7 @@
 		    					<p:ajax event="itemSelect" oncomplete="PF('administrativeUnitsDataTable').filter()" />
 		    				</p:autoComplete>
 			            </f:facet>
-		  				<h:outputText value="#{administrativeUnit.serviceGroup.code}" styleClass="cyk-code"/><h:outputText value=" #{administrativeUnit.serviceGroup.name}"/>
+		  				<h:outputText value="#{administrativeUnit.serviceGroup.code}" styleClass="cyk-business-identifier"/><h:outputText value=" #{administrativeUnit.serviceGroup.name}"/>
 		  			</p:column>
 		  			
 		  			

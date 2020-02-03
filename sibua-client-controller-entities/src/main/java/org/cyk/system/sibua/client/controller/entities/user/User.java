@@ -35,10 +35,13 @@ public class User extends AbstractDataIdentifiableSystemStringImpl implements Se
 	
 	private String creationDate;
 	private String activationDate;
-	private String validationDate;
+	private String validationByOrdonnateurDate;
+	private String validationByDGBFDate;
 	private String sendingDate;
 	
 	private String accessToken;
+	private String photoUniformResourceIdentifier;
+	private String photoUniformResourceIdentifierFormat;
 	private String reportUniformResourceIdentifier;
 	private String administrativeCertificateUniformResourceIdentifier;
 	private String administrativeCertificateUniformResourceIdentifierFormat;

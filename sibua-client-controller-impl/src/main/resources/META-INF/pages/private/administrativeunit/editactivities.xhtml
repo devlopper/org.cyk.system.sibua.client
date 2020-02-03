@@ -32,7 +32,7 @@
     				<h:outputText value="#{rowIndex+1}" />
     			</p:column>
     			<p:column headerText="Activité">
-    				<h:outputText value="#{activity.code}" styleClass="cyk-code"/><h:outputText value=" #{activity.name}" />
+    				<h:outputText value="#{activity.code}" styleClass="cyk-business-identifier"/><h:outputText value=" #{activity.name}" />
     			</p:column>
     			<p:column headerText="Unité opérationnelle" width="200">
     				<h:outputText value="" />
@@ -41,7 +41,7 @@
     				<h:outputText value="" />
     			</p:column>
     			<p:column headerText="Programme">
-    				<h:outputText value="#{activity.action.program.code}" styleClass="cyk-code"/><h:outputText value=" #{activity.action.program.name}" />
+    				<h:outputText value="#{activity.action.program.code}" styleClass="cyk-business-identifier"/><h:outputText value=" #{activity.action.program.name}" />
     			</p:column>
     			<p:column width="50">
     				<p:commandButton title="Retirer" icon="fa fa-minus" action="#{administrativeUnitEditActivitiesPage.unselectOne(activity)}" update=":form:selectedActivities"/>
@@ -49,7 +49,7 @@
     		</p:dataTable>
     		
     		<p:dialog id="activitiesDialog" header="Sélection des activités non rattachées" modal="true" widgetVar="dialog" fitViewport="true" 
-				styleClass="cyk-activity-dialog" closeOnEscape="true" draggable="false" dynamic="false" resizable="false">
+				styleClass="cyk-min-width-90-percent cyk-min-height-90-percent" closeOnEscape="true" draggable="false" dynamic="false" resizable="false">
 				
 				<p:dataTable id="selectableActivities" value="#{administrativeUnitEditActivitiesPage.availableActivities}" var="activity" rowIndexVar="rowIndex"
 					emptyMessage="Aucune activité trouvée" lazy="true" rows="10" paginator="true" paginatorAlwaysVisible="false"
@@ -61,7 +61,7 @@
 						<h:outputText value="#{rowIndex+1}" />
 					</p:column>
 		  			<p:column headerText="Libellé" filterBy="#{activity.name}">
-		  				<h:outputText value="#{activity.code}" styleClass="cyk-code"/><h:outputText value=" #{activity.name}"/>
+		  				<h:outputText value="#{activity.code}" styleClass="cyk-business-identifier"/><h:outputText value=" #{activity.name}"/>
 		  			</p:column>		  			
 		  			
 		  			<p:column headerText="Programme" width="400" filterBy="#{activity.action.program}">
@@ -74,7 +74,7 @@
 		    					<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />
 		    				</p:autoComplete>
 			            </f:facet>
-		  				<h:outputText value="#{activity.action.program.code}" styleClass="cyk-code"/><h:outputText value=" #{activity.action.program.name}"/>
+		  				<h:outputText value="#{activity.action.program.code}" styleClass="cyk-business-identifier"/><h:outputText value=" #{activity.action.program.name}"/>
 		  			</p:column>
 		  			
 		  			<p:column headerText="Action" width="400" filterBy="#{activity.action}">
@@ -87,7 +87,7 @@
 		    					<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />
 		    				</p:autoComplete>	
 			            </f:facet>
-		  				<h:outputText value="#{activity.action.code}" styleClass="cyk-code"/><h:outputText value=" #{activity.action.name}"/>
+		  				<h:outputText value="#{activity.action.code}" styleClass="cyk-business-identifier"/><h:outputText value=" #{activity.action.name}"/>
 		  			</p:column>
 		  			
 		  			<p:column width="50">

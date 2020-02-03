@@ -65,7 +65,7 @@ public class UserCreditManagerReadPage extends AbstractPageContainerManagedImpl 
 			detail = "Veuillez transmettre votre fiche d'identification.";
 		}else {
 			severity = "info";
-			detail = "Votre fiche d'identification est en cours de traitement.";
+			detail = "Votre fiche d'identification sera traitée lorsqu'elle sera validée par votre ordonnateur au vu de vos specimens de signature.";
 		}
 		
 		CommandableBuilder deleteCommandableBuilder = __inject__(CommandableBuilder.class);
@@ -89,8 +89,9 @@ public class UserCreditManagerReadPage extends AbstractPageContainerManagedImpl 
 				}
 			}
 		);
-		sendCommandable = sendCommandableBuilder.execute().getOutput();
 		sendCommandableBuilder.setIcon(Icon.SEND);
+		sendCommandable = sendCommandableBuilder.execute().getOutput();
+		
 	}
 	
 	@Override
@@ -134,11 +135,37 @@ public class UserCreditManagerReadPage extends AbstractPageContainerManagedImpl 
 	    }
 	}
 	
+	public void listenPhotoFileUpload(FileUploadEvent event) {
+		UploadedFile uploadedFile = event.getFile();
+	    byte[] bytes = uploadedFile.getContents();
+	    if(bytes == null || bytes.length == 0)
+	    	return;
+	    if(photoUserFile == null) {
+	    	photoUserFile = new UserFile();
+	    	photoUserFile.setUser(new User());
+	    	photoUserFile.getUser().setIdentifier(user.getIdentifier());
+	    	photoUserFile.setFile(new File());
+	    	photoUserFile.getFile().setBytes(bytes);
+	    	photoUserFile.getFile().setName(uploadedFile.getFileName());
+	    	photoUserFile.setType(UserFileType.PHOTO);
+	    	__inject__(UserFileController.class).create(photoUserFile);
+	    	PrimeFaces.current().ajax().update(":form:photoFileOutputPanel");
+	    	user.setPhotoUniformResourceIdentifier(String.format(user.getPhotoUniformResourceIdentifierFormat(), user.getIdentifier()));
+	    }
+	}
+	
 	public void deleteAdministrativeUnitCertificateFile() {
 		if(administrativeUnitCertificateUserFile == null)
 			return;
 		__inject__(UserFileController.class).delete(administrativeUnitCertificateUserFile);
 		administrativeUnitCertificateUserFile = null;
+	}
+	
+	public void deletePhotoFile() {
+		if(photoUserFile == null)
+			return;
+		__inject__(UserFileController.class).delete(photoUserFile);
+		photoUserFile = null;
 	}
 	
 	public void delete() {

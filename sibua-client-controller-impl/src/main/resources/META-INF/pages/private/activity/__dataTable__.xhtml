@@ -48,7 +48,7 @@
   	
   	<p:outputPanel id="editableActivitiesDialogOutputPanel">
   		<p:dialog id="editableActivitiesDialog" header="Modification de rattachement" modal="true" widgetVar="editableActivitiesDialog" fitViewport="true" 
-				styleClass="cyk-activity-edit-dialog" closeOnEscape="true" draggable="false" dynamic="true" resizable="false">
+				styleClass="cyk-min-width-90-percent cyk-min-height-90-percent" closeOnEscape="true" draggable="false" dynamic="true" resizable="false">
 	  		<p:dataTable id="editableActivitiesDialogDataTable" value="#{__page__.selectedActivities}" var="activity" rowIndexVar="rowIndex">
 	  			<p:column headerText="#" width="40">
 	  				<h:outputText value="#{rowIndex+1}" />

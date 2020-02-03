@@ -6,14 +6,16 @@
     xmlns:h="http://java.sun.com/jsf/html">
 	
 	<div class="ui-g">
-		<div class="ui-g-12">
-			<div class="ui-g-4 ui-widget-header">
-				<h:outputText value="Informations personnelles"/>
+		<ui:insert name="personalInformationsHeader">
+			<div class="ui-g-12">
+				<div class="ui-g-4 ui-widget-header">
+					<h:outputText value="Informations personnelles"/>
+				</div>
+				<div class="ui-g-8">					
+					<p:separator style="padding:0px;margin-bottom:0px;vertical-align: bottom;" />
+				</div>					
 			</div>
-			<div class="ui-g-8">
-				<p:separator/>	
-			</div>					
-		</div>
+		</ui:insert>
 		
 		<ui:insert name="personalInformationsBody">		
 			<div class="ui-g-12">
@@ -55,14 +57,16 @@
   	</div>
   	
   	<div class="ui-g">
- 		<div class="ui-g-12">
-			<div class="ui-g-4 ui-widget-header">
-				<h:outputText value="Service"/>
+  		<ui:insert name="serviceHeader">
+	 		<div class="ui-g-12">
+				<div class="ui-g-4 ui-widget-header">
+					<h:outputText value="Service"/>
+				</div>
+				<div class="ui-g-8">
+					<p:separator style="padding:0px;margin-bottom:0px;vertical-align: bottom;"/>	
+				</div>					
 			</div>
-			<div class="ui-g-8">
-				<p:separator/>	
-			</div>					
-		</div>
+		</ui:insert>
 		
 		<ui:insert name="serviceBody">	
 			<div class="ui-g-12">

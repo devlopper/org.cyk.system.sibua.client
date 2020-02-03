@@ -14,7 +14,7 @@
 		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"					
 		currentPageReportTemplate="{totalRecords} trouvées. Page {currentPage}/{totalPages}"
 		widgetVar="administrativeUnitsDataTable" rowIndexVar="rowIndex" filterDelay="2000" selection="#{__page__.selectedAdministrativeUnits}"
-		rowStyleClass="#{administrativeUnit.numberOfActivities == 0 and administrativeUnit.numberOfActivitiesBeneficiaire == 0 ? 'cyk-administrative-unit-no-activities' : 'ui-state-default'}"
+		rowStyleClass="#{administrativeUnit.numberOfActivities == 0 and administrativeUnit.numberOfActivitiesBeneficiaire == 0 ? 'cyk-background-highlight' : 'ui-state-default'}"
     	>
     			
    		<f:facet name="header">
