@@ -23,7 +23,7 @@ public abstract class AbstractPageContainerManagedImpl extends org.cyk.utility.c
 	@Override
 	protected WindowBuilder __getWindowBuilder__(List<String> subDurations) {
 		WindowBuilder windowBuilder = super.__getWindowBuilder__(subDurations);
-		windowBuilder.getApplicationName(Boolean.TRUE).setValue("Module d'identification des acteurs du SIB");
+		windowBuilder.getApplicationName(Boolean.TRUE).setValue("Module d'identification des acteurs");
 		return windowBuilder;
 	}
 	

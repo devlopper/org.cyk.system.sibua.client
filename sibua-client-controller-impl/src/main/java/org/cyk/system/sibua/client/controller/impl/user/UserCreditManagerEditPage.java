@@ -30,7 +30,6 @@ import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
 import org.cyk.utility.client.controller.component.command.Commandable;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
-import org.cyk.utility.client.controller.web.ComponentHelper;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntity;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntityBuilder;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.SelectionOne;

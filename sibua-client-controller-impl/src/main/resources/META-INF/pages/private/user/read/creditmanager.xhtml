@@ -22,9 +22,19 @@
 		    			<p:button value="Modifier" icon="fa fa-edit" outcome="userCreditManagerEditView">
 			    			<f:param name="actionidentifier" value="update" />
 			    			<f:param name="entityidentifier" value="#{userCreditManagerReadPage.user.identifier}" />
-			    		</p:button>			    		
+			    		</p:button>			 
+			    		
+			    		<ui:decorate template="/command/commandbutton/default.xhtml">
+			    			<ui:param name="commandButton" value="#{userCreditManagerReadPage.sendCommandButton}"/>
+			    		</ui:decorate>
+			    		
+			    		<ui:decorate template="/command/commandbutton/default.xhtml">
+			    			<ui:param name="commandButton" value="#{userCreditManagerReadPage.deleteCommandButton}"/>
+			    		</ui:decorate>
+			    		<!--   		
 			    		<cyk:commandable value="#{userCreditManagerReadPage.sendCommandable}" />			    		
 			    		<cyk:commandable value="#{userCreditManagerReadPage.deleteCommandable}" />
+			    		-->
 		    		</ui:fragment>
     				<p:button value="Imprimer" icon="fa fa-print" href="#{userCreditManagerReadPage.user.reportUniformResourceIdentifier}" target="_blank"/>
     			</f:facet>    			
@@ -101,7 +111,7 @@
 			    					<ui:fragment rendered="#{userCreditManagerReadPage.administrativeUnitCertificateUserFile == null}">
 			    						<p:commandButton id="uploadAdministrativeUnitCertificateFile" icon="fa fa-upload" 
 			    							action="#{userCreditManagerReadPage.openDialog('uploadAdministrativeUnitCertificateFile')}" 
-			    							update=":form:administrativeUnitCertificateFileOutputPanel" oncomplete="PF('dialog').show();" 
+			    							update=":form:administrativeUnitCertificateFileOutputPanel,:form:dialogOutputPanel" oncomplete="PF('dialog').show();" 
 			    							styleClass="cyk-margin-left-10-px" />
 			    						<p:tooltip value="Joindre un fichier" for="uploadAdministrativeUnitCertificateFile" />
 			    					</ui:fragment>
@@ -131,7 +141,7 @@
 	    				
     					<ui:fragment rendered="#{userCreditManagerReadPage.photoUserFile == null}">
     						<p:commandButton id="uploadPhotoFile" icon="fa fa-upload" 
-    							action="#{userCreditManagerReadPage.openDialog('uploadPhotoFile')}" update=":form:photoFileOutputPanel" oncomplete="PF('dialog').show();" 
+    							action="#{userCreditManagerReadPage.openDialog('uploadPhotoFile')}" update=":form:photoFileOutputPanel,:form:dialogOutputPanel" oncomplete="PF('dialog').show();" 
     							styleClass="cyk-margin-left-10-px" />
     						<p:tooltip value="Joindre un fichier" for="uploadPhotoFile" />
     					</ui:fragment>

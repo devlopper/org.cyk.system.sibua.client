@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -23,12 +24,14 @@ import org.cyk.utility.__kernel__.identifier.resource.PathAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.QueryAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierHelper;
+import org.cyk.utility.__kernel__.object.Builder;
 import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
 import org.cyk.utility.client.controller.component.command.Commandable;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.command.CommandButton;
 import org.omnifaces.util.Faces;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
@@ -46,6 +49,7 @@ public class UserCreditManagerReadPage extends AbstractPageContainerManagedImpl 
 	private UserFile administrativeUnitCertificateUserFile,photoUserFile;
 	private String dialogAction,dialogTitle;
 	private Commandable deleteCommandable,sendCommandable;
+	private CommandButton deleteCommandButton,sendCommandButton;
 	
 	@Override
 	protected void __listenPostConstruct__() {
@@ -91,6 +95,24 @@ public class UserCreditManagerReadPage extends AbstractPageContainerManagedImpl 
 		);
 		sendCommandableBuilder.setIcon(Icon.SEND);
 		sendCommandable = sendCommandableBuilder.execute().getOutput();
+		
+		deleteCommandButton = Builder.build(CommandButton.class,Map.of("value","Supprimer")).setIcon(Icon.REMOVE);
+		deleteCommandButton.getConfirm().setDisabled(Boolean.FALSE);
+		deleteCommandButton.setListener(new CommandButton.Listener() {
+			@Override
+			public void listenAction() {
+				delete();
+			}
+		});
+		
+		sendCommandButton = Builder.build(CommandButton.class,Map.of("value","Transmettre")).setIcon(Icon.SEND);
+		sendCommandButton.getConfirm().setDisabled(Boolean.FALSE);
+		sendCommandButton.setListener(new CommandButton.Listener() {
+			@Override
+			public void listenAction() {
+				send();
+			}
+		});
 		
 	}
 	
@@ -181,8 +203,8 @@ public class UserCreditManagerReadPage extends AbstractPageContainerManagedImpl 
 		}
 	}
 	
-	public void send() {
-		__inject__(UserController.class).update(user,new Properties().setFields("sendingDate"));
+	public void send() {			
+		__inject__(UserController.class).update(user,new Properties().setFields("sendingDate"));		
 		UniformResourceIdentifierAsFunctionParameter p = new UniformResourceIdentifierAsFunctionParameter();
 		p.setRequest(__getRequest__());
 		p.setPath(new PathAsFunctionParameter());

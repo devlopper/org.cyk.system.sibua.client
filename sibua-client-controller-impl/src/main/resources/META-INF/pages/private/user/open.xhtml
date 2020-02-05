@@ -9,7 +9,7 @@
       xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
 	
     <cyk:page value="#{userOpenPage}">
-    	<ui:define name="centerCenter">.
+    	<ui:define name="centerCenter">
     		<pre>
     			<ui:fragment rendered="#{userOpenPage.user != null}">Votre fiche d'identification a été bien enregistrée.</ui:fragment>
     			Un message a été envoyé à l'adresse mail suivante <span style="color: black;font-style:italic;">#{userOpenPage.user.electronicMailAddress}.</span>
