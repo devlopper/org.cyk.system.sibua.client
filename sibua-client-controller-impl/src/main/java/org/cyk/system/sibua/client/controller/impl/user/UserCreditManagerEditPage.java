@@ -83,7 +83,8 @@ public class UserCreditManagerEditPage extends AbstractPageContainerManagedImpl 
 			user = __inject__(UserController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier"));
 			civility.select(user.getCivility());
 			userType.select(user.getType());
-			administrativeUnitCertificateSignedDate = new Date(user.getAdministrativeUnitCertificateSignedDateTimestamp());
+			if(user.getAdministrativeUnitCertificateSignedDateTimestamp() != null)
+				administrativeUnitCertificateSignedDate = new Date(user.getAdministrativeUnitCertificateSignedDateTimestamp());
 			administrativeUnit.setValue(user.getAdministrativeUnit());
 			if(CollectionHelper.isNotEmpty(user.getUserFiles())) {
 				administrativeUnitCertificateFile = user.getUserFiles().get(0).getFile();
