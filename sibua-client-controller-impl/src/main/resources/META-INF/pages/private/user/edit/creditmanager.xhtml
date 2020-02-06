@@ -130,31 +130,40 @@
     				<p:tooltip value="Fonction administrative" for="administrativeUnitFunction" />
     				<p:watermark value="Fonction administrative" for="administrativeUnitFunction"/>
     			</ui:define>	
-    		
+    			
+    			<ui:define name="administrativeUnitCertificateLabel">
+    				<p:outputLabel value="Acte de nomination" />
+    			</ui:define>
+    			
     			<ui:define name="administrativeUnitCertificateReferenceLabel">
-    				<p:outputLabel for="administrativeUnitCertificateReference" value="Référence de l'acte de nomination" />
+    				<p:outputLabel for="administrativeUnitCertificateReference" value="Référence" />
     			</ui:define>
     			<ui:define name="administrativeUnitCertificateReferenceControl">
     				<p:inputText id="administrativeUnitCertificateReference" value="#{userCreditManagerEditPage.user.administrativeUnitCertificateReference}"/>
     				<p:message for="administrativeUnitCertificateReference" />
-    				<p:tooltip value="Référence de l'acte de nomination" for="administrativeUnitCertificateReference" />
-    				<p:watermark value="Référence de l'acte de nomination" for="administrativeUnitCertificateReference"/>
+    				<p:tooltip value="Référence" for="administrativeUnitCertificateReference" />
+    				<p:watermark value="Référence" for="administrativeUnitCertificateReference"/>
     			</ui:define>	
     			
-    			<!--
-    			<ui:define name="administrativeUnitCertificateFileControl">
-    				<p:fileUpload id="administrativeUnitCertificateFile" value="#{userCreditManagerEditPage.administrativeUnitCertificateUploadedFile}" 
-    					mode="simple" skinSimple="true" label="Sélectionner un fichier au format pdf ou image"/>    				
-    				<p:tooltip value="Sélectionner un fichier au format pdf ou image" for="administrativeUnitCertificateFile" />
-    				<p:outputPanel id="administrativeUnitCertificateFileControlOutputPanel">
-    					<p:button value="Voir l'acte courant" icon="fa fa-eye" href="#{userCreditManagerEditPage.user.administrativeCertificateUniformResourceIdentifier}" 
-    					target="_blank" rendered="#{not empty userCreditManagerEditPage.user.administrativeCertificateUniformResourceIdentifier}"/>
-    					<p:commandButton title="Supprimer" icon="fa fa-remove" action="#{userCreditManagerEditPage.removeAdministrativeCertificateFile}" 
-    						update="administrativeUnitCertificateFileControlOutputPanel" 
-    						rendered="#{not empty userCreditManagerEditPage.user.administrativeCertificateUniformResourceIdentifier}"/>
-    				</p:outputPanel>    				
+    			<ui:define name="administrativeUnitCertificateSignedByLabel">
+    				<p:outputLabel for="administrativeUnitCertificateSignedBy" value="Signataire" />
     			</ui:define>
-    			-->    			 			    		
+    			<ui:define name="administrativeUnitCertificateSignedByControl">
+    				<p:inputText id="administrativeUnitCertificateSignedBy" value="#{userCreditManagerEditPage.user.administrativeUnitCertificateSignedBy}"/>
+    				<p:message for="administrativeUnitCertificateSignedBy" />
+    				<p:tooltip value="Signataire" for="administrativeUnitCertificateSignedBy" />
+    				<p:watermark value="Signataire" for="administrativeUnitCertificateSignedBy"/>
+    			</ui:define>	
+    			
+    			<ui:define name="administrativeUnitCertificateSignedDateLabel">
+    				<p:outputLabel for="administrativeUnitCertificateSignedDate" value="Date de signature" />
+    			</ui:define>
+    			<ui:define name="administrativeUnitCertificateSignedDateControl">
+    				<p:calendar id="administrativeUnitCertificateSignedDate" value="#{userCreditManagerEditPage.administrativeUnitCertificateSignedDate}" locale="fr" pattern="dd/MM/yyyy"/>
+    				<p:message for="administrativeUnitCertificateSignedDate" />
+    				<p:tooltip value="Date de signature" for="administrativeUnitCertificateSignedDate" />
+    				<p:watermark value="Date de signature" for="administrativeUnitCertificateSignedDate"/>
+    			</ui:define>	 			    		
     		</ui:decorate>
     		</p:outputPanel>
     		

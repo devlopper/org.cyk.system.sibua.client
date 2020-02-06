@@ -70,35 +70,57 @@
 		
 		<ui:insert name="serviceBody">	
 			<div class="ui-g-12">
-				<div class="ui-g-3">
+				<div class="ui-g-2">
 					<ui:insert name="administrativeUnitLabel"><h:outputText value="administrative unit Label" /></ui:insert>
 				</div>
-				<div class="ui-g-9">
+				<div class="ui-g-10">
 					<ui:insert name="administrativeUnitControl"><h:outputText value="administrative unit Control" /></ui:insert>
 				</div>
 			</div>
 	
 			<div class="ui-g-12">
-				<div class="ui-g-3">
+				<div class="ui-g-2">
 					<ui:insert name="administrativeUnitFunctionLabel"><h:outputText value="administrative unit function Label" /></ui:insert>
 				</div>
-				<div class="ui-g-9">
+				<div class="ui-g-10">
 					<ui:insert name="administrativeUnitFunctionControl"><h:outputText value="administrative unit function Control" /></ui:insert>
 				</div>
 			</div>
-	
+			
+			<!--
+			<div class="ui-g-12">
+				<h:outputText value="Acte de nomination" />
+			</div>
+			-->
+	 		
 	 		<div class="ui-g-12">
-	 			<div class="ui-g-3">
-	 				<ui:insert name="administrativeUnitCertificateReferenceLabel"><h:outputText value="administrative unit certificate reference Label" /></ui:insert>
+	 			<div class="ui-g-2">
+	 				<ui:insert name="administrativeUnitCertificateLabel"><h:outputText value="administrative unit certificate Label" /></ui:insert>
 	 			</div>
-	 			<div class="ui-g-9">
-	 				<ui:insert name="administrativeUnitCertificateReferenceControl"><h:outputText value="administrative unit certificate reference Control" /></ui:insert>
+	 			<div class="ui-g-10">
+	 				<ui:insert name="administrativeUnitCertificateControl">
+	 					<div class="ui-g-12">
+				 			<div class="ui-g-1">
+				 				<ui:insert name="administrativeUnitCertificateReferenceLabel"><h:outputText value="administrative unit certificate reference Label" /></ui:insert>
+				 			</div>
+				 			<div class="ui-g-2">
+				 				<ui:insert name="administrativeUnitCertificateReferenceControl"><h:outputText value="administrative unit certificate reference Control" /></ui:insert>
+				 			</div>
+				 			<div class="ui-g-1">
+				 				<ui:insert name="administrativeUnitCertificateSignedByLabel"><h:outputText value="administrative unit certificate signed by Label" /></ui:insert>
+				 			</div>
+				 			<div class="ui-g-4">
+				 				<ui:insert name="administrativeUnitCertificateSignedByControl"><h:outputText value="administrative unit certificate signed by Control" /></ui:insert>
+				 			</div>
+				 			<div class="ui-g-2">
+				 				<ui:insert name="administrativeUnitCertificateSignedDateLabel"><h:outputText value="administrative unit certificate signed date Label" /></ui:insert>
+				 			</div>
+				 			<div class="ui-g-2">
+				 				<ui:insert name="administrativeUnitCertificateSignedDateControl"><h:outputText value="administrative unit certificate signed date Control" /></ui:insert>
+				 			</div>
+				 		</div>
+	 				</ui:insert>
 	 			</div>
-	 			<!--
-	 			<div class="ui-g-5">
-	 				<ui:insert name="administrativeUnitCertificateFileControl"><h:outputText value="administrative unit certificate file Control" /></ui:insert>
-	 			</div>
-	 			-->
 	 		</div>
  		</ui:insert>
  	</div>

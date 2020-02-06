@@ -21,6 +21,9 @@ public class User extends AbstractDataIdentifiableSystemStringImpl implements Se
 	private Civility civility;
 	private AdministrativeUnit administrativeUnit;
 	private String administrativeUnitCertificateReference;
+	private String administrativeUnitCertificateSignedBy;
+	private String administrativeUnitCertificateSignedDate;
+	private Long administrativeUnitCertificateSignedDateTimestamp;
 	private String administrativeUnitFunction;
 	
 	private Function function;

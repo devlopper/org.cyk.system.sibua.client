@@ -6,5 +6,5 @@ import org.mapstruct.Mapper;
 @Mapper
 public abstract class UserMapper extends AbstractMapperSourceDestinationImpl<User, UserDto> {
 	private static final long serialVersionUID = 1L;
-    	
+	
 }

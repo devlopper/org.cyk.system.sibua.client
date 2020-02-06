@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
@@ -48,6 +49,7 @@ public class UserCreditManagerEditPage extends AbstractPageContainerManagedImpl 
 	private SelectionOne<UserType> userType;
 	private AutoCompleteEntity<AdministrativeUnit> administrativeUnit;	
 	private Collection<String> selectedFunctionCategoryCodes = new ArrayList<>();
+	private Date administrativeUnitCertificateSignedDate;
 	
 	private List<UserCreateFunctionTab> functionTabs = new ArrayList<>();
 	
@@ -81,6 +83,7 @@ public class UserCreditManagerEditPage extends AbstractPageContainerManagedImpl 
 			user = __inject__(UserController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier"));
 			civility.select(user.getCivility());
 			userType.select(user.getType());
+			administrativeUnitCertificateSignedDate = new Date(user.getAdministrativeUnitCertificateSignedDateTimestamp());
 			administrativeUnit.setValue(user.getAdministrativeUnit());
 			if(CollectionHelper.isNotEmpty(user.getUserFiles())) {
 				administrativeUnitCertificateFile = user.getUserFiles().get(0).getFile();
@@ -147,8 +150,16 @@ public class UserCreditManagerEditPage extends AbstractPageContainerManagedImpl 
 				e.printStackTrace();
 			}
 		}else if("update".equals(action)) {
+			if(administrativeUnitCertificateSignedDate == null) {
+				//user.setAdministrativeUnitCertificateSignedDate(null);
+				user.setAdministrativeUnitCertificateSignedDateTimestamp(null);
+			}else {
+				//user.setAdministrativeUnitCertificateSignedDate(LocalDateTime.ofInstant(administrativeUnitCertificateSignedDate.toInstant(),ZoneOffset.UTC));
+				user.setAdministrativeUnitCertificateSignedDateTimestamp(administrativeUnitCertificateSignedDate.getTime());
+			}
 			__inject__(UserController.class).update(user,new Properties().setFields("type,civility,administrativeUnit,administrativeUnitFunction"
-					+ ",administrativeUnitCertificateReference,registrationNumber,firstName,lastNames,electronicMailAddress,mobilePhoneNumber"
+					+ ",administrativeUnitCertificateReference,administrativeUnitCertificateSignedBy,administrativeUnitCertificateSignedDateTimestamp,registrationNumber"
+					+ ",firstName,lastNames,electronicMailAddress,mobilePhoneNumber"
 					+ ",deskPhoneNumber,deskPost,postalAddress"));
 			
 			UniformResourceIdentifierAsFunctionParameter p = new UniformResourceIdentifierAsFunctionParameter();

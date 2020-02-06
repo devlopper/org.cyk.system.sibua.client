@@ -31,10 +31,6 @@
 			    		<ui:decorate template="/command/commandbutton/default.xhtml">
 			    			<ui:param name="commandButton" value="#{userCreditManagerReadPage.deleteCommandButton}"/>
 			    		</ui:decorate>
-			    		<!--   		
-			    		<cyk:commandable value="#{userCreditManagerReadPage.sendCommandable}" />			    		
-			    		<cyk:commandable value="#{userCreditManagerReadPage.deleteCommandable}" />
-			    		-->
 		    		</ui:fragment>
     				<p:button value="Imprimer" icon="fa fa-print" href="#{userCreditManagerReadPage.user.reportUniformResourceIdentifier}" target="_blank"/>
     			</f:facet>    			
@@ -107,6 +103,13 @@
 		    				<div class="ui-g-9">
 		    					<h:outputText value=" N° #{userCreditManagerReadPage.user.administrativeUnitCertificateReference} " 
 		    						rendered="#{not empty userCreditManagerReadPage.user.administrativeUnitCertificateReference}" style="float:left"/>
+		    					
+		    					<h:outputText value=" Signataire : #{userCreditManagerReadPage.user.administrativeUnitCertificateSignedBy} " 
+		    						rendered="#{not empty userCreditManagerReadPage.user.administrativeUnitCertificateSignedBy}" style="float:left"/>
+		    						
+		    					<h:outputText value=" Signé le #{userCreditManagerReadPage.user.administrativeUnitCertificateSignedDate} " 
+		    						rendered="#{userCreditManagerReadPage.user.administrativeUnitCertificateSignedDate != null}" style="float:left"/>		
+		    						
 			    				<p:outputPanel id="administrativeUnitCertificateFileOutputPanel" style="float:left">
 			    					<ui:fragment rendered="#{userCreditManagerReadPage.administrativeUnitCertificateUserFile == null}">
 			    						<p:commandButton id="uploadAdministrativeUnitCertificateFile" icon="fa fa-upload" 
