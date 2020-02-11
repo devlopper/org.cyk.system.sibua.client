@@ -13,6 +13,7 @@ public class AdministrativeUnitActivity extends AbstractDataIdentifiableSystemSt
 	private static final long serialVersionUID = 1L;
 
 	private AdministrativeUnit administrativeUnit;
+	private AdministrativeUnit administrativeUnitBeneficiaire;
 	private Activity activity;
 	
 	public AdministrativeUnitActivity(AdministrativeUnit administrativeUnit,Activity activity) {

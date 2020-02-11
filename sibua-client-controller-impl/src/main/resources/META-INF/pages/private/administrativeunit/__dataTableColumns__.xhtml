@@ -32,10 +32,12 @@
 		</ui:include>
  	</p:column>
  	
- 	<p:column id="na" width="60" exportable="false">
+ 	<p:column width="70" exportable="false">
  		<f:facet name="header">
- 			<h:outputText value="N.A." />
+ 			<h:outputText id="na" value="N.A." title="Nombre d'activité(s)"/>
+ 			<!--
  			<p:tooltip for="na" value="Nombre d'activité(s)"/>
+ 			-->
  		</f:facet>
  		<h:outputText id="nav" value="#{administrativeUnit.numberOfActivities} | #{administrativeUnit.numberOfActivitiesBeneficiaire}"/>
  		<p:tooltip for="nav" value="Gestionnaire de #{administrativeUnit.numberOfActivities} | Bénéficiaire de #{administrativeUnit.numberOfActivitiesBeneficiaire}"/>

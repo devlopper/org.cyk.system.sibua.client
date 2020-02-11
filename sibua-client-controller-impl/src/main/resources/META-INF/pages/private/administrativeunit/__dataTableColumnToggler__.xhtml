@@ -5,8 +5,11 @@
     xmlns:f="http://java.sun.com/jsf/core"      
     xmlns:h="http://java.sun.com/jsf/html">
 
-	<p:column headerText="#" width="35" selectionMode="multiple" exportable="false" rendered="#{empty param['export']}" >
-		<h:outputText value="#{rowIndex+1}" />
+	<p:column headerText="#" width="60" selectionMode="multiple" exportable="false" rendered="#{empty param['export']}" >
+		<div style="float: left;">
+			<h:outputText value="#{rowIndex+1}" />
+		</div>
+		
 		<p:rowToggler rendered="#{not empty administrativeUnit.activityDestinations or not empty administrativeUnit.activities or not empty administrativeUnit.destinations or not empty administrativeUnit.children}"/>	
 	</p:column>	
   	

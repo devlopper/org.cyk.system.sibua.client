@@ -100,7 +100,7 @@ public class UserCreditManagerReadPage extends AbstractPageContainerManagedImpl 
 		deleteCommandButton.getConfirm().setDisabled(Boolean.FALSE);
 		deleteCommandButton.setListener(new CommandButton.Listener() {
 			@Override
-			public void listenAction() {
+			public void listenAction(Object argument) {
 				delete();
 			}
 		});
@@ -109,7 +109,7 @@ public class UserCreditManagerReadPage extends AbstractPageContainerManagedImpl 
 		sendCommandButton.getConfirm().setDisabled(Boolean.FALSE);
 		sendCommandButton.setListener(new CommandButton.Listener() {
 			@Override
-			public void listenAction() {
+			public void listenAction(Object argument) {
 				send();
 			}
 		});

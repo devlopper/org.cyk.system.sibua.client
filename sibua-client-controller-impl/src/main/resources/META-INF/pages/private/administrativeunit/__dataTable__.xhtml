@@ -10,7 +10,7 @@
 	
 	<p:dataTable
    		id="dataTable" value="#{__page__.administrativeUnits}" var="administrativeUnit" emptyMessage="Aucune unité administrative trouvée"
-   		lazy="true" rows="20" paginator="true" rowsPerPageTemplate="20,50,100" paginatorAlwaysVisible="false"
+   		lazy="true" rows="20" paginator="true" rowsPerPageTemplate="20,50,100,500,1000" paginatorAlwaysVisible="false"
 		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"					
 		currentPageReportTemplate="{totalRecords} trouvées. Page {currentPage}/{totalPages}"
 		widgetVar="administrativeUnitsDataTable" rowIndexVar="rowIndex" filterDelay="2000" selection="#{__page__.selectedAdministrativeUnits}"
