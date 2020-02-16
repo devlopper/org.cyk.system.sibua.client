@@ -10,16 +10,13 @@
 	
     <cyk:page value="#{administrativeUnitEditActivitiesPage}">
     	<ui:define name="centerCenter">
-    		
     		<p:dataTable id="administrativeUnitActivities" value="#{administrativeUnitEditActivitiesPage.administrativeUnitActivities}" var="administrativeUnitActivity" rowIndexVar="rowIndex"
     			emptyMessage="Aucune activité" 
     			
     			lazy="true" rows="20" paginator="true" rowsPerPageTemplate="20,50,100,500,1000" paginatorAlwaysVisible="false"
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"					
 				currentPageReportTemplate="{totalRecords} trouvées. Page {currentPage}/{totalPages}"
-		
     		>
-    		
     			<f:facet name="header">
     				<p:toolbar>
     					<f:facet name="right">
@@ -46,42 +43,27 @@
     			<p:column headerText="Programme" visible="false">
     				<h:outputText value="#{administrativeUnitActivity.activity.action.program.code}" styleClass="cyk-business-identifier"/><h:outputText value=" #{administrativeUnitActivity.activity.action.program.name}" />
     			</p:column>
-    			<p:column headerText="Gestionnaire" styleClass="#{administrativeUnitEditActivitiesPage.administrativeUnit.code eq administrativeUnitActivity.administrativeUnit.code ? 'cyk-background-highlight' : 'ui-state-default'}">
-    				<p:inplace editor="true" event="dblclick" saveLabel="Enregistrer" cancelLabel="Annuler" effect="none">
-			            <f:facet name="output">
-			            	<ui:fragment rendered="#{administrativeUnitActivity.administrativeUnit == null}">
-			            		<h:outputText value="-- Rattacher --" />
-			            	</ui:fragment>
-			            	<ui:fragment rendered="#{administrativeUnitActivity.administrativeUnit != null}">
-				            	<ui:include src="../outputText_code_name.xhtml">
-									<ui:param name="code" value="#{administrativeUnitActivity.administrativeUnit.code}"/>
-									<ui:param name="name" value="#{administrativeUnitActivity.administrativeUnit.name}"/>
-								</ui:include>
-							</ui:fragment>
-			            </f:facet>
-			            <f:facet name="input">
-			                INPUT GEST
-			            </f:facet>
-			            <p:ajax event="save" listener="#{administrativeUnitEditActivitiesPage.saveGestionnaire}" />
-			        </p:inplace>
+    			<p:column headerText="Gestionnaire" styleClass="#{administrativeUnitEditActivitiesPage.administrativeUnit.code eq administrativeUnitActivity.administrativeUnit.code ? 'cyk-background-highlight' : 'ui-state-default'}">    				
+	            	<ui:fragment rendered="#{administrativeUnitActivity.administrativeUnit == null}">
+	            		<h:outputText value="** Rattacher **" />
+	            	</ui:fragment>
+	            	<ui:fragment rendered="#{administrativeUnitActivity.administrativeUnit != null}">
+		            	<ui:include src="../outputText_code_name.xhtml">
+							<ui:param name="code" value="#{administrativeUnitActivity.administrativeUnit.code}"/>
+							<ui:param name="name" value="#{administrativeUnitActivity.administrativeUnit.name}"/>
+						</ui:include>
+					</ui:fragment>			            
     			</p:column>
-    			<p:column headerText="Bénéficiaire" styleClass="#{administrativeUnitEditActivitiesPage.administrativeUnit.code eq administrativeUnitActivity.administrativeUnitBeneficiaire.code ? 'cyk-background-highlight' : 'ui-state-default'}">
-    				<p:inplace editor="true" event="dblclick" saveLabel="Enregistrer" cancelLabel="Annuler" effect="none" >
-			            <f:facet name="output">
-			            	<ui:fragment rendered="#{administrativeUnitActivity.administrativeUnitBeneficiaire == null}">
-			            		<h:outputText value="-- Rattacher --" />
-			            	</ui:fragment>
-			            	<ui:fragment rendered="#{administrativeUnitActivity.administrativeUnitBeneficiaire != null}">
-			            		<ui:include src="../outputText_code_name.xhtml">
-									<ui:param name="code" value="#{administrativeUnitActivity.administrativeUnitBeneficiaire.code}"/>
-									<ui:param name="name" value="#{administrativeUnitActivity.administrativeUnitBeneficiaire.name}"/>
-								</ui:include>
-			            	</ui:fragment>			            	
-			            </f:facet>
-			            <f:facet name="input">
-			                INPUT BENE
-			            </f:facet>
-			        </p:inplace>	
+    			<p:column headerText="Bénéficiaire" styleClass="#{administrativeUnitEditActivitiesPage.administrativeUnit.code eq administrativeUnitActivity.administrativeUnitBeneficiaire.code ? 'cyk-background-highlight' : 'ui-state-default'}">    				    				
+	            	<ui:fragment rendered="#{administrativeUnitActivity.administrativeUnitBeneficiaire == null}">
+	            		<h:outputText value="** Rattacher **" />
+	            	</ui:fragment>
+	            	<ui:fragment rendered="#{administrativeUnitActivity.administrativeUnitBeneficiaire != null}">
+	            		<ui:include src="../outputText_code_name.xhtml">
+							<ui:param name="code" value="#{administrativeUnitActivity.administrativeUnitBeneficiaire.code}"/>
+							<ui:param name="name" value="#{administrativeUnitActivity.administrativeUnitBeneficiaire.name}"/>
+						</ui:include>
+	            	</ui:fragment>			            	
     			</p:column>
     			<p:column width="40">
     				<ui:decorate template="/command/commandbutton/default.xhtml">

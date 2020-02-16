@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -24,8 +25,11 @@ import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.component.window.WindowBuilder;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.ajax.Ajax;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.command.CommandButton;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.input.AutoComplete;
 import org.omnifaces.util.Faces;
+import org.primefaces.component.inplace.Inplace;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -39,6 +43,8 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 	private AdministrativeUnit administrativeUnit;
 	private LazyDataModel<AdministrativeUnitActivity> administrativeUnitActivities;
 	private CommandButton deleteCommandButton;
+	private AutoComplete serviceGestionnaireAutoComplete,serviceBeneficiaireAutoComplete,autoComplete;
+	private Ajax saveAjax;
 	
 	@Override
 	protected void __listenPostConstruct__() {
@@ -68,6 +74,23 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 						return list;
 					}
 				};
+				
+				autoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,AdministrativeUnit.class));
+				serviceGestionnaireAutoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,AdministrativeUnit.class));
+				serviceBeneficiaireAutoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,AdministrativeUnit.class));
+				
+				saveAjax = Builder.build(Ajax.class,Map.of(Ajax.FIELD_EVENT,"save",Ajax.FIELD_LISTENER,new Ajax.Listener() {
+					@Override
+					public void listenAction(Object argument) {
+						if(argument instanceof AjaxBehaviorEvent) {
+							Inplace inplace = (Inplace) ((AjaxBehaviorEvent)argument).getSource();
+							AdministrativeUnitActivity administrativeUnitActivity = (AdministrativeUnitActivity) inplace.getAttributes().get("administrativeUnitActivity");
+							System.out.println(administrativeUnitActivity.getAdministrativeUnit()+" ::: "+administrativeUnitActivity.getAdministrativeUnitBeneficiaire());
+						}
+					}
+				}));
+				//saveAjax.getRunnerArguments().setSuccessMessageArguments(null);
+				saveAjax.setDisabled(Boolean.FALSE);
 			}
 		}catch(Exception exception) {
 			exception.printStackTrace();

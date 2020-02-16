@@ -6,7 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 import org.cyk.utility.__kernel__.AbstractApplicationScopeLifeCycleListener;
 import org.cyk.utility.client.controller.component.menu.MenuBuilderMapInstantiator;
-import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntity;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.input.AutoComplete;
 
 @ApplicationScoped
 public class ApplicationScopeLifeCycleListener extends AbstractApplicationScopeLifeCycleListener implements Serializable {
@@ -14,8 +14,8 @@ public class ApplicationScopeLifeCycleListener extends AbstractApplicationScopeL
 
 	@Override
 	public void __initialize__(Object object) {
-		AutoCompleteEntity.INITIAL_NUMBER_OF_RESULTS = 20;
-		AutoCompleteEntity.QUERY_DELAY = 2000;
+		AutoComplete.INITIAL_NUMBER_OF_RESULTS = 20;
+		AutoComplete.QUERY_DELAY = 2000;
 		__inject__(org.cyk.system.sibua.client.controller.api.ApplicationScopeLifeCycleListener.class).initialize(null);
 		__setQualifierClassTo__(org.cyk.system.sibua.server.annotation.System.class, MenuBuilderMapInstantiator.class);
 	}

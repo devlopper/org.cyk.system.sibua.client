@@ -23,6 +23,7 @@ import org.cyk.system.sibua.server.persistence.api.AdministrativeUnitPersistence
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
 import org.cyk.utility.__kernel__.map.MapHelper;
+import org.cyk.utility.__kernel__.object.Builder;
 import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
@@ -31,8 +32,7 @@ import org.cyk.utility.__kernel__.value.ValueHelper;
 import org.cyk.utility.client.controller.component.command.Commandable;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.web.ComponentHelper;
-import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntity;
-import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntityBuilder;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.input.AutoComplete;
 import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.LazyDataModel;
@@ -45,10 +45,10 @@ import lombok.Setter;
 public abstract class AbstractAdministrativeUnitListPage extends AbstractPageContainerManagedImpl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private AutoCompleteEntity<Section> sectionAutoComplete;
-	private AutoCompleteEntity<ServiceGroup> serviceGroupAutoComplete;
-	private AutoCompleteEntity<FunctionalClassification> functionalClassificationAutoComplete;
-	private AutoCompleteEntity<Localisation> localisationAutoComplete;
+	private AutoComplete sectionAutoComplete;
+	private AutoComplete serviceGroupAutoComplete;
+	private AutoComplete functionalClassificationAutoComplete;
+	private AutoComplete localisationAutoComplete;
 	
 	//protected SelectionOne<Section> section;
 	//protected Collection<Section> sections;
@@ -71,11 +71,17 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 	@Override
 	protected void __listenPostConstruct__() {
 		super.__listenPostConstruct__();
+		sectionAutoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,Section.class,AutoComplete.FIELD_TARGET_WIDGET_VAR,"administrativeUnitsDataTable"));		
+		serviceGroupAutoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,ServiceGroup.class,AutoComplete.FIELD_TARGET_WIDGET_VAR,"administrativeUnitsDataTable"));
+		functionalClassificationAutoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,FunctionalClassification.class,AutoComplete.FIELD_TARGET_WIDGET_VAR,"administrativeUnitsDataTable"));
+		localisationAutoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,Localisation.class,AutoComplete.FIELD_TARGET_WIDGET_VAR,"administrativeUnitsDataTable"));
+		
+		/*
 		sectionAutoComplete = AutoCompleteEntityBuilder.build(Section.class, "administrativeUnitsDataTable");		
 		serviceGroupAutoComplete = AutoCompleteEntityBuilder.build(ServiceGroup.class, "administrativeUnitsDataTable");
 		functionalClassificationAutoComplete = AutoCompleteEntityBuilder.build(FunctionalClassification.class, "administrativeUnitsDataTable");
 		localisationAutoComplete = AutoCompleteEntityBuilder.build(Localisation.class, "administrativeUnitsDataTable");
-		
+		*/
 		export = ValueHelper.convertToBoolean(Faces.getRequestParameter("export"));
 		/*
 		section = new SelectionOne<Section>(Section.class);		
