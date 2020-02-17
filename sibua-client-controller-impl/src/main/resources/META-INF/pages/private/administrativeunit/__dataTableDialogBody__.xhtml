@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"      
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+	<ui:fragment rendered="#{__page__.dataTable.selectedCommandIdentifier eq 'create'}">
+  		<h1>Create</h1>
+  	</ui:fragment>
+  	
+  	<ui:fragment rendered="#{administrativeUnitListPageNew.dataTable.selectedCommandIdentifier eq 'delete'}">
+  		<h1>Deletion</h1>
+  	</ui:fragment>
+  	
+  	<ui:fragment rendered="#{administrativeUnitListPageNew.dataTable.selectedCommandIdentifier eq 'merge'}">
+  		<h1>Merging</h1>
+  	</ui:fragment>
+  	
+  	<ui:fragment rendered="#{administrativeUnitListPageNew.dataTable.selectedCommandIdentifier eq 'read'}">
+  		
+  	</ui:fragment>
+		
+		
+  		<!--
+		<p:separator/>
+		
+		
+		-->	
+</ui:composition>

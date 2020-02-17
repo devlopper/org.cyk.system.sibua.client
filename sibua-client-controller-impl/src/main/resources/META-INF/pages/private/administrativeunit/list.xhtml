@@ -57,6 +57,54 @@
     				</ui:fragment>
 				</ui:define>
     			
+    			<ui:define name="dataTableDialogBodyDataTable">
+    				<p:dataTable id="dialogDataTable" value="#{administrativeUnitListPageNew.dataTable.selection}" var="administrativeUnit" rowIndexVar="rowIndexAdministrativeUnit">
+			  			<p:columnGroup type="header">
+			  				<p:row>
+			  					<p:column headerText="Activité"/>
+			  					<p:column headerText="Gestionnaire" width="100"/>
+			  					<p:column headerText="Bénéficiaire" width="100"/>
+			  				</p:row>
+			  			</p:columnGroup>
+			  			
+			  			<p:subTable value="#{administrativeUnit.activities}" var="activity" rowIndexVar="rowIndexActivity"> 
+			  				<f:facet name="header">
+			  					<h:outputText value="#{rowIndexAdministrativeUnit+1} - " />
+			  					<ui:include src="../outputText_code_name.xhtml">
+									<ui:param name="code" value="#{administrativeUnit.code}"/>
+									<ui:param name="name" value="#{administrativeUnit.name}"/>
+								</ui:include>
+			  				</f:facet>				
+			 				<p:column>
+			 					<h:outputText value="#{activity}"/>
+			 				</p:column>
+			 				<p:column>
+			 					<i  class="#{activity.isGestionnaire ? 'fa fa-check' : ''}"/>
+			 				</p:column>
+			 				<p:column>
+			 					<i  class="#{activity.isBeneficiaire ? 'fa fa-check' : ''}"/>
+			 				</p:column>
+			  			</p:subTable>
+			  		</p:dataTable>
+    			</ui:define>
+    			
+    			<ui:define name="dataTableDialogBodyDataTableAfter">
+    				<ui:fragment rendered="#{__page__.dataTable.selectedCommandIdentifier eq 'merge'}">
+						<span>
+							<p:outputLabel for="ua" value="Toutes les unités administratives ci dessus seront fusionnées en la suivante :" />
+							<p:selectOneMenu id="ua" value="#{__page__.administrativeUnit}" converter="#{objectConverter}">
+								<f:selectItems value="#{__page__.dataTable.selection}" var="dua" itemValue="#{dua}" itemLabel="#{dua}" />
+							</p:selectOneMenu>		
+						</span>						
+						<p:separator/>
+					</ui:fragment>
+					<!--
+					<ui:fragment rendered="#{__page__.dataTable.selectedCommandIdentifier eq 'delete' or __page__.dataTable.selectedCommandIdentifier eq 'merge'}">
+						<p:staticMessage severity="warn" summary="Avertissement" detail="#{__page__.dialogMessage}"/>
+					</ui:fragment>
+					-->
+    			</ui:define>
+    			
     		</ui:decorate>
 	    	<ui:include src="../css.xhtml"/>	    		 		
     	</ui:define>

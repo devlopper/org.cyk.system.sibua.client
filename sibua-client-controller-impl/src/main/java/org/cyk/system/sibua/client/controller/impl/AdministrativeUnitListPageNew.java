@@ -1,15 +1,27 @@
 package org.cyk.system.sibua.client.controller.impl;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.cyk.system.sibua.client.controller.api.ActivityController;
+import org.cyk.system.sibua.client.controller.api.AdministrativeUnitController;
+import org.cyk.system.sibua.client.controller.entities.Activity;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
+import org.cyk.system.sibua.server.persistence.api.ActivityPersistence;
+import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
 import org.cyk.utility.__kernel__.object.Builder;
+import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.properties.Properties;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.AbstractAction;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.AbstractCollection;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.Column;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.DataTable;
@@ -23,6 +35,8 @@ public class AdministrativeUnitListPageNew extends AbstractPageContainerManagedI
 	private static final long serialVersionUID = 1L;
 
 	private DataTable dataTable;
+	private AdministrativeUnit administrativeUnit;
+	private Collection<AdministrativeUnit> administrativeUnits;
 	
 	@Override
 	protected void __listenPostConstruct__() {
@@ -53,34 +67,98 @@ public class AdministrativeUnitListPageNew extends AbstractPageContainerManagedI
 					@Override
 					protected void __showDialog__() {
 						dataTable.getDialog().setHeader("Création d'unité administrative");
+						dataTable.getDialog().getExecuteCommandButton().setRendered(Boolean.TRUE);
+						dataTable.getDialog().getExecuteCommandButton().getConfirm().setDisabled(Boolean.TRUE);
 						super.__showDialog__();
 					}
-				}.setMinimumSelectionSize(0).setIsSelectionShowable(Boolean.FALSE),CommandButton.FIELD_ICON,"fa fa-plus"))
+				}.setCommandIdentifier("create").setMinimumSelectionSize(0).setIsSelectionShowable(Boolean.FALSE),CommandButton.FIELD_ICON,"fa fa-plus"))
 				,Builder.build(CommandButton.class,Map.of(CommandButton.FIELD_VALUE,"Supprimer",CommandButton.ConfiguratorImpl.FIELD_DATA_TABLE,dataTable
 						,CommandButton.FIELD_LISTENER,new AbstractCollection.AbstractActionListenerImpl(dataTable) {
 					@Override
 					protected void __showDialog__() {
 						dataTable.getDialog().setHeader("Suppression d'unité administrative");
+						dataTable.getDialog().getExecuteCommandButton().setRendered(Boolean.TRUE);
+						dataTable.getDialog().getExecuteCommandButton().getConfirm().setDisabled(Boolean.FALSE);
 						super.__showDialog__();
 					}
-				},CommandButton.FIELD_ICON,"fa fa-remove"))
+				}.setCommandIdentifier("delete"),CommandButton.FIELD_ICON,"fa fa-remove"))
 				,Builder.build(CommandButton.class,Map.of(CommandButton.FIELD_VALUE,"Fusionner",CommandButton.ConfiguratorImpl.FIELD_DATA_TABLE,dataTable
 						,CommandButton.FIELD_LISTENER,new AbstractCollection.AbstractActionListenerImpl(dataTable) {
 					@Override
 					protected void __showDialog__() {
 						dataTable.getDialog().setHeader("Fusion d'unité administrative");
+						dataTable.getDialog().getExecuteCommandButton().setRendered(Boolean.TRUE);
+						dataTable.getDialog().getExecuteCommandButton().getConfirm().setDisabled(Boolean.FALSE);
 						super.__showDialog__();
 					}
-				}.setMinimumSelectionSize(2),CommandButton.FIELD_ICON,"fa fa-arrows"))
+				}.setCommandIdentifier("merge").setMinimumSelectionSize(2),CommandButton.FIELD_ICON,"fa fa-arrows"))
 				,Builder.build(CommandButton.class,Map.of(CommandButton.FIELD_VALUE,"Consulter",CommandButton.ConfiguratorImpl.FIELD_DATA_TABLE,dataTable
 						,CommandButton.FIELD_LISTENER,new AbstractCollection.AbstractActionListenerImpl(dataTable) {
 					@Override
 					protected void __showDialog__() {
 						dataTable.getDialog().setHeader("Consultation d'unité administrative");
+						dataTable.getDialog().getExecuteCommandButton().setRendered(Boolean.FALSE);
+						@SuppressWarnings("unchecked")
+						Collection<AdministrativeUnit> selectedAdministrativeUnits = (Collection<AdministrativeUnit>) dataTable.getSelection();
+						selectedAdministrativeUnits.forEach(new Consumer<AdministrativeUnit>() {
+							@Override
+							public void accept(AdministrativeUnit administrativeUnit) {
+								if(administrativeUnit.getActivities() == null) {
+									List<Activity> activities = (List<Activity>) __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_WHERE_IS_GESTIONNAIRE_OR_BENEFICIAIRE_BY_ADMINISTRATIVE_UNITS_CODES)
+											.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
+											.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT_GESTIONNAIRE_OR_BENEFICIAIRE, List.of(administrativeUnit.getCode())))
+											.setIsPageable(Boolean.FALSE));
+									if(CollectionHelper.isNotEmpty(activities)) {
+										List<Activity> gestionnaires = (List<Activity>) __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_BY_FILTERS_LIKE)
+												.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
+												.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE));
+										
+										List<Activity> beneficiaires = (List<Activity>) __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_BY_FILTERS_LIKE)
+												.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
+												.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT_BENEFICIAIRE, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE));
+									
+										for(Activity activity : activities) {
+											activity.setIsGestionnaire(CollectionHelper.contains(gestionnaires, activity));
+											activity.setIsBeneficiaire(CollectionHelper.contains(beneficiaires, activity));
+										}
+										
+										administrativeUnit.setActivities(activities.stream().sorted(new Comparator<Activity>() {
+											@Override
+											public int compare(Activity o1, Activity o2) {
+												return o1.getIsGestionnaire() ? -1 : 1;
+											}							
+										}).collect(Collectors.toList()));
+									}
+								}
+							}
+						});
+						
 						super.__showDialog__();
 					}
-				},CommandButton.FIELD_ICON,"fa fa-eye"))
+				}.setCommandIdentifier("read"),CommandButton.FIELD_ICON,"fa fa-eye"))
 			);
+		
+		dataTable.getDialog().getExecuteCommandButton().setListener(new AbstractAction.Listener() {			
+			@Override
+			public void listenAction(Object argument) {
+				if(CollectionHelper.isEmpty(dataTable.getSelection()))
+					return;
+				@SuppressWarnings("unchecked")
+				List<AdministrativeUnit> selectedAdministrativeUnits = (List<AdministrativeUnit>) dataTable.getSelection();
+				
+				if("create".equals(dataTable.getSelectedCommandIdentifier())) {
+					__inject__(AdministrativeUnitController.class).createMany(administrativeUnits);
+				}else if("delete".equals(dataTable.getSelectedCommandIdentifier())) {
+					__inject__(AdministrativeUnitController.class).deleteMany(selectedAdministrativeUnits);
+				}else if("merge".equals(dataTable.getSelectedCommandIdentifier())) {
+					if(administrativeUnit == null)
+						return;
+					__inject__(AdministrativeUnitController.class).mergeByCodes(selectedAdministrativeUnits, administrativeUnit);
+				}
+				dataTable.getSelection().clear();
+				dataTable.setSelection(null);
+			}
+		});
 	}
 	
 	@Override
