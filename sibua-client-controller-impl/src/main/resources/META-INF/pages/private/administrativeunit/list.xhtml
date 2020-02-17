@@ -8,11 +8,10 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
 	
-    <cyk:page value="#{administrativeUnitListPageNew}">
+    <cyk:page value="#{administrativeUnitListPage}">
     	<ui:define name="centerCenter">	    	
 	    	<ui:decorate template="/collection/datatable/default.xhtml">
-    			<ui:param name="dataTable" value="#{administrativeUnitListPageNew.dataTable}"/>
-    			<ui:param name="rowStyleClass" value="#{record.numberOfActivities == 0 and record.numberOfActivitiesBeneficiaire == 0 ? 'cyk-background-highlight' : 'ui-state-default'}"/>
+    			<ui:param name="dataTable" value="#{administrativeUnitListPage.dataTable}"/>
     			
     			<ui:define name="columnsAfterRowIndexBodies">
     				<ui:fragment rendered="#{columnIndex == 0}">
@@ -58,7 +57,7 @@
 				</ui:define>
     			
     			<ui:define name="dataTableDialogBodyDataTable">
-    				<p:dataTable id="dialogDataTable" value="#{administrativeUnitListPageNew.dataTable.selection}" var="administrativeUnit" rowIndexVar="rowIndexAdministrativeUnit">
+    				<p:dataTable id="dialogDataTable" value="#{administrativeUnitListPage.dataTable.selection}" var="administrativeUnit" rowIndexVar="rowIndexAdministrativeUnit">
 			  			<p:columnGroup type="header">
 			  				<p:row>
 			  					<p:column headerText="Activité"/>

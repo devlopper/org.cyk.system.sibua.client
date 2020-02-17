@@ -14,11 +14,13 @@ import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnitActivity;
 import org.cyk.system.sibua.server.persistence.api.AdministrativeUnitActivityPersistence;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
+import org.cyk.utility.__kernel__.computation.ComparisonOperator;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
 import org.cyk.utility.__kernel__.icon.Icon;
 import org.cyk.utility.__kernel__.identifier.resource.PathAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierHelper;
+import org.cyk.utility.__kernel__.number.NumberHelper;
 import org.cyk.utility.__kernel__.object.Builder;
 import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
 import org.cyk.utility.__kernel__.properties.Properties;
@@ -26,6 +28,10 @@ import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.component.window.WindowBuilder;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.ajax.Ajax;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.AbstractCollection;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.AbstractDataTable;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.Column;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.DataTable;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.command.CommandButton;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.input.AutoComplete;
 import org.omnifaces.util.Faces;
@@ -40,12 +46,15 @@ import lombok.Setter;
 public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerManagedImpl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private DataTable dataTable;
+	
 	private AdministrativeUnit administrativeUnit;
 	private LazyDataModel<AdministrativeUnitActivity> administrativeUnitActivities;
 	private CommandButton deleteCommandButton;
 	private AutoComplete serviceGestionnaireAutoComplete,serviceBeneficiaireAutoComplete,autoComplete;
 	private Ajax saveAjax;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void __listenPostConstruct__() {
 		super.__listenPostConstruct__();
@@ -53,7 +62,69 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 			if(StringHelper.isBlank(Faces.getRequestParameter("entityidentifier"))) {
 				
 			}else {
-				administrativeUnit = __inject__(AdministrativeUnitController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier"));				
+				administrativeUnit = __inject__(AdministrativeUnitController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier"));
+				
+				dataTable = Builder.build(DataTable.class,Map.of(DataTable.FIELD_LAZY,Boolean.TRUE,DataTable.ConfiguratorImpl.FIELD_ENTIY_CLASS,AdministrativeUnitActivity.class
+						,DataTable.ConfiguratorImpl.FIELD_FILTERABLE,Boolean.TRUE,DataTable.FIELD_SELECTION_MODE,"multiple"));				
+				
+				((org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.LazyDataModel<AdministrativeUnitActivity>) dataTable.getValue())
+					.setReadQueryIdentifier(AdministrativeUnitActivityPersistence.READ_WHERE_IS_GESTIONNAIRE_OR_BENEFICIAIRE_BY_ADMINISTRATIVE_UNITS_CODES);
+				
+				((org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.LazyDataModel<AdministrativeUnitActivity>) dataTable.getValue())
+					.setCountQueryIdentifier(AdministrativeUnitActivityPersistence.COUNT_WHERE_IS_GESTIONNAIRE_OR_BENEFICIAIRE_BY_ADMINISTRATIVE_UNITS_CODES);
+				
+				((org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.LazyDataModel<AdministrativeUnitActivity>) dataTable.getValue())
+					.setFilter(new FilterDto().addField(AdministrativeUnitActivity.FIELD_ADMINISTRATIVE_UNIT, List.of(administrativeUnit.getCode())));
+				
+				dataTable.addColumnsAfterRowIndex(
+						Builder.build(Column.class, Map.of(Column.FIELD_FIELD_NAME,AdministrativeUnitActivity.FIELD_ACTIVITY,Column.FIELD_WIDTH,"50%"))
+						,Builder.build(Column.class, Map.of(Column.FIELD_HEADER,"Programme",Column.FIELD_FILTER_BY,"program",Column.FIELD_VISIBLE,Boolean.FALSE))
+						,Builder.build(Column.class, Map.of(Column.FIELD_HEADER,"Gestionnaire",Column.FIELD_FILTER_BY,"gestionnaire"))
+						,Builder.build(Column.class, Map.of(Column.FIELD_HEADER,"Bénéficiaire",Column.FIELD_FILTER_BY,"beneficiaire"))
+						);
+				
+				dataTable.addHeaderToolbarLeftCommandButtons(
+						Builder.build(CommandButton.class,Map.of(CommandButton.FIELD_VALUE,"Modifier en masse",CommandButton.ConfiguratorImpl.FIELD_DATA_TABLE,dataTable
+								,CommandButton.FIELD_LISTENER,new AbstractCollection.AbstractActionListenerImpl(dataTable) {
+							@Override
+							protected void __showDialog__() {
+								dataTable.getDialog().setHeader("Modification en masse");
+								dataTable.getDialog().getExecuteCommandButton().setRendered(Boolean.TRUE);
+								super.__showDialog__();
+							}
+						}.setCommandIdentifier("editmass"),CommandButton.FIELD_ICON,"fa fa-pencil"))
+						,Builder.build(CommandButton.class,Map.of(CommandButton.FIELD_VALUE,"Modifier en détails",CommandButton.ConfiguratorImpl.FIELD_DATA_TABLE,dataTable
+								,CommandButton.FIELD_LISTENER,new AbstractCollection.AbstractActionListenerImpl(dataTable) {
+							@Override
+							protected void __showDialog__() {
+								dataTable.getDialog().setHeader("Modification en détails");
+								dataTable.getDialog().getExecuteCommandButton().setRendered(Boolean.TRUE);
+								super.__showDialog__();
+							}
+						}.setCommandIdentifier("editdetails"),CommandButton.FIELD_ICON,"fa fa-pencil"))
+					);
+				
+				dataTable.setListener(new AbstractDataTable.Listener() {
+					@Override
+					public String listenGetStyleClassByRecord(Object record,Integer rowIndex) {
+						return "ui-state-default";
+					}
+					
+					@Override
+					public String listenGetStyleClassByRecordByColumn(Object record,Integer rowIndex,Column column, Integer columnIndex) {
+						if(record instanceof AdministrativeUnitActivity) {
+							if((NumberHelper.compare(2, columnIndex, ComparisonOperator.EQ) && 	
+									((AdministrativeUnitActivity)record).getAdministrativeUnit().getCode().equals(administrativeUnit.getCode()))
+									||
+									(NumberHelper.compare(3, columnIndex, ComparisonOperator.EQ) && 	
+											((AdministrativeUnitActivity)record).getAdministrativeUnitBeneficiaire().getCode().equals(administrativeUnit.getCode()))
+								)
+								return "cyk-background-highlight";
+						}						
+						return "ui-state-default";
+					}
+				});
+				
 				administrativeUnitActivities = new LazyDataModel<AdministrativeUnitActivity>() {
 					private static final long serialVersionUID = 1L;
 

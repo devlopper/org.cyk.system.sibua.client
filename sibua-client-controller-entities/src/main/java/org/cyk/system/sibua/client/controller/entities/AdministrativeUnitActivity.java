@@ -24,6 +24,7 @@ public class AdministrativeUnitActivity extends AbstractDataIdentifiableSystemSt
 	/**/
 
 	public static final String FIELD_ADMINISTRATIVE_UNIT = "administrativeUnit";
+	public static final String FIELD_ADMINISTRATIVE_UNIT_BENEFICIAIRE = "administrativeUnitBeneficiaire";
 	public static final String FIELD_ACTIVITY = "activity";
 	
 }
