@@ -10,50 +10,69 @@
 	
     <cyk:page value="#{administrativeUnitEditActivitiesPage}">
     	<ui:define name="centerCenter">
-    		<ui:decorate template="/collection/datatable/default.xhtml">
-    			<ui:param name="dataTable" value="#{administrativeUnitEditActivitiesPage.dataTable}"/>
-    			 			
-    			<ui:define name="columnsAfterRowIndexBodies">
-    				<ui:fragment rendered="#{columnIndex == 0}">
-    					<ui:include src="../outputText_code_name.xhtml">
-							<ui:param name="code" value="#{record.activity.code}"/>
-							<ui:param name="name" value="#{record.activity.name}"/>
-						</ui:include>
-    				</ui:fragment>
-    				
-    				<ui:fragment rendered="#{columnIndex == 1}">
-    					<ui:include src="../outputText_code_name.xhtml">
-							<ui:param name="code" value="#{record.activity.action.program.code}"/>
-							<ui:param name="name" value="#{record.activity.action.program.name}"/>
-						</ui:include>
-    				</ui:fragment>
-    				
-    				<ui:fragment rendered="#{columnIndex == 2}">
-    					<ui:fragment rendered="#{record.administrativeUnit == null}">
-		            		<h:outputText value="** NON DEFINI **" />
-		            	</ui:fragment>
-		            	<ui:fragment rendered="#{record.administrativeUnit != null}">
-			            	<ui:include src="../outputText_code_name.xhtml">
-								<ui:param name="code" value="#{record.administrativeUnit.code}"/>
-								<ui:param name="name" value="#{record.administrativeUnit.name}"/>
-							</ui:include>
-						</ui:fragment>			   
-    				</ui:fragment>
-    				
-    				<ui:fragment rendered="#{columnIndex == 3}">
-    					<ui:fragment rendered="#{record.administrativeUnitBeneficiaire == null}">
-		            		<h:outputText value="** NON DEFINI **" />
-		            	</ui:fragment>
-		            	<ui:fragment rendered="#{record.administrativeUnitBeneficiaire != null}">
-		            		<ui:include src="../outputText_code_name.xhtml">
-								<ui:param name="code" value="#{record.administrativeUnitBeneficiaire.code}"/>
-								<ui:param name="name" value="#{record.administrativeUnitBeneficiaire.name}"/>
-							</ui:include>
-		            	</ui:fragment>		
-    				</ui:fragment>
-				</ui:define>
+    		<p:dataTable id="administrativeUnitActivities" value="#{administrativeUnitEditActivitiesPage.administrativeUnitActivities}" var="administrativeUnitActivity" rowIndexVar="rowIndex"
+    			emptyMessage="Aucune activité" 
     			
-    		</ui:decorate>
+    			lazy="true" rows="20" paginator="true" rowsPerPageTemplate="20,50,100,500,1000" paginatorAlwaysVisible="false"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"					
+				currentPageReportTemplate="{totalRecords} trouvées. Page {currentPage}/{totalPages}"
+    		>
+    			<f:facet name="header">
+    				<p:toolbar>
+    					<f:facet name="right">
+		    				<p:commandButton id="toggler" type="button" value="Colonnes" icon="fa fa-columns" />
+		       				<p:columnToggler datasource="administrativeUnitActivities" trigger="toggler" />
+		    			</f:facet>    		
+    				</p:toolbar>
+    			</f:facet>
+    			
+    			<p:column headerText="#" width="30">
+    				<h:outputText value="#{rowIndex+1}" />
+    			</p:column>
+    			<p:column headerText="Activité" width="50%">
+    				<h:outputText value="#{administrativeUnitActivity.activity.code}" styleClass="cyk-business-identifier"/><h:outputText value=" #{administrativeUnitActivity.activity.name}" />
+    			</p:column>
+    			<!--
+    			<p:column headerText="Unité opérationnelle" width="200">
+    				<h:outputText value="" />
+    			</p:column>
+    			<p:column headerText="Budget opérationnel de programme" width="200">
+    				<h:outputText value="" />
+    			</p:column>
+    			-->
+    			<p:column headerText="Programme" visible="false">
+    				<h:outputText value="#{administrativeUnitActivity.activity.action.program.code}" styleClass="cyk-business-identifier"/><h:outputText value=" #{administrativeUnitActivity.activity.action.program.name}" />
+    			</p:column>
+    			<p:column headerText="Gestionnaire" styleClass="#{administrativeUnitEditActivitiesPage.administrativeUnit.code eq administrativeUnitActivity.administrativeUnit.code ? 'cyk-background-highlight' : 'ui-state-default'}">    				
+	            	<ui:fragment rendered="#{administrativeUnitActivity.administrativeUnit == null}">
+	            		<h:outputText value="** Rattacher **" />
+	            	</ui:fragment>
+	            	<ui:fragment rendered="#{administrativeUnitActivity.administrativeUnit != null}">
+		            	<ui:include src="../outputText_code_name.xhtml">
+							<ui:param name="code" value="#{administrativeUnitActivity.administrativeUnit.code}"/>
+							<ui:param name="name" value="#{administrativeUnitActivity.administrativeUnit.name}"/>
+						</ui:include>
+					</ui:fragment>			            
+    			</p:column>
+    			<p:column headerText="Bénéficiaire" styleClass="#{administrativeUnitEditActivitiesPage.administrativeUnit.code eq administrativeUnitActivity.administrativeUnitBeneficiaire.code ? 'cyk-background-highlight' : 'ui-state-default'}">    				    				
+	            	<ui:fragment rendered="#{administrativeUnitActivity.administrativeUnitBeneficiaire == null}">
+	            		<h:outputText value="** Rattacher **" />
+	            	</ui:fragment>
+	            	<ui:fragment rendered="#{administrativeUnitActivity.administrativeUnitBeneficiaire != null}">
+	            		<ui:include src="../outputText_code_name.xhtml">
+							<ui:param name="code" value="#{administrativeUnitActivity.administrativeUnitBeneficiaire.code}"/>
+							<ui:param name="name" value="#{administrativeUnitActivity.administrativeUnitBeneficiaire.name}"/>
+						</ui:include>
+	            	</ui:fragment>			            	
+    			</p:column>
+    			<p:column width="40">
+    				<ui:decorate template="/command/commandbutton/default.xhtml">
+			    		<ui:param name="commandButton" value="#{administrativeUnitEditActivitiesPage.deleteCommandButton}"/>
+			    		<ui:param name="actionArgument" value="#{administrativeUnitActivity}"/>
+			    	</ui:decorate>
+    			</p:column>
+    		</p:dataTable>
+    		
     		<ui:include src="../css.xhtml"/>  		
     	</ui:define>
     </cyk:page>

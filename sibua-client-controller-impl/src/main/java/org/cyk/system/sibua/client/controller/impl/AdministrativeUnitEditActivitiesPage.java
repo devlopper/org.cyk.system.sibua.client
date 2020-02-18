@@ -63,7 +63,7 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 				
 			}else {
 				administrativeUnit = __inject__(AdministrativeUnitController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier"));
-				
+				/*
 				dataTable = Builder.build(DataTable.class,Map.of(DataTable.FIELD_LAZY,Boolean.TRUE,DataTable.ConfiguratorImpl.FIELD_ENTIY_CLASS,AdministrativeUnitActivity.class
 						,DataTable.ConfiguratorImpl.FIELD_FILTERABLE,Boolean.TRUE,DataTable.FIELD_SELECTION_MODE,"multiple"));				
 				
@@ -83,7 +83,7 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 						,Builder.build(Column.class, Map.of(Column.FIELD_HEADER,"Bénéficiaire",Column.FIELD_FILTER_BY,"beneficiaire"))
 						);
 				
-				dataTable.addHeaderToolbarLeftCommandButtons(
+				dataTable.addHeaderToolbarLeftCommands(
 						Builder.build(CommandButton.class,Map.of(CommandButton.FIELD_VALUE,"Modifier en masse",CommandButton.ConfiguratorImpl.FIELD_DATA_TABLE,dataTable
 								,CommandButton.FIELD_LISTENER,new AbstractCollection.AbstractActionListenerImpl(dataTable) {
 							@Override
@@ -124,7 +124,7 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 						return "ui-state-default";
 					}
 				});
-				
+				*/
 				administrativeUnitActivities = new LazyDataModel<AdministrativeUnitActivity>() {
 					private static final long serialVersionUID = 1L;
 
