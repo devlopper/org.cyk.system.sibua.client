@@ -6,6 +6,7 @@ import java.util.List;
 import org.cyk.system.sibua.client.controller.entities.Activity;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
 import org.cyk.system.sibua.client.controller.entities.Localisation;
+import org.cyk.system.sibua.client.controller.entities.Program;
 import org.cyk.system.sibua.client.controller.entities.Section;
 import org.cyk.utility.client.controller.data.AbstractDataIdentifiableSystemStringImpl;
 
@@ -50,6 +51,7 @@ public class User extends AbstractDataIdentifiableSystemStringImpl implements Se
 	private String administrativeCertificateUniformResourceIdentifierFormat;
 	
 	private List<Section> sections;
+	private List<Program> programs;
 	private List<AdministrativeUnit> administrativeUnits;
 	private List<File> files;
 	private List<UserFile> userFiles;

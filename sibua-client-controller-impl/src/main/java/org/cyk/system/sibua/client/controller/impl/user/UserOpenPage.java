@@ -40,13 +40,15 @@ public class UserOpenPage extends AbstractPageContainerManagedImpl implements Se
 		User user = null;
 		try {
 			//user = __inject__(UserController.class).readBySystemIdentifier(accessToken);
-			user = CollectionHelper.getFirst(__inject__(UserController.class).read(new Properties().setFilters(new FilterDto().addField(User.FIELD_ACCESS_TOKEN, List.of(accessToken)))));
+			user = CollectionHelper.getFirst(__inject__(UserController.class).read(new Properties()
+					.setFields("identifier,programs")
+					.setFilters(new FilterDto().addField(User.FIELD_ACCESS_TOKEN, List.of(accessToken)))));
 		} catch (Exception exception) {}
 		if(user == null) {
 			MessageRenderer.getInstance().render(new Message().setSummary("Jeton d'accès inconnu").setSeverity(Severity.ERROR), RenderType.INLINE);
 			return null;
 		}
-		return "read/creditmanager.jsf?faces-redirect=true&entityidentifier="+user.getIdentifier();
+		return "read/"+(CollectionHelper.isEmpty(user.getPrograms()) ? "program" : "credit")+"manager.jsf?faces-redirect=true&entityidentifier="+user.getIdentifier();
 	}
 	
 	@Override

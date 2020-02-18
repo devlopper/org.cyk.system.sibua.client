@@ -36,7 +36,7 @@ public class MenuBuilderMapInstantiatorImpl extends org.cyk.utility.client.contr
 			sessionMenuBuilder.addItems(
 					__inject__(MenuItemBuilder.class).setCommandableName("Fiche identifiaction").setCommandableIcon(Icon.USERS)
 					.addChild(
-							__inject__(MenuItemBuilder.class).setCommandableName("Créer").setCommandableNavigationIdentifier("userCreditManagerEditView").setCommandableIcon(Icon.FILE)
+							__inject__(MenuItemBuilder.class).setCommandableName("Créer").setCommandableNavigationIdentifier("userEditIndexView").setCommandableIcon(Icon.FILE)
 							//,__inject__(MenuItemBuilder.class).setCommandableName("Activation").setCommandableNavigationIdentifier("userActivateView").setCommandableIcon(Icon.FLASH)
 							,__inject__(MenuItemBuilder.class).setCommandableName("Ouvrir").setCommandableNavigationIdentifier("userOpenView").setCommandableIcon(Icon.FOLDER_OPEN)
 							,__inject__(MenuItemBuilder.class).setCommandableName("Renvoyer jeton d'accès").setCommandableNavigationIdentifier("userNotifyAccessTokenView").setCommandableIcon(Icon.SEND)

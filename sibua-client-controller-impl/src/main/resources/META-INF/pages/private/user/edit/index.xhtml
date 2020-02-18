@@ -8,11 +8,20 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
 	
-    <cyk:page value="#{userCreditManagerReadPage}">
+    <cyk:page value="#{userEditIndexPage}">
     	<ui:define name="centerCenter">
-    		<ui:decorate template="__read__.xhtml" >
-    		
-    		</ui:decorate>
+    		<div class="ui-g">
+    			<div class="ui-g-6">
+    				<div>
+    					<p:linkButton value="Je suis un gestionnaire de crédit" outcome="userCreditManagerEditView" />
+    				</div>
+    			</div>
+    			<div class="ui-g-6">
+    				<div>
+    					<p:linkButton value="Je suis un responsable de programme" outcome="userProgramManagerEditView" />
+    				</div>
+    			</div>
+    		</div>
     	</ui:define>
     </cyk:page>
 </html>

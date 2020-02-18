@@ -5,7 +5,17 @@
 
 	<url-mapping id="identification">
 		<pattern value="/identification" />
+		<view-id value="/private/user/edit/index.jsf" />
+	</url-mapping>
+
+	<url-mapping id="identification_credit_manager">
+		<pattern value="/identification/gestionnairedecredits" />
 		<view-id value="/private/user/edit/creditmanager.jsf" />
+	</url-mapping>
+	
+	<url-mapping id="identification_program_manager">
+		<pattern value="/identification/responsabledeprogramme" />
+		<view-id value="/private/user/edit/programmanager.jsf" />
 	</url-mapping>
 
 </pretty-config>

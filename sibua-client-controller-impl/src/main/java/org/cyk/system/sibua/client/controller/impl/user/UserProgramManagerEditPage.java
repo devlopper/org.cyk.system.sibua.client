@@ -9,7 +9,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Named @ViewScoped @Getter @Setter
-public class UserReadPage extends AbstractActorReadPage implements Serializable {
+public class UserProgramManagerEditPage extends AbstractActorEditPage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Override
+	public Boolean getIsProgramManager() {
+		return Boolean.TRUE;
+	}
 }

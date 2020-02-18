@@ -9,6 +9,30 @@
 		<from-view-id>*</from-view-id>
 		
 		<navigation-case>
+			<from-outcome>userEditIndexView</from-outcome>
+			<to-view-id>/private/user/edit/index.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>userReadIndexView</from-outcome>
+			<to-view-id>/private/user/read/index.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>userProgramManagerEditView</from-outcome>
+			<to-view-id>/private/user/edit/programmanager.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>userProgramManagerReadView</from-outcome>
+			<to-view-id>/private/user/read/programmanager.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>userCreditManagerEditView</from-outcome>
 			<to-view-id>/private/user/edit/creditmanager.jsf</to-view-id>
 			<redirect />

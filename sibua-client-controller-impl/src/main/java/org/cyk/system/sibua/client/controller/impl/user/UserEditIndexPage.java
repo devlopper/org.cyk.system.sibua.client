@@ -9,7 +9,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Named @ViewScoped @Getter @Setter
-public class UserReadPage extends AbstractActorReadPage implements Serializable {
+public class UserEditIndexPage extends AbstractPageContainerManagedImpl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Override
+	protected String __getWindowTitleValue__() {
+		return "Identification des acteurs du Système d'Information Budgétaire";
+	}
+	
 }

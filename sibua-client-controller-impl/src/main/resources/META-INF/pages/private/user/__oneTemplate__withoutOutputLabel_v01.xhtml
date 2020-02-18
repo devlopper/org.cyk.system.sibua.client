@@ -109,6 +109,17 @@
 		 			</div>			 		
  				</ui:insert>	 			
 	 		</div>
+	 		
+	 		<ui:fragment rendered="#{__page__.isProgramManager}">
+	 			<div class="ui-g-12">
+					<div class="ui-g-2">
+						<ui:insert name="programLabel"><h:outputText value="program Label" /></ui:insert>
+					</div>
+					<div class="ui-g-10">
+						<ui:insert name="programControl"><h:outputText value="program Control" /></ui:insert>
+					</div>
+				</div>
+	 		</ui:fragment>			
  		</ui:insert>
  	</div>
 

@@ -13,7 +13,7 @@
     		<pre>
     			<ui:fragment rendered="#{userOpenPage.user != null}">Votre fiche d'identification a été bien enregistrée.</ui:fragment>
     			Un message a été envoyé à l'adresse mail suivante <span style="color: black;font-style:italic;">#{userOpenPage.user.electronicMailAddress}.</span>
-    			Utiliser votre <b>jeton d'accès</b> pour ouvrir votre fiche d'identification afin de la transmettre.
+    			Utiliser votre <b>jeton d'accès</b> pour ouvrir votre fiche d'identification.
     			<ui:fragment rendered="#{userOpenPage.user != null}">Jeton d'accès : <span style="color: blue;font-weight: bold;">#{userOpenPage.user.accessToken}</span></ui:fragment>    			
     		</pre>
     		<p:outputPanel id="outputPanel" class="ui-g">
