@@ -3,21 +3,23 @@ package org.cyk.system.sibua.client.controller.impl.user;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.faces.context.FacesContext;
 
 import org.cyk.system.sibua.client.controller.api.user.UserController;
 import org.cyk.system.sibua.client.controller.api.user.UserFileController;
-import org.cyk.system.sibua.client.controller.api.user.UserProgramController;
-import org.cyk.system.sibua.client.controller.entities.Program;
+import org.cyk.system.sibua.client.controller.api.user.UserFunctionController;
 import org.cyk.system.sibua.client.controller.entities.user.File;
+import org.cyk.system.sibua.client.controller.entities.user.Function;
 import org.cyk.system.sibua.client.controller.entities.user.User;
 import org.cyk.system.sibua.client.controller.entities.user.UserFile;
-import org.cyk.system.sibua.client.controller.entities.user.UserProgram;
+import org.cyk.system.sibua.client.controller.entities.user.UserFunction;
 import org.cyk.system.sibua.server.persistence.api.user.UserFilePersistence;
-import org.cyk.system.sibua.server.persistence.api.user.UserProgramPersistence;
+import org.cyk.system.sibua.server.persistence.api.user.UserFunctionPersistence;
 import org.cyk.system.sibua.server.persistence.entities.user.UserFileType;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
@@ -26,6 +28,7 @@ import org.cyk.utility.__kernel__.identifier.resource.PathAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.QueryAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierHelper;
+import org.cyk.utility.__kernel__.map.MapHelper;
 import org.cyk.utility.__kernel__.object.Builder;
 import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
 import org.cyk.utility.__kernel__.properties.Properties;
@@ -33,7 +36,14 @@ import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
 import org.cyk.utility.client.controller.component.command.Commandable;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.AbstractCollection;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.AbstractDataTable;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.Column;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.DataTable;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.command.CommandButton;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.input.AutoComplete;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.layout.Cell;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.layout.Layout;
 import org.omnifaces.util.Faces;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
@@ -49,10 +59,12 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 	private User user;
 	private String severity,summary,detail;
 	private UserFile administrativeUnitCertificateUserFile,photoUserFile;
-	private Program program;
 	private String dialogAction,dialogTitle;
 	private Commandable deleteCommandable,sendCommandable;
 	private CommandButton deleteCommandButton,sendCommandButton;
+	private DataTable functionsDataTable;
+	private Layout functionsDataTableBodyLayout;
+	private AutoComplete functionAutoComplete;
 	
 	@Override
 	protected void __listenPostConstruct__() {
@@ -67,11 +79,8 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 				else if(UserFileType.PHOTO.equals(index.getType()))
 					photoUserFile = index;
 		
-		Collection<UserProgram> userPrograms = __inject__(UserProgramController.class).read(new Properties().setQueryIdentifier(UserProgramPersistence.READ_BY_USERS_IDENTIFIERS)
-				.setFilters(new FilterDto().addField("user", List.of(user.getIdentifier()))));
-		if(CollectionHelper.isNotEmpty(userPrograms)) {
-			program = CollectionHelper.getFirst(userPrograms).getProgram();
-		}
+		user.setUserFunctions((List<UserFunction>) __inject__(UserFunctionController.class).read(new Properties().setQueryIdentifier(UserFunctionPersistence.READ_BY_USERS_IDENTIFIERS)
+				.setFilters(new FilterDto().addField("user", List.of(user.getIdentifier())))));
 		
 		summary = "Notification";
 		if(StringHelper.isBlank(user.getSendingDate())) {
@@ -79,7 +88,17 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 			detail = "Veuillez transmettre votre fiche d'identification.";
 		}else {
 			severity = "info";
-			detail = "Votre fiche d'identification sera traitée lorsqu'elle sera validée par votre ordonnateur au vu de vos specimens de signature.";
+			//detail = "Votre fiche d'identification sera traitée lorsqu'elle sera validée par votre ordonnateur au vu de vos specimens de signature.";
+			if(CollectionHelper.isEmpty(user.getUserFunctions())) {
+				
+			}else {
+				Collection<String> codes = user.getUserFunctions().stream().map(userFunction -> userFunction.getFunction().getType().getCategory().getCode()).collect(Collectors.toList());
+				if(codes.contains("1") || codes.contains("2")) {
+					detail = "Votre fiche d'identification est en cours de traitement.";
+				}else {
+					detail = "Votre fiche d'identification sera traitée lorsqu'elle sera validée par votre ordonnateur au vu de vos specimens de signature.";
+				}
+			}
 		}
 		
 		CommandableBuilder deleteCommandableBuilder = __inject__(CommandableBuilder.class);
@@ -124,28 +143,65 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 			}
 		});
 		
+		functionAutoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,Function.class));
+		
+		Map<Object,Object> map = new HashMap<>();
+		map.put(DataTable.ConfiguratorImpl.FIELD_ENTIY_CLASS,Function.class);
+		if(CollectionHelper.isNotEmpty(user.getFunctions()))
+			map.put(DataTable.FIELD_VALUE,user.getFunctions());
+		functionsDataTable = Builder.build(DataTable.class,map);		
+		functionsDataTable.addColumnsAfterRowIndex(Builder.build(Column.class, Map.of(Column.FIELD_FIELD_NAME,Function.FIELD_NAME)));
+		functionsDataTable.setAreColumnsChoosable(Boolean.FALSE);		
+		functionsDataTable.setIsExportable(Boolean.FALSE);
+		
+		functionsDataTable.addHeaderToolbarLeftCommands(
+				Builder.build(CommandButton.class,Map.of(CommandButton.FIELD_VALUE,"Ajouter des fonctions budgétaires",CommandButton.FIELD_ICON,"fa fa-plus"
+						,CommandButton.ConfiguratorImpl.FIELD_DATA_TABLE,functionsDataTable
+						,CommandButton.FIELD_LISTENER,new AbstractCollection.AbstractActionListenerImpl(functionsDataTable) {
+					@Override
+					protected void __showDialog__() {
+						functionsDataTable.getDialog().setHeader("Ajout de fonctions budgétaires");
+						super.__showDialog__();
+					}
+				}.setMinimumSelectionSize(0).setIsSelectionShowable(Boolean.FALSE)))
+			);
+		
+		functionsDataTable.setListener(new AbstractDataTable.Listener() {
+			
+			@Override
+			public String listenGetStyleClassByRecord(Object record,Integer recordIndex) {
+				/*if(record instanceof Function) {
+					return "cyk-default";
+				}*/					
+				return null;
+			}
+			
+			@Override
+			public String listenGetStyleClassByRecordByColumn(Object record,Integer recordIndex,Column column,Integer columnIndex) {
+				return null;
+			}
+		});
+		
+		functionsDataTableBodyLayout = Builder.build(Layout.class,Map.of(Layout.FIELD_IDENTIFIER,"layoutTwoColumns",Layout.FIELD_CELL_WIDTH_UNIT,Cell.WidthUnit.UI_G,Layout.FIELD_NUMBER_OF_COLUMNS,2
+				,Layout.FIELD_ROW_CELL_MODEL,Map.of(0,new Cell().setWidth(3),1,new Cell().setWidth(9))
+				,Layout.ConfiguratorImpl.FIELD_CELLS_MAPS,CollectionHelper.listOf(
+					MapHelper.instantiate(Cell.FIELD_IDENTIFIER,"type_label"),MapHelper.instantiate(Cell.FIELD_IDENTIFIER,"type_input")
+					,MapHelper.instantiate(Cell.FIELD_IDENTIFIER,"cat_label"),MapHelper.instantiate(Cell.FIELD_IDENTIFIER,"cat_input")
+					,MapHelper.instantiate(Cell.FIELD_IDENTIFIER,"func_label"),MapHelper.instantiate(Cell.FIELD_IDENTIFIER,"func_input")
+					)));
 	}
 	
 	@Override
 	protected String __getWindowTitleValue__() {
 		if(user == null)
 			return null;
-		String suffix = null;
-		if(Boolean.TRUE.equals(getIsProgramManager()))
-			suffix = "de responsable de programme";
-		else if(Boolean.TRUE.equals(getIsFinancialController()))
-			suffix = "de contrôlleur financier";
-		else if(Boolean.TRUE.equals(getIsOrganizer()))
-			suffix = "d'ordonnateur";
-		else
-			suffix = "de gestionnaire de crédits";
 		String string = ConstantEmpty.STRING;
 		if(user.getCivility() != null)
 			string = user.getCivility().getName()+" ";
 		string += user.getFirstName();
 		if(StringHelper.isNotBlank(user.getLastNames()))
 			string += " "+user.getLastNames();
-		return "Fiche d'identification "+suffix+" de "+string;
+		return "Fiche d'identification de "+string;
 	}
 	
 	public void openDialog(String action) {

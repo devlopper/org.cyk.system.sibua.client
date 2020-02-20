@@ -7,20 +7,22 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.faces.context.FacesContext;
 
 import org.cyk.system.sibua.client.controller.api.user.UserController;
 import org.cyk.system.sibua.client.controller.api.user.UserFileController;
-import org.cyk.system.sibua.client.controller.api.user.UserProgramController;
+import org.cyk.system.sibua.client.controller.api.user.UserFunctionController;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
-import org.cyk.system.sibua.client.controller.entities.Program;
 import org.cyk.system.sibua.client.controller.entities.user.Civility;
 import org.cyk.system.sibua.client.controller.entities.user.File;
+import org.cyk.system.sibua.client.controller.entities.user.Function;
 import org.cyk.system.sibua.client.controller.entities.user.User;
-import org.cyk.system.sibua.client.controller.entities.user.UserProgram;
+import org.cyk.system.sibua.client.controller.entities.user.UserFunction;
 import org.cyk.system.sibua.client.controller.entities.user.UserType;
-import org.cyk.system.sibua.server.persistence.api.user.UserProgramPersistence;
+import org.cyk.system.sibua.server.persistence.api.user.FunctionPersistence;
+import org.cyk.system.sibua.server.persistence.api.user.UserFunctionPersistence;
 import org.cyk.system.sibua.server.persistence.entities.user.UserFileType;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
@@ -32,6 +34,7 @@ import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierH
 import org.cyk.utility.__kernel__.object.Builder;
 import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
 import org.cyk.utility.__kernel__.properties.Properties;
+import org.cyk.utility.__kernel__.runnable.Runner;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
 import org.cyk.utility.client.controller.component.command.Commandable;
@@ -52,11 +55,9 @@ public abstract class AbstractActorEditPage extends AbstractPageContainerManaged
 	private SelectionOne<Civility> civility;
 	private SelectionOne<UserType> userType;
 	private AutoComplete administrativeUnitAutoComplete;	
-	private AutoComplete programAutoComplete;	
 	private Collection<String> selectedFunctionCategoryCodes = new ArrayList<>();
 	private Date administrativeUnitCertificateSignedDate;
-	
-	private List<UserCreateFunctionTab> functionTabs = new ArrayList<>();
+	private AutoComplete budgetaryFunctionsAutoComplete;
 	
 	private File administrativeUnitCertificateFile/*,budgetaryCertificateFile=new File().setType(UserFileType.BUDGETARY_CERTIFICATE)*/;
 	private UploadedFile administrativeUnitCertificateUploadedFile,budgetaryCertificateUploadedFile;
@@ -70,14 +71,20 @@ public abstract class AbstractActorEditPage extends AbstractPageContainerManaged
 		super.__listenPostConstruct__();
 		try {
 			administrativeUnitAutoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,AdministrativeUnit.class));
-			programAutoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,Program.class));
+			budgetaryFunctionsAutoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,Function.class,AutoComplete.FIELD_MULTIPLE,Boolean.TRUE
+					,AutoComplete.FIELD_READ_QUERY_IDENTIFIER,FunctionPersistence.READ_WHERE_BUSINESS_IDENTIFIER_OR_NAME_CONTAINS_BY_TYPES_CATEGORIES_CODES
+					,AutoComplete.FIELD_COUNT_QUERY_IDENTIFIER,FunctionPersistence.COUNT_WHERE_BUSINESS_IDENTIFIER_OR_NAME_CONTAINS_BY_TYPES_CATEGORIES_CODES
+					,AutoComplete.FIELD_LISTENER,new AutoComplete.Listener.AbstractImpl() {
+						public void listenComplete(AutoComplete autoComplete,Runner.Arguments arguments, FilterDto filter, String queryString) {
+							filter.addField("categoriesCodes", List.of("1","2","3"));
+							super.listenComplete(autoComplete,arguments,filter,queryString);
+						};
+					} 
+				));
 			civility = new SelectionOne<Civility>(Civility.class);
 			civility.setMessage("Civilité");
 			userType = new SelectionOne<UserType>(UserType.class);
 			userType.setMessage("Je suis un");			
-			functionTabs.add(new UserCreateFunctionTab("Contrôlleur Financier", UserFileType.BUDGETARY_CERTIFICATE));
-			functionTabs.add(new UserCreateFunctionTab("Ordonnateur", UserFileType.BUDGETARY_CERTIFICATE));
-			functionTabs.add(new UserCreateFunctionTab("Gestionnaire de Crédits", UserFileType.BUDGETARY_CERTIFICATE));
 		}catch(Exception exception) {
 			exception.printStackTrace();
 		}
@@ -92,11 +99,10 @@ public abstract class AbstractActorEditPage extends AbstractPageContainerManaged
 				administrativeUnitCertificateSignedDate = new Date(user.getAdministrativeUnitCertificateSignedDateTimestamp());
 			administrativeUnitAutoComplete.setValue(user.getAdministrativeUnit());
 			
-			Collection<UserProgram> userPrograms = __inject__(UserProgramController.class).read(new Properties().setQueryIdentifier(UserProgramPersistence.READ_BY_USERS_IDENTIFIERS)
+			Collection<UserFunction> userFunctions = __inject__(UserFunctionController.class).read(new Properties().setQueryIdentifier(UserFunctionPersistence.READ_BY_USERS_IDENTIFIERS)
 					.setFilters(new FilterDto().addField("user", List.of(user.getIdentifier()))));
-			if(CollectionHelper.isNotEmpty(userPrograms)) {
-				programAutoComplete.setValue(CollectionHelper.getFirst(userPrograms).getProgram());
-			}
+			if(CollectionHelper.isNotEmpty(userFunctions))
+				budgetaryFunctionsAutoComplete.setValue(userFunctions.stream().map(UserFunction::getFunction).collect(Collectors.toList()));
 			
 			if(CollectionHelper.isNotEmpty(user.getUserFiles())) {
 				administrativeUnitCertificateFile = user.getUserFiles().get(0).getFile();
@@ -124,17 +130,6 @@ public abstract class AbstractActorEditPage extends AbstractPageContainerManaged
 	
 	@Override
 	protected String __getWindowTitleValue__() {
-		String suffix = null;
-		if(Boolean.TRUE.equals(getIsProgramManager()))
-			suffix = "de responsable de programme";
-		else if(Boolean.TRUE.equals(getIsFinancialController()))
-			suffix = "de contrôlleur financier";
-		else if(Boolean.TRUE.equals(getIsOrganizer()))
-			suffix = "d'ordonnateur";
-		else
-			suffix = "de gestionnaire de crédits";
-		if(StringHelper.isBlank(action))
-			return "Création d'une fiche d'identification "+suffix;
 		String string = ConstantEmpty.STRING;
 		if(user.getCivility() != null)
 			string = user.getCivility().getName()+" ";
@@ -142,22 +137,24 @@ public abstract class AbstractActorEditPage extends AbstractPageContainerManaged
 		if(StringHelper.isNotBlank(user.getLastNames()))
 			string += " "+user.getLastNames();
 		if("update".equals(action))
-			return "Modification de la fiche d'identification "+suffix+" de "+string;
+			return "Modification de la fiche d'identification de "+string;
 		if("delete".equals(action))
-			return "Suppression de la fiche d'identification "+suffix+" de "+string;
+			return "Suppression de la fiche d'identification de "+string;
 		if("send".equals(action))
-			return "Transmission de la fiche d'identification "+suffix+" de "+string;
-		return null;
+			return "Transmission de la fiche d'identification de "+string;
+		return "Création d'une fiche d'identification";
 	}
 	
 	public void save() {
 		user.setType(userType.getValue());
 		user.setCivility(civility.getValue());
 		user.setAdministrativeUnit((AdministrativeUnit) administrativeUnitAutoComplete.getValue());
-		if(programAutoComplete.getValue() == null)
-			user.setPrograms(null);
+		@SuppressWarnings("unchecked")
+		List<Function> functions = (List<Function>) budgetaryFunctionsAutoComplete.getValue();
+		if(CollectionHelper.isEmpty(functions))
+			user.setFunctions(null);
 		else
-			user.setPrograms(CollectionHelper.listOf((Program)programAutoComplete.getValue()));
+			user.setFunctions(functions);
 		user.setFiles(null);
 		addFile(administrativeUnitCertificateUploadedFile, administrativeUnitCertificateFile);
 		//addFile(budgetaryCertificateUploadedFile, budgetaryCertificateFile);
@@ -185,7 +182,7 @@ public abstract class AbstractActorEditPage extends AbstractPageContainerManaged
 			}
 			__inject__(UserController.class).update(user,new Properties().setFields("type,civility,administrativeUnit,administrativeUnitFunction"
 					+ ",administrativeUnitCertificateReference,administrativeUnitCertificateSignedBy,administrativeUnitCertificateSignedDateTimestamp,registrationNumber"
-					+ ",firstName,lastNames,electronicMailAddress,mobilePhoneNumber,deskPhoneNumber,deskPost,postalAddress,programs"));
+					+ ",firstName,lastNames,electronicMailAddress,mobilePhoneNumber,deskPhoneNumber,deskPost,postalAddress,functions"));
 			
 			UniformResourceIdentifierAsFunctionParameter p = new UniformResourceIdentifierAsFunctionParameter();
 			p.setRequest(__getRequest__());

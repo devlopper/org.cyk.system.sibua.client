@@ -17,6 +17,7 @@ public class Function extends AbstractDataIdentifiableSystemStringIdentifiableBu
 	private FunctionType type;
 	private Collection<AdministrativeUnit> administrativeUnits;
 	
+	
 	@Override
 	public String toString() {
 		return getCode()+" "+getName();

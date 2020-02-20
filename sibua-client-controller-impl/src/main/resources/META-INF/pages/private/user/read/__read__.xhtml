@@ -131,7 +131,38 @@
 		    				</div>			
 	    				</div>
 	    				
-	    				<ui:fragment rendered="#{__page__.program != null}">
+	    				
+	    				<div class="ui-g-12">
+		    				<div class="ui-g-3">
+		    					<span class="ui-inputgroup-addon"><i class="fa fa-wrench"/></span>
+		    					<h:outputText value="Fonction(s) budgétaire(s) demandée(s)" styleClass="cyk-margin-left-10-px cyk-font-weight-bold"/>
+		    				</div>
+		    				<div class="ui-g-9">
+		    					<ui:repeat value="#{__page__.user.userFunctions}" var="userFunction" varStatus="varStatusObject">
+		    						<h:outputText value="#{varStatusObject.index+1}. #{userFunction.function}" /><br/><br/>
+		    					</ui:repeat>
+		    					
+		    					<!--
+		    					<ui:decorate template="/collection/datatable/default.xhtml">
+					    			<ui:param name="dataTable" value="#{__page__.functionsDataTable}"/>
+					    			<ui:define name="dataTableDialogBody">
+										<ui:decorate template="/layout/default.xhtml">
+							    			<ui:param name="layout" value="#{__page__.functionsDataTableBodyLayout}"/>
+							    			<ui:define name="cell0">
+							    				<p:outputLabel for="ipt01" value="InputText" />
+							    			</ui:define>
+							    			<ui:define name="cell1">
+							    				<p:inputText id="ipt01" value="" />
+							    			</ui:define>
+							    		</ui:decorate>	   
+									</ui:define>	
+					    		</ui:decorate>
+					    		-->
+		    				</div>
+		    			</div>
+		    			
+		    			<!--
+		    			<ui:fragment rendered="#{__page__.program != null}">
 		    				<div class="ui-g-12">
 			    				<div class="ui-g-3">
 			    					<span class="ui-inputgroup-addon"><i class="fa fa-check"/></span>
@@ -142,6 +173,7 @@
 			    				</div>
 			    			</div>
 		    			</ui:fragment>
+		    			-->
 	    			</div>
 	    			
 	    			<!-- Photo -->

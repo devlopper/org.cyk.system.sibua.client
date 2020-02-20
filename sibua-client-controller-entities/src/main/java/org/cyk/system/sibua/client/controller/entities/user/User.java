@@ -58,6 +58,7 @@ public class User extends AbstractDataIdentifiableSystemStringImpl implements Se
 	private List<Localisation> localisations;
 	private List<Activity> activities;
 	private List<Function> functions;
+	private List<UserFunction> userFunctions;
 	
 	public static final String FIELD_ACTIVATION_DATE = "activationDate";
 	public static final String FIELD_ACCESS_TOKEN = "accessToken";

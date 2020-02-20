@@ -54,7 +54,6 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 	private AutoComplete serviceGestionnaireAutoComplete,serviceBeneficiaireAutoComplete,autoComplete;
 	private Ajax saveAjax;
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void __listenPostConstruct__() {
 		super.__listenPostConstruct__();

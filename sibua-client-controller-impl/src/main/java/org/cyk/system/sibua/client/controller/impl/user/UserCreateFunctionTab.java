@@ -16,7 +16,7 @@ import org.primefaces.model.UploadedFile;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter @Setter @Deprecated
 public class UserCreateFunctionTab extends AbstractObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 

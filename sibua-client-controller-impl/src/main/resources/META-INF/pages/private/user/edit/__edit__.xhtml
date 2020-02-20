@@ -161,16 +161,16 @@
    			<p:watermark value="Date de signature de l'acte de nomination" for="administrativeUnitCertificateSignedDate"/>
    		</ui:define>
    		
-   		<ui:define name="programLabel">
-   			<p:outputLabel id="programLabelOutputLabel" for="#{__page__.programAutoComplete.identifier}" value="Programme" />
+   		<ui:define name="budgetaryFunctionsLabel">
+   			<p:outputLabel id="budgetaryFunctionsLabelOutputLabel" for="#{__page__.budgetaryFunctionsAutoComplete.identifier}" value="Fonction(s) budgétaire(s) demandée(s)" />
    		</ui:define>
-   		<ui:define name="programControl">
+   		<ui:define name="budgetaryFunctionsControl">
    			<ui:decorate template="/input/select/one/autoComplete.xhtml">
-	    		<ui:param name="autoComplete" value="#{__page__.programAutoComplete}"/>
+	    		<ui:param name="autoComplete" value="#{__page__.budgetaryFunctionsAutoComplete}"/>
 	    	</ui:decorate>
-   			<p:message id="programControlMessage" for="#{__page__.programAutoComplete.identifier}" />
-   			<p:tooltip id="programControlTooltip" value="Programme" for="#{__page__.programAutoComplete.identifier}" />
-   			<p:watermark id="programControlWatermark" value="Rechercher..." for="#{__page__.programAutoComplete.identifier}"/>
+   			<p:message id="budgetaryFunctionsControlMessage" for="#{__page__.budgetaryFunctionsAutoComplete.identifier}" />
+   			<p:tooltip id="budgetaryFunctionsControlTooltip" value="Fonction(s) budgétaire(s) demandée(s)" for="#{__page__.budgetaryFunctionsAutoComplete.identifier}" />
+   			<p:watermark id="budgetaryFunctionsControlWatermark" value="Rechercher..." for="#{__page__.budgetaryFunctionsAutoComplete.identifier}"/>
    		</ui:define>	 			    		
    	</ui:decorate>
    	</p:outputPanel>

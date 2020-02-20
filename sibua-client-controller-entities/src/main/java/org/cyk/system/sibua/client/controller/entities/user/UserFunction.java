@@ -13,4 +13,7 @@ import lombok.experimental.Accessors;
 public class UserFunction extends AbstractDataIdentifiableSystemStringImpl implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	private User user;
+	private Function function;
+	
 }
