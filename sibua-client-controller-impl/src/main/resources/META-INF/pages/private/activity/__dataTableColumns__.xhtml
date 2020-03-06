@@ -13,15 +13,17 @@
 	</p:column>
 	
 	<p:column headerText="Section" width="200" filterBy="#{activity.action.program.section}" rendered="#{__page__.defaultSection == null}">
+ 		<!--
  		<f:facet name="filter">
 			<p:autoComplete onchange="PF('activitiesDataTable').filter()" placeholder="Rechercher..."
 		    	var="section" itemValue="#{section.code}" itemLabel="#{section}"
 		    	completeMethod="#{sectionController.readByString}" cache="true" 
-		    	maxResults="5" queryDelay="1000" emptyMessage="-- Aucun résultat --"
+		    	maxResults="5" queryDelay="1000" emptyMessage="Aucun résultat"
 		    >
 		    	<p:ajax event="itemSelect" oncomplete="PF('activitiesDataTable').filter()" />	
 		    </p:autoComplete>
 		</f:facet>
+		-->
 		<ui:include src="../outputText_code_name.xhtml">
 			<ui:param name="code" value="#{activity.action.program.section.code}"/>
 			<ui:param name="name" value="#{activity.action.program.section.name}"/>
@@ -54,11 +56,13 @@
  	</p:column>
  	
  	<p:column headerText="Programme" width="200" filterBy="#{activity.action.program}" visible="false">
+ 		<!--
  		<f:facet name="filter">
 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
 				<ui:param name="autoComplete" value="#{__page__.programFilter}"/>
 			</ui:decorate>
 		</f:facet>
+		-->
 		<ui:include src="../outputText_code_name.xhtml">
 			<ui:param name="code" value="#{activity.action.program.code}"/>
 			<ui:param name="name" value="#{activity.action.program.name}"/>
@@ -66,11 +70,13 @@
  	</p:column>
  	
  	<p:column headerText="Service Bénéficiaire" filterBy="#{activity.administrativeUnitBeneficiaire}">
+ 		<!--
  		<f:facet name="filter">
  			<ui:decorate template="/input/select/one/autoComplete.xhtml">
 				<ui:param name="autoComplete" value="#{__page__.administrativeUnitBeneficiaireFilter}"/>
 			</ui:decorate>
 		</f:facet>
+		-->
  		<ui:include src="../outputText_code_name.xhtml">
 			<ui:param name="code" value="#{activity.administrativeUnitBeneficiaire.code}"/>
 			<ui:param name="name" value="#{activity.administrativeUnitBeneficiaire.name}"/>
@@ -78,11 +84,13 @@
  	</p:column>
  	
  	<p:column headerText="Service Gestionnaire" filterBy="#{activity.administrativeUnit}">
+ 		<!--
  		<f:facet name="filter">
  			<ui:decorate template="/input/select/one/autoComplete.xhtml">
 				<ui:param name="autoComplete" value="#{__page__.administrativeUnitFilter}"/>
 			</ui:decorate>
 		</f:facet>
+		-->
  		<h:outputText value="#{activity.administrativeUnit.code}" styleClass="cyk-business-identifier"/>
 		<h:outputText value="-" />
 		<h:outputText value="#{activity.administrativeUnit.section.code}" styleClass="cyk-business-identifier" style="color:blue;"/>

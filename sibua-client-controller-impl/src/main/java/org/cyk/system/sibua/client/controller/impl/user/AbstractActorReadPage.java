@@ -36,7 +36,6 @@ import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
 import org.cyk.utility.client.controller.component.command.Commandable;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
-import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.AbstractCollection;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.AbstractDataTable;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.Column;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.DataTable;
@@ -127,7 +126,7 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 		
 		deleteCommandButton = Builder.build(CommandButton.class,Map.of("value","Supprimer")).setIcon(Icon.REMOVE);
 		deleteCommandButton.getConfirm().setDisabled(Boolean.FALSE);
-		deleteCommandButton.setListener(new CommandButton.Listener() {
+		deleteCommandButton.setListener(new CommandButton.Listener.AbstractImpl() {
 			@Override
 			public void listenAction(Object argument) {
 				delete();
@@ -136,7 +135,7 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 		
 		sendCommandButton = Builder.build(CommandButton.class,Map.of("value","Transmettre")).setIcon(Icon.SEND);
 		sendCommandButton.getConfirm().setDisabled(Boolean.FALSE);
-		sendCommandButton.setListener(new CommandButton.Listener() {
+		sendCommandButton.setListener(new CommandButton.Listener.AbstractImpl() {
 			@Override
 			public void listenAction(Object argument) {
 				send();
@@ -157,7 +156,7 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 		functionsDataTable.addHeaderToolbarLeftCommands(
 				Builder.build(CommandButton.class,Map.of(CommandButton.FIELD_VALUE,"Ajouter des fonctions budgétaires",CommandButton.FIELD_ICON,"fa fa-plus"
 						,CommandButton.ConfiguratorImpl.FIELD_DATA_TABLE,functionsDataTable
-						,CommandButton.FIELD_LISTENER,new AbstractCollection.AbstractActionListenerImpl(functionsDataTable) {
+						,CommandButton.FIELD_LISTENER,new CommandButton.Listener.AbstractImpl() {
 					@Override
 					protected void __showDialog__() {
 						functionsDataTable.getDialog().setHeader("Ajout de fonctions budgétaires");

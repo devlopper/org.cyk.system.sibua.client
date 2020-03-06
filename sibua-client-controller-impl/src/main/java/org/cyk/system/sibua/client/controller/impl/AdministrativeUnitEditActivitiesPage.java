@@ -14,23 +14,18 @@ import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnitActivity;
 import org.cyk.system.sibua.server.persistence.api.AdministrativeUnitActivityPersistence;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
-import org.cyk.utility.__kernel__.computation.ComparisonOperator;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
-import org.cyk.utility.__kernel__.icon.Icon;
 import org.cyk.utility.__kernel__.identifier.resource.PathAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierHelper;
-import org.cyk.utility.__kernel__.number.NumberHelper;
 import org.cyk.utility.__kernel__.object.Builder;
 import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
+import org.cyk.utility.__kernel__.user.interface_.message.RenderType;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.component.window.WindowBuilder;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.ajax.Ajax;
-import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.AbstractCollection;
-import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.AbstractDataTable;
-import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.Column;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.DataTable;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.command.CommandButton;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.input.AutoComplete;
@@ -149,7 +144,7 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 				serviceGestionnaireAutoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,AdministrativeUnit.class));
 				serviceBeneficiaireAutoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,AdministrativeUnit.class));
 				
-				saveAjax = Builder.build(Ajax.class,Map.of(Ajax.FIELD_EVENT,"save",Ajax.FIELD_LISTENER,new Ajax.Listener() {
+				saveAjax = Builder.build(Ajax.class,Map.of(Ajax.FIELD_EVENT,"save",Ajax.FIELD_LISTENER,new Ajax.Listener.AbstractImpl() {
 					@Override
 					public void listenAction(Object argument) {
 						if(argument instanceof AjaxBehaviorEvent) {
@@ -166,9 +161,11 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 			exception.printStackTrace();
 		}
 		
-		deleteCommandButton = Builder.build(CommandButton.class,Map.of("title","Supprimer")).setIcon(Icon.REMOVE);
-		deleteCommandButton.getConfirm().setDisabled(Boolean.FALSE);
-		deleteCommandButton.setListener(new CommandButton.Listener() {
+		deleteCommandButton = CommandButton.build(CommandButton.FIELD_TITLE,"Supprimer",CommandButton.FIELD_ICON,"fa fa-remove"
+				,CommandButton.ConfiguratorImpl.FIELD_CONFIRMABLE,Boolean.TRUE,CommandButton.ConfiguratorImpl.FIELD_RUNNER_ARGUMENTS_SUCCESS_MESSAGE_ARGUMENTS_RENDER_TYPES
+				,List.of(RenderType.GROWL));
+		deleteCommandButton.addUpdates("administrativeUnitActivities");
+		deleteCommandButton.setListener(new CommandButton.Listener.AbstractImpl() {
 			@Override
 			public void listenAction(Object argument) {
 				if(!(argument instanceof AdministrativeUnitActivity))

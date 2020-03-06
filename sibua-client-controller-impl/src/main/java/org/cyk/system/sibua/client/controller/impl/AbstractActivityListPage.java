@@ -10,7 +10,6 @@ import java.util.function.Consumer;
 
 import org.cyk.system.sibua.client.controller.api.ActivityController;
 import org.cyk.system.sibua.client.controller.api.ActivityCostUnitController;
-import org.cyk.system.sibua.client.controller.api.AdministrativeUnitController;
 import org.cyk.system.sibua.client.controller.entities.Activity;
 import org.cyk.system.sibua.client.controller.entities.ActivityCostUnit;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
@@ -18,12 +17,10 @@ import org.cyk.system.sibua.client.controller.entities.Program;
 import org.cyk.system.sibua.client.controller.entities.Section;
 import org.cyk.system.sibua.server.persistence.api.ActivityCostUnitPersistence;
 import org.cyk.system.sibua.server.persistence.api.ActivityPersistence;
-import org.cyk.system.sibua.server.persistence.api.AdministrativeUnitPersistence;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
 import org.cyk.utility.__kernel__.map.MapHelper;
 import org.cyk.utility.__kernel__.object.ReadListener;
-import org.cyk.utility.__kernel__.persistence.query.QueryHelper;
 import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
@@ -32,8 +29,7 @@ import org.cyk.utility.__kernel__.value.ValueHelper;
 import org.cyk.utility.client.controller.component.command.Commandable;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.web.ComponentHelper;
-import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntity;
-import org.cyk.utility.client.controller.web.jsf.primefaces.model.AutoCompleteEntityBuilder;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.input.AutoComplete;
 import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.LazyDataModel;
@@ -50,13 +46,13 @@ public abstract class AbstractActivityListPage extends AbstractPageContainerMana
 
 	protected LazyDataModel<Activity> activities;
 	
-	protected AutoCompleteEntity<Program> programFilter;
-	protected AutoCompleteEntity<AdministrativeUnit> administrativeUnitFilter;
-	protected AutoCompleteEntity<AdministrativeUnit> administrativeUnitBeneficiaireFilter;
+	protected AutoComplete programFilter;
+	protected AutoComplete administrativeUnitFilter;
+	protected AutoComplete administrativeUnitBeneficiaireFilter;
 	
 	protected List<Activity> selectedActivities,__selectedActivities__;
-	protected AutoCompleteEntity<AdministrativeUnit> administrativeUnit;
-	protected AutoCompleteEntity<AdministrativeUnit> administrativeUnitBeneficiaire;
+	protected AutoComplete administrativeUnit;
+	protected AutoComplete administrativeUnitBeneficiaire;
 	
 	protected Collection<ActivityCostUnit> activityCostUnits;
 	
@@ -70,29 +66,29 @@ public abstract class AbstractActivityListPage extends AbstractPageContainerMana
 	protected void __listenPostConstruct__() {
 		super.__listenPostConstruct__();
 		/* Filters */
-		programFilter = AutoCompleteEntityBuilder.build(Program.class,"activitiesDataTable");
-		programFilter.setIdentifier("programFilter");
+		programFilter = AutoComplete.build(AutoComplete.FIELD_IDENTIFIER,"programFilter",AutoComplete.FIELD_ENTITY_CLASS,Program.class
+				,AutoComplete.FIELD_TARGET_WIDGET_VAR,"activitiesDataTable");
 		
-		administrativeUnitFilter = AutoCompleteEntityBuilder.build(AdministrativeUnit.class,"activitiesDataTable");
-		administrativeUnitFilter.setIdentifier("ua01Filter");
+		administrativeUnitFilter = AutoComplete.build(AutoComplete.FIELD_IDENTIFIER,"ua01Filter",AutoComplete.FIELD_ENTITY_CLASS,AdministrativeUnit.class
+				,AutoComplete.FIELD_TARGET_WIDGET_VAR,"activitiesDataTable");		
+		//administrativeUnitFilter = AutoCompleteEntityBuilder.build(AdministrativeUnit.class,"activitiesDataTable");
+		//administrativeUnitFilter.setIdentifier("ua01Filter");
 		administrativeUnitFilter.setListener(new AdministrativeUnitAutoCompleteEntityListener(defaultSection, null));
 		administrativeUnitFilter.setReadItemLabelListener(new ReadListenerImpl(defaultSection,null));
 		//administrativeUnitFilter.setRendered(groupModification);
 		
-		administrativeUnitBeneficiaireFilter = AutoCompleteEntityBuilder.build(AdministrativeUnit.class,"activitiesDataTable");
-		administrativeUnitBeneficiaireFilter.setIdentifier("ua02Filter");
+		administrativeUnitBeneficiaireFilter = AutoComplete.build(AutoComplete.FIELD_IDENTIFIER,"ua02Filter",AutoComplete.FIELD_ENTITY_CLASS,AdministrativeUnit.class
+				,AutoComplete.FIELD_TARGET_WIDGET_VAR,"activitiesDataTable");
 		administrativeUnitBeneficiaireFilter.setListener(new AdministrativeUnitAutoCompleteEntityListener(defaultSection, Boolean.TRUE));
 		administrativeUnitBeneficiaireFilter.setReadItemLabelListener(new ReadListenerImpl(defaultSection,Boolean.TRUE));
 		//administrativeUnitBeneficiaireFilter.setRendered(groupModification);
 		
 		/**/
-		administrativeUnit = AutoCompleteEntityBuilder.build(AdministrativeUnit.class);
-		administrativeUnit.setIdentifier("ua01");
+		administrativeUnit = AutoComplete.build(AutoComplete.FIELD_IDENTIFIER,"ua01",AutoComplete.FIELD_ENTITY_CLASS,AdministrativeUnit.class);	
 		administrativeUnit.setListener(new AdministrativeUnitAutoCompleteEntityListener(defaultSection, null));
 		administrativeUnit.setReadItemLabelListener(new ReadListenerImpl(defaultSection,null));
 		
-		administrativeUnitBeneficiaire = AutoCompleteEntityBuilder.build(AdministrativeUnit.class);
-		administrativeUnitBeneficiaire.setIdentifier("ua02");
+		administrativeUnitBeneficiaire = AutoComplete.build(AutoComplete.FIELD_IDENTIFIER,"ua02",AutoComplete.FIELD_ENTITY_CLASS,AdministrativeUnit.class);	
 		administrativeUnitBeneficiaire.setListener(new AdministrativeUnitAutoCompleteEntityListener(defaultSection, null));
 		administrativeUnitBeneficiaire.setReadItemLabelListener(new ReadListenerImpl(defaultSection,Boolean.TRUE));
 		
@@ -216,11 +212,11 @@ public abstract class AbstractActivityListPage extends AbstractPageContainerMana
 	/**/
 	
 	@Getter @Setter @Accessors(chain=true) @AllArgsConstructor
-	public static class AdministrativeUnitAutoCompleteEntityListener implements AutoCompleteEntity.Listener<AdministrativeUnit> {
+	public static class AdministrativeUnitAutoCompleteEntityListener implements AutoComplete.Listener {
 		
 		private Section section;
 		private Boolean beneficiaire;
-		
+		/*
 		@Override
 		public Collection<AdministrativeUnit> listenComplete(AutoCompleteEntity<AdministrativeUnit> autoCompleteEntity,String queryString) {
 			if(Boolean.TRUE.equals(beneficiaire)) {
@@ -237,7 +233,8 @@ public abstract class AbstractActivityListPage extends AbstractPageContainerMana
 					.setFilters(new FilterDto().addField(AdministrativeUnit.FIELD_CODE, queryString).addField(AdministrativeUnit.FIELD_NAME, queryString))
 					.setFields("identifier,code,name,section")
 					);
-		}		
+		}	
+		*/
 	}
 	
 	@Getter @Setter @Accessors(chain=true) @AllArgsConstructor

@@ -22,7 +22,6 @@ import org.cyk.utility.__kernel__.object.Builder;
 import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.AbstractAction;
-import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.AbstractCollection;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.AbstractDataTable;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.Column;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.DataTable;
@@ -53,12 +52,12 @@ public class AdministrativeUnitListPageNEW extends AbstractPageContainerManagedI
 			dataTable.addColumnsAfterRowIndex(Builder.build(Column.class, Map.of(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_SECTION)));
 		
 		dataTable.addColumnsAfterRowIndex(
-				Builder.build(Column.class, Map.of(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_NAME,Column.FIELD_HEADER
+				Builder.build(Column.class, Map.of(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_NAME,Column.FIELD_HEADER_TEXT
 						,"Unité administrative","filterBy","administrativeUnit",Column.FIELD_WIDTH,"60%"))
-				,Builder.build(Column.class, Map.of(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_NUMBER_OF_ACTIVITIES,Column.FIELD_HEADER,"N.A.",Column.FIELD_WIDTH,"70"
+				,Builder.build(Column.class, Map.of(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_NUMBER_OF_ACTIVITIES,Column.FIELD_HEADER_TEXT,"N.A.",Column.FIELD_WIDTH,"70"
 						,Column.ConfiguratorImpl.FIELD_FILTERABLE,Boolean.FALSE))
 				,Builder.build(Column.class, Map.of(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_SERVICE_GROUP))
-				,Builder.build(Column.class, Map.of(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION,Column.FIELD_HEADER,"CFAP"
+				,Builder.build(Column.class, Map.of(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION,Column.FIELD_HEADER_TEXT,"CFAP"
 						,Column.FIELD_VISIBLE,Boolean.FALSE))
 				,Builder.build(Column.class, Map.of(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_LOCALISATION,Column.FIELD_VISIBLE,Boolean.FALSE))
 				);
@@ -66,7 +65,7 @@ public class AdministrativeUnitListPageNEW extends AbstractPageContainerManagedI
 		dataTable.addHeaderToolbarLeftCommands(
 				Builder.build(Button.class,Map.of(Button.FIELD_VALUE,"Créer",Button.FIELD_ICON,"fa fa-plus",Button.FIELD_OUTCOME,"administrativeUnitEditView"))
 				,Builder.build(CommandButton.class,Map.of(CommandButton.FIELD_VALUE,"Supprimer",CommandButton.ConfiguratorImpl.FIELD_DATA_TABLE,dataTable
-						,CommandButton.FIELD_LISTENER,new AbstractCollection.AbstractActionListenerImpl(dataTable) {
+						,CommandButton.FIELD_LISTENER,new AbstractAction.Listener.AbstractImpl() {
 					@Override
 					protected void __showDialog__() {
 						dataTable.getDialog().setHeader("Suppression d'unité administrative");
@@ -76,7 +75,7 @@ public class AdministrativeUnitListPageNEW extends AbstractPageContainerManagedI
 					}
 				}.setCommandIdentifier("delete"),CommandButton.FIELD_ICON,"fa fa-remove"))
 				,Builder.build(CommandButton.class,Map.of(CommandButton.FIELD_VALUE,"Fusionner",CommandButton.ConfiguratorImpl.FIELD_DATA_TABLE,dataTable
-						,CommandButton.FIELD_LISTENER,new AbstractCollection.AbstractActionListenerImpl(dataTable) {
+						,CommandButton.FIELD_LISTENER,new AbstractAction.Listener.AbstractImpl() {
 					@Override
 					protected void __showDialog__() {
 						dataTable.getDialog().setHeader("Fusion d'unité administrative");
@@ -86,7 +85,7 @@ public class AdministrativeUnitListPageNEW extends AbstractPageContainerManagedI
 					}
 				}.setCommandIdentifier("merge").setMinimumSelectionSize(2),CommandButton.FIELD_ICON,"fa fa-arrows"))
 				,Builder.build(CommandButton.class,Map.of(CommandButton.FIELD_VALUE,"Consulter",CommandButton.ConfiguratorImpl.FIELD_DATA_TABLE,dataTable
-						,CommandButton.FIELD_LISTENER,new AbstractCollection.AbstractActionListenerImpl(dataTable) {
+						,CommandButton.FIELD_LISTENER,new AbstractAction.Listener.AbstractImpl() {
 					@Override
 					protected void __showDialog__() {
 						dataTable.getDialog().setHeader("Consultation d'unité administrative");
@@ -133,7 +132,7 @@ public class AdministrativeUnitListPageNEW extends AbstractPageContainerManagedI
 		
 		dataTable.getMenuColumn().setRendered(Boolean.TRUE);
 		
-		dataTable.getDialog().getExecuteCommandButton().setListener(new AbstractAction.Listener() {			
+		dataTable.getDialog().getExecuteCommandButton().setListener(new AbstractAction.Listener.AbstractImpl() {			
 			@Override
 			public void listenAction(Object argument) {
 				if(CollectionHelper.isEmpty(dataTable.getSelection()))

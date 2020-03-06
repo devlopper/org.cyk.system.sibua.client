@@ -93,8 +93,8 @@
 						widgetVar="#{__page__.administrativeUnitBeneficiaireFilter.widgetVar}#{rowIndex}"
 						rendered="#{not __page__.groupModification}"						
 					>						
-						<ui:decorate template="/ajax.xhtml">
-							<ui:param name="ajax" value="#{__page__.administrativeUnitBeneficiaireFilter.ajaxQuery}"/>
+						<ui:decorate template="/ajax/default.xhtml">
+							<ui:param name="ajax" value="#{__page__.administrativeUnitBeneficiaireFilter.ajaxes.get('query')}"/>
 						</ui:decorate>
 						<!--
 						<ui:decorate template="/ajax.xhtml">
@@ -104,8 +104,8 @@
 							<ui:param name="ajax" value="#{__page__.administrativeUnitBeneficiaireFilter.ajaxItemUnselect}"/>
 						</ui:decorate>
 						-->
-						<ui:decorate template="/ajax.xhtml">
-							<ui:param name="ajax" value="#{__page__.administrativeUnitBeneficiaireFilter.ajaxMoreText}"/>
+						<ui:decorate template="/ajax/default.xhtml">
+							<ui:param name="ajax" value="#{__page__.administrativeUnitBeneficiaireFilter.ajaxes.get('moreText')}"/>
 						</ui:decorate>						
 					</p:autoComplete>			 		
 			 	</p:column>
@@ -135,8 +135,8 @@
 						widgetVar="#{__page__.administrativeUnitFilter.widgetVar}#{rowIndex}"
 						rendered="#{not __page__.groupModification}"						
 					>						
-						<ui:decorate template="/ajax.xhtml">
-							<ui:param name="ajax" value="#{__page__.administrativeUnitFilter.ajaxQuery}"/>
+						<ui:decorate template="/ajax/default.xhtml">
+							<ui:param name="ajax" value="#{__page__.administrativeUnitFilter.ajaxes.get('query')}"/>
 						</ui:decorate>
 						<!--
 						<ui:decorate template="/ajax.xhtml">
@@ -146,8 +146,8 @@
 							<ui:param name="ajax" value="#{__page__.administrativeUnitBeneficiaireFilter.ajaxItemUnselect}"/>
 						</ui:decorate>
 						-->
-						<ui:decorate template="/ajax.xhtml">
-							<ui:param name="ajax" value="#{__page__.administrativeUnitFilter.ajaxMoreText}"/>
+						<ui:decorate template="/ajax/default.xhtml">
+							<ui:param name="ajax" value="#{__page__.administrativeUnitFilter.ajaxes.get('moreText')}"/>
 						</ui:decorate>						
 					</p:autoComplete>
 			 	</p:column>
@@ -164,7 +164,7 @@
 	  			<p:columnGroup type="header">
 	  				<p:row>
 		  				<p:column headerText="#" width="30" rowspan="2" colspan="1"/>
-		  				<p:column headerText="Unité de coût" rowspan="2" colspan="1" width="40%"/>
+		  				<p:column headerText="Unité de coût" rowspan="2" colspan="1" width="36%"/>
 		  				<p:column headerText="Financement" colspan="2"/>
 		  				<p:column headerText="Arbitrage" colspan="2"/>
 		  				<p:column headerText="Budget" colspan="2"/>
@@ -195,23 +195,35 @@
 	  			<p:column>
 			 		<h:outputText value="#{activityCostUnit.costUnit}" />
 			 	</p:column>
-			 	<p:column>
-			 		<h:outputText value="#{activityCostUnit.financementAE}" />
+			 	<p:column style="text-align:right;">
+			 		<h:outputText value="#{activityCostUnit.financementAE}">
+			 			<f:convertNumber type="number" integerOnly="true"/>
+			 		</h:outputText>
 			 	</p:column>
-			 	<p:column>
-			 		<h:outputText value="#{activityCostUnit.financementCP}" />
+			 	<p:column style="text-align:right;">
+			 		<h:outputText value="#{activityCostUnit.financementCP}">
+			 			<f:convertNumber type="number" integerOnly="true"/>
+			 		</h:outputText>
 			 	</p:column>
-			 	<p:column>
-			 		<h:outputText value="#{activityCostUnit.arbitrageAE}" />
+			 	<p:column style="text-align:right;">
+			 		<h:outputText value="#{activityCostUnit.arbitrageAE}">
+			 			<f:convertNumber type="number" integerOnly="true"/>
+			 		</h:outputText>
 			 	</p:column>
-			 	<p:column>
-			 		<h:outputText value="#{activityCostUnit.arbitrageCP}" />
+			 	<p:column style="text-align:right;">
+			 		<h:outputText value="#{activityCostUnit.arbitrageCP}">
+			 			<f:convertNumber type="number" integerOnly="true"/>
+			 		</h:outputText>
 			 	</p:column>
-			 	<p:column>
-			 		<h:outputText value="#{activityCostUnit.budgetAE}" />
+			 	<p:column style="text-align:right;">
+			 		<h:outputText value="#{activityCostUnit.budgetAE}">
+			 			<f:convertNumber type="number" integerOnly="true"/>
+			 		</h:outputText>
 			 	</p:column>
-			 	<p:column>
-			 		<h:outputText value="#{activityCostUnit.budgetCP}" />
+			 	<p:column style="text-align:right;">
+			 		<h:outputText value="#{activityCostUnit.budgetCP}">
+			 			<f:convertNumber type="number" integerOnly="true"/>
+			 		</h:outputText>
 			 	</p:column>
 			 	<p:column>
 			 		<h:outputText value="#{activityCostUnit.procedure}" />
