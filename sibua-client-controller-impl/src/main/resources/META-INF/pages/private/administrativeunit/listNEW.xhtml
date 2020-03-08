@@ -8,10 +8,10 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
 	
-    <cyk:page value="#{administrativeUnitListPage}">
+    <cyk:page value="#{administrativeUnitListPageNEW}">
     	<ui:define name="centerCenter">	    	
 	    	<ui:decorate template="/collection/datatable/default.xhtml">
-    			<ui:param name="dataTable" value="#{administrativeUnitListPage.dataTable}"/>
+    			<ui:param name="dataTable" value="#{administrativeUnitListPageNEW.dataTable}"/>
     			
     			<ui:define name="columnsAfterRowIndexBodies">
     				<ui:fragment rendered="#{columnIndex == 0}">
@@ -55,7 +55,7 @@
 						</ui:include>
     				</ui:fragment>
 				</ui:define>
-    			
+    			<!--
     			<ui:define name="columnMenuCommands">
     				<p:menuButton title="Actions">
 			    		<p:menuitem value="Rattachement" icon="fa fa-link" outcome="administrativeUnitEditActivitiesView">
@@ -68,9 +68,11 @@
 			    		</p:menuitem>
 			    	</p:menuButton>
     			</ui:define>
-    			
+    			-->
     			<ui:define name="dataTableDialogBodyDataTable">
-    				<p:dataTable id="dialogDataTable" value="#{administrativeUnitListPage.dataTable.selection}" var="administrativeUnit" rowIndexVar="rowIndexAdministrativeUnit">
+    				
+    				<!--
+    				<p:dataTable id="dialogDataTable" value="#{administrativeUnitListPageNEW.dataTable.selection}" var="administrativeUnit" rowIndexVar="rowIndexAdministrativeUnit">
 			  			<p:columnGroup type="header">
 			  				<p:row>
 			  					<p:column headerText="Activité"/>
@@ -98,9 +100,11 @@
 			 				</p:column>
 			  			</p:subTable>
 			  		</p:dataTable>
+			  		-->
     			</ui:define>
     			
     			<ui:define name="dataTableDialogBodyDataTableAfter">
+    				<!--
     				<ui:fragment rendered="#{__page__.dataTable.selectedCommandIdentifier eq 'merge'}">
 						<span>
 							<p:outputLabel for="ua" value="Toutes les unités administratives ci dessus seront fusionnées en la suivante :" />
@@ -110,6 +114,7 @@
 						</span>						
 						<p:separator/>
 					</ui:fragment>
+					-->
 					<!--
 					<ui:fragment rendered="#{__page__.dataTable.selectedCommandIdentifier eq 'delete' or __page__.dataTable.selectedCommandIdentifier eq 'merge'}">
 						<p:staticMessage severity="warn" summary="Avertissement" detail="#{__page__.dialogMessage}"/>

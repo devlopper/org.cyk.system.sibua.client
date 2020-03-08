@@ -155,12 +155,12 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 		
 		functionsDataTable.addHeaderToolbarLeftCommands(
 				Builder.build(CommandButton.class,Map.of(CommandButton.FIELD_VALUE,"Ajouter des fonctions budgétaires",CommandButton.FIELD_ICON,"fa fa-plus"
-						,CommandButton.ConfiguratorImpl.FIELD_DATA_TABLE,functionsDataTable
+						,CommandButton.ConfiguratorImpl.FIELD_COLLECTION,functionsDataTable
 						,CommandButton.FIELD_LISTENER,new CommandButton.Listener.AbstractImpl() {
 					@Override
-					protected void __showDialog__() {
+					protected void __showDialog__(Object argument) {
 						functionsDataTable.getDialog().setHeader("Ajout de fonctions budgétaires");
-						super.__showDialog__();
+						super.__showDialog__(outcome);
 					}
 				}.setMinimumSelectionSize(0).setIsSelectionShowable(Boolean.FALSE)))
 			);
