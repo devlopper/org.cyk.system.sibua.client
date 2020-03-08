@@ -145,7 +145,7 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 		functionAutoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,Function.class));
 		
 		Map<Object,Object> map = new HashMap<>();
-		map.put(DataTable.ConfiguratorImpl.FIELD_ENTIY_CLASS,Function.class);
+		map.put(DataTable.FIELD_ELEMENT_CLASS,Function.class);
 		if(CollectionHelper.isNotEmpty(user.getFunctions()))
 			map.put(DataTable.FIELD_VALUE,user.getFunctions());
 		functionsDataTable = Builder.build(DataTable.class,map);		

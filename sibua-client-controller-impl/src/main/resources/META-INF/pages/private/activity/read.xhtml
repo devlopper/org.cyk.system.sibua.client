@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{activityReadPage}">
+    	<ui:define name="centerCenter">
+    		<p:dataTable value="#{activityReadPage.activityCostUnits}" var="activityCostUnit" rowIndexVar="rowIndex">
+	  			<p:columnGroup type="header">
+	  				<p:row>
+		  				<p:column headerText="#" width="30" rowspan="2" colspan="1"/>
+		  				<p:column headerText="Unité de coût" rowspan="2" colspan="1" width="36%"/>
+		  				<p:column headerText="Financement" colspan="2"/>
+		  				<p:column headerText="Arbitrage" colspan="2"/>
+		  				<p:column headerText="Budget" colspan="2"/>
+		  				<p:column headerText="Procedure" rowspan="2" colspan="1" width="5%"/>
+		  				<p:column headerText="Exempte" rowspan="2" colspan="1" width="5%"/>
+		  			</p:row>
+		  			
+		  			<p:row>
+		  				<p:column>
+		  					<f:facet name="header">
+							     <h:outputText value="A.E." title="Autorisation d'engagement"/>
+							</f:facet> 
+		  				</p:column>
+		  				<p:column headerText="C.P."/>
+		  				
+		  				<p:column headerText="A.E."/>
+		  				<p:column headerText="C.P."/>
+		  				
+		  				<p:column headerText="A.E."/>
+		  				<p:column headerText="C.P."/>
+		  			</p:row>
+		  			
+	  			</p:columnGroup>
+		  				  			
+	  			<p:column>
+	  				<h:outputText value="#{rowIndex+1}" />
+	  			</p:column>
+	  			<p:column>
+			 		<h:outputText value="#{activityCostUnit.costUnit}" />
+			 	</p:column>
+			 	<p:column style="text-align:right;">
+			 		<h:outputText value="#{activityCostUnit.financementAE}">
+			 			<f:convertNumber type="number" integerOnly="true"/>
+			 		</h:outputText>
+			 	</p:column>
+			 	<p:column style="text-align:right;">
+			 		<h:outputText value="#{activityCostUnit.financementCP}">
+			 			<f:convertNumber type="number" integerOnly="true"/>
+			 		</h:outputText>
+			 	</p:column>
+			 	<p:column style="text-align:right;">
+			 		<h:outputText value="#{activityCostUnit.arbitrageAE}">
+			 			<f:convertNumber type="number" integerOnly="true"/>
+			 		</h:outputText>
+			 	</p:column>
+			 	<p:column style="text-align:right;">
+			 		<h:outputText value="#{activityCostUnit.arbitrageCP}">
+			 			<f:convertNumber type="number" integerOnly="true"/>
+			 		</h:outputText>
+			 	</p:column>
+			 	<p:column style="text-align:right;">
+			 		<h:outputText value="#{activityCostUnit.budgetAE}">
+			 			<f:convertNumber type="number" integerOnly="true"/>
+			 		</h:outputText>
+			 	</p:column>
+			 	<p:column style="text-align:right;">
+			 		<h:outputText value="#{activityCostUnit.budgetCP}">
+			 			<f:convertNumber type="number" integerOnly="true"/>
+			 		</h:outputText>
+			 	</p:column>
+			 	<p:column>
+			 		<h:outputText value="#{activityCostUnit.procedure}" />
+			 	</p:column>
+			 	<p:column>
+			 		<h:outputText value="#{activityCostUnit.exempted}" />
+			 	</p:column>
+	  		</p:dataTable>
+    	</ui:define>
+    </cyk:page>
+</html>

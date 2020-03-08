@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{activityEditPage}">
+    	<ui:define name="centerCenter">	    	
+	    	<ui:decorate template="/collection/datatable/default.xhtml">
+    			<ui:param name="dataTable" value="#{activityEditPage.dataTable}"/>    
+    			<ui:define name="headerToolbarRight">
+    				<ui:decorate template="/command/commandbutton/default.xhtml">
+    					<ui:param name="commandButton" value="#{activityEditPage.recordCommandButton}"/>
+    				</ui:decorate>
+    			</ui:define>
+    			
+    			<!-- headers -->
+    			
+    			<ui:define name="columnsAfterRowIndexHeaders2">
+    				<ui:include src="/collection/datatable/__columnsAfterRowIndexHeader__.xhtml"/>
+    				<ui:fragment rendered="#{activityEditPage.isOneToMany}">
+			 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
+				    		<ui:param name="autoComplete" value="#{activityEditPage.beneficiaryAutoComplete}"/>
+				    	</ui:decorate>
+			 		</ui:fragment>		
+    			</ui:define>
+    			
+    			<ui:define name="columnsAfterRowIndexHeaders3">
+    				<ui:include src="/collection/datatable/__columnsAfterRowIndexHeader__.xhtml"/>
+    				<ui:fragment rendered="#{activityEditPage.isOneToMany}">
+			 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
+				    		<ui:param name="autoComplete" value="#{activityEditPage.managerAutoComplete}"/>
+				    	</ui:decorate>
+			 		</ui:fragment>		
+    			</ui:define>
+    			
+    			<ui:define name="columnsAfterRowIndexHeaders4">
+    				<ui:include src="/collection/datatable/__columnsAfterRowIndexHeader__.xhtml"/>
+    				<ui:fragment rendered="#{activityEditPage.isOneToMany}">
+			 			<ui:decorate template="/input/select/one/autoComplete.xhtml">
+				    		<ui:param name="autoComplete" value="#{activityEditPage.functionTypeAutoComplete}"/>
+				    	</ui:decorate>
+			 		</ui:fragment>		
+    			</ui:define>
+    			
+    			<!-- bodies -->
+    						
+    			<ui:define name="columnsAfterRowIndexBodies0">
+    				<h:outputText value="#{record.action.program.section}" />
+    			</ui:define>    			
+    			
+    			<ui:define name="columnsAfterRowIndexBodies1">
+    				<h:outputText value="#{record}" />
+    			</ui:define>
+    			
+    			<ui:define name="columnsAfterRowIndexBodies2">
+    				<ui:fragment rendered="#{activityEditPage.isOneToMany}">
+    					<h:outputText value="#{record.administrativeUnitBeneficiaire}" />
+    				</ui:fragment>
+    				<ui:fragment rendered="#{not activityEditPage.isOneToMany}">
+    					<ui:param name="autoComplete" value="#{activityEditPage.beneficiaryAutoComplete}"/>
+    					<p:autoComplete
+							value="#{record.administrativeUnitBeneficiaire}" 
+							placeholder="#{activityEditPage.beneficiaryAutoComplete.placeholder}"
+							var="item" 
+							itemValue="#{activityEditPage.beneficiaryAutoComplete.readItemValue(item)}" 
+							itemLabel="#{activityEditPage.beneficiaryAutoComplete.readItemLabel(item)}"
+							converter="#{activityEditPage.beneficiaryAutoComplete.converter}"
+							completeMethod="#{activityEditPage.beneficiaryAutoComplete.complete}"
+							maxResults="#{activityEditPage.beneficiaryAutoComplete.numberOfResults}" 
+							queryDelay="#{activityEditPage.beneficiaryAutoComplete.queryDelay}" 
+							emptyMessage="#{activityEditPage.beneficiaryAutoComplete.emptyMessage}"
+							widgetVar="#{activityEditPage.beneficiaryAutoComplete.widgetVar}"
+							
+							
+						>			
+							
+						</p:autoComplete>   
+    				</ui:fragment>    				
+    			</ui:define>
+    			
+    			<ui:define name="columnsAfterRowIndexBodies3">
+    				<h:outputText value="#{record.administrativeUnit}" />
+    			</ui:define>
+    			
+    			<ui:define name="columnsAfterRowIndexBodies4">
+    				<h:outputText value="#{record.functionType}" />
+    			</ui:define>
+    			
+    			
+    		</ui:decorate>		 		
+    	</ui:define>
+    </cyk:page>
+</html>

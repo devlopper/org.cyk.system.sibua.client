@@ -165,14 +165,20 @@
 		</navigation-case>
 		
 		<navigation-case>
+			<from-outcome>administrativeUnitListView</from-outcome>
+			<to-view-id>/private/administrativeunit/list.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>administrativeUnitEditView</from-outcome>
 			<to-view-id>/private/administrativeunit/edit.jsf</to-view-id>
 			<redirect />
 		</navigation-case>
 		
 		<navigation-case>
-			<from-outcome>administrativeUnitListView</from-outcome>
-			<to-view-id>/private/administrativeunit/list.jsf</to-view-id>
+			<from-outcome>administrativeUnitReadView</from-outcome>
+			<to-view-id>/private/administrativeunit/read.jsf</to-view-id>
 			<redirect />
 		</navigation-case>
 		
@@ -221,6 +227,18 @@
 		<navigation-case>
 			<from-outcome>activityListView</from-outcome>
 			<to-view-id>/private/activity/list.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>activityEditView</from-outcome>
+			<to-view-id>/private/activity/edit.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>activityReadView</from-outcome>
+			<to-view-id>/private/activity/read.jsf</to-view-id>
 			<redirect />
 		</navigation-case>
 		

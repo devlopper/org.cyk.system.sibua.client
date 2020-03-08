@@ -3,6 +3,7 @@ package org.cyk.system.sibua.client.controller.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import org.cyk.system.sibua.client.controller.entities.user.FunctionType;
 import org.cyk.utility.client.controller.data.AbstractDataIdentifiableSystemStringIdentifiableBusinessStringNamableImpl;
 
 import lombok.Getter;
@@ -13,6 +14,7 @@ import lombok.Setter;
 public class Activity extends AbstractDataIdentifiableSystemStringIdentifiableBusinessStringNamableImpl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private FunctionType functionType;
 	private Section section;
 	private AdministrativeUnit administrativeUnit;
 	private AdministrativeUnit administrativeUnitGestionnaire;
@@ -45,6 +47,7 @@ public class Activity extends AbstractDataIdentifiableSystemStringIdentifiableBu
 		return getCode()+" "+getName();
 	}
 	
+	public static final String FIELD_FUNCTION_TYPE = "functionType";
 	public static final String FIELD_SECTION = "section";
 	public static final String FIELD_ADMINISTRATIVE_UNIT = "administrativeUnit";
 	public static final String FIELD_ADMINISTRATIVE_UNIT_GESTIONNAIRE = "administrativeUnitGestionnaire";
