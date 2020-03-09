@@ -45,7 +45,16 @@ public class ActivityListPage extends AbstractPageContainerManagedImpl implement
 				,Column.build(Column.FIELD_FIELD_NAME,Activity.FIELD_ADMINISTRATIVE_UNIT,Column.FIELD_HEADER_TEXT,"Gestionnaire",Column.ConfiguratorImpl.FIELD_FILTERABLE,Boolean.TRUE)
 				,Column.build(Column.FIELD_FIELD_NAME,Activity.FIELD_FUNCTION_TYPE,Column.FIELD_HEADER_TEXT,"Type de fonction")
 				);
-		
+		/*
+		Map<String,Ajax> ajaxes = new HashMap<>();
+		ajaxes.put("dialogReturn", Ajax.build(Ajax.FIELD_EVENT,"dialogReturn",Ajax.FIELD_LISTENER,new AbstractAction.Listener.AbstractImpl() {
+			@Override
+			public void listenAction(Object argument) {
+				MessageRenderer.getInstance().render("Activities has been updated!!! Datatable should be updated",RenderType.GROWL);
+				PrimefacesHelper.updateOnComplete(":form:"+dataTable.getIdentifier());
+			}
+		},Ajax.FIELD_DISABLED,Boolean.FALSE));
+		*/
 		dataTable.addHeaderToolbarLeftCommands(
 				CommandButton.build(CommandButton.FIELD_VALUE,"Modification en masse",CommandButton.FIELD_ICON,"fa fa-edit",CommandButton.ConfiguratorImpl.FIELD_COLLECTION,dataTable
 						,CommandButton.ConfiguratorImpl.FIELD_OPEN_VIEW_IN_DIALOG_ARGUMENTS_GETTER,new AbstractAction.Listener.OpenViewInDialogArgumentsGetter.AbstractImpl() {										
@@ -62,8 +71,9 @@ public class ActivityListPage extends AbstractPageContainerManagedImpl implement
 						return parameters;
 					}
 				}
-				)
-				,CommandButton.build(CommandButton.FIELD_VALUE,"Modification en détails",CommandButton.FIELD_ICON,"fa fa-pencil",CommandButton.ConfiguratorImpl.FIELD_COLLECTION,dataTable
+				//,CommandButton.FIELD_AJAXES,ajaxes
+			)
+				/*,CommandButton.build(CommandButton.FIELD_VALUE,"Modification en détails",CommandButton.FIELD_ICON,"fa fa-pencil",CommandButton.ConfiguratorImpl.FIELD_COLLECTION,dataTable
 						,CommandButton.ConfiguratorImpl.FIELD_OPEN_VIEW_IN_DIALOG_ARGUMENTS_GETTER,new AbstractAction.Listener.OpenViewInDialogArgumentsGetter.AbstractImpl() {										
 					@Override
 					public String getOutcome(Object argument, String outcome) {
@@ -75,7 +85,7 @@ public class ActivityListPage extends AbstractPageContainerManagedImpl implement
 						return parameters;
 					}
 				}
-				)
+				)*/
 			);
 		
 		dataTable.addRecordMenuItemByArgumentsOpenViewInDialogRead();

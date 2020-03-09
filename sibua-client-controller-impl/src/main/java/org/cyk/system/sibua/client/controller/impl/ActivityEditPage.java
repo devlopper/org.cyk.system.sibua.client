@@ -61,7 +61,7 @@ public class ActivityEditPage extends AbstractPageContainerManagedImpl implement
 		functionTypeAutoComplete = AutoComplete.build(AutoComplete.FIELD_ENTITY_CLASS,FunctionType.class,AutoComplete.FIELD_DROPDOWN,Boolean.FALSE);
 		
 		recordCommandButton = CommandButton.build(CommandButton.ConfiguratorImpl.FIELD_OBJECT,this,CommandButton.ConfiguratorImpl.FIELD_METHOD_NAME,"record"
-				,CommandButton.FIELD_ICON,"fa fa-floppy-o");
+				,CommandButton.FIELD_ICON,"fa fa-floppy-o",CommandButton.ConfiguratorImpl.FIELD_LISTENER_IS_WINDOW_RENDERED_AS_DIALOG,getIsRenderTypeDialog());
 		
 		if(Boolean.TRUE.equals(isOneToMany)) {
 			
