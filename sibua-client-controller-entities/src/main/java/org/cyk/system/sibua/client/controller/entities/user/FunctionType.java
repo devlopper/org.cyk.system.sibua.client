@@ -19,5 +19,6 @@ public class FunctionType extends AbstractDataIdentifiableSystemStringIdentifiab
 	public String toString() {
 		return getCode()+" "+getName();
 	}
-		
+	
+	public static final String FIELD_ADMINISTRATIVE_UNIT = "administrativeUnit";
 }

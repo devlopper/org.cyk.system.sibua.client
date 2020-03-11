@@ -165,14 +165,7 @@ public class AdministrativeUnitListPage extends AbstractPageContainerManagedImpl
 		
 		dataTable.addRecordMenuItemByArgumentsOpenViewInDialogRead();
 		dataTable.addRecordMenuItemByArgumentsOpenViewInDialogUpdate();
-		
-		/*
-		dataTable.addRecordMenuItemByArguments(MenuItem.FIELD_VALUE,"Rattachements",MenuItem.FIELD_ICON,"fa fa-link"
-				,MenuItem.ConfiguratorImpl.FIELD_OPEN_VIEW_IN_DIALOG_ARGUMENTS_GETTER_OUTCOME,"administrativeUnitEditActivitiesView");
-		
-		dataTable.addRecordMenuItemByArguments(MenuItem.FIELD_VALUE,"Modifier",MenuItem.FIELD_ICON,"fa fa-edit"
-				,MenuItem.ConfiguratorImpl.FIELD_OPEN_VIEW_IN_DIALOG_ARGUMENTS_GETTER_OUTCOME,"administrativeUnitEditView");
-		*/
+		dataTable.addRecordMenuItemByArgumentsExecuteFunctionDelete();
 	}
 	
 	@Override

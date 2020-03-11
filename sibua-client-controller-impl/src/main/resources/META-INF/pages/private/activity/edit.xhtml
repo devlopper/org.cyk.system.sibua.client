@@ -65,16 +65,16 @@
     					<ui:param name="autoComplete" value="#{activityEditPage.beneficiaryAutoComplete}"/>
     					<p:autoComplete
 							value="#{record.administrativeUnitBeneficiaire}" 
-							placeholder="#{activityEditPage.beneficiaryAutoComplete.placeholder}"
+							placeholder="#{autoComplete.placeholder}"
 							var="item" 
-							itemValue="#{activityEditPage.beneficiaryAutoComplete.readItemValue(item)}" 
-							itemLabel="#{activityEditPage.beneficiaryAutoComplete.readItemLabel(item)}"
-							converter="#{activityEditPage.beneficiaryAutoComplete.converter}"
-							completeMethod="#{activityEditPage.beneficiaryAutoComplete.complete}"
-							maxResults="#{activityEditPage.beneficiaryAutoComplete.numberOfResults}" 
-							queryDelay="#{activityEditPage.beneficiaryAutoComplete.queryDelay}" 
-							emptyMessage="#{activityEditPage.beneficiaryAutoComplete.emptyMessage}"
-							widgetVar="#{activityEditPage.beneficiaryAutoComplete.widgetVar}"
+							itemValue="#{autoComplete.readItemValue(item)}" 
+							itemLabel="#{autoComplete.readItemLabel(item)}"
+							converter="#{autoComplete.converter}"
+							completeMethod="#{autoComplete.complete}"
+							maxResults="#{autoComplete.numberOfResults}" 
+							queryDelay="#{autoComplete.queryDelay}" 
+							emptyMessage="#{autoComplete.emptyMessage}"
+							widgetVar="#{autoComplete.widgetVar}"
 							
 							
 						>			
@@ -84,11 +84,46 @@
     			</ui:define>
     			
     			<ui:define name="columnsAfterRowIndexBodies3">
-    				<h:outputText value="#{record.administrativeUnit}" />
+    				<ui:fragment rendered="#{activityEditPage.isOneToMany}">
+    					<h:outputText value="#{record.administrativeUnit}" />
+    				</ui:fragment>
+    				<ui:fragment rendered="#{not activityEditPage.isOneToMany}">
+    					<ui:param name="autoComplete" value="#{activityEditPage.managerAutoComplete}"/>
+    					<p:autoComplete
+							value="#{record.administrativeUnit}" 
+							placeholder="#{autoComplete.placeholder}"
+							var="item" 
+							itemValue="#{autoComplete.readItemValue(item)}" 
+							itemLabel="#{autoComplete.readItemLabel(item)}"
+							converter="#{autoComplete.converter}"
+							completeMethod="#{autoComplete.complete}"
+							maxResults="#{autoComplete.numberOfResults}" 
+							queryDelay="#{autoComplete.queryDelay}" 
+							emptyMessage="#{autoComplete.emptyMessage}"
+							widgetVar="#{autoComplete.widgetVar}"
+							
+							
+						>			
+							
+						</p:autoComplete>
+    				</ui:fragment>
     			</ui:define>
     			
     			<ui:define name="columnsAfterRowIndexBodies4">
-    				<h:outputText value="#{record.functionType}" />
+    				<ui:fragment rendered="#{activityEditPage.isOneToMany}">
+    					<h:outputText value="#{record.functionType}" />
+    				</ui:fragment>
+    				<ui:fragment rendered="#{not activityEditPage.isOneToMany}">
+    					<ui:param name="autoComplete" value="#{activityEditPage.functionTypeAutoComplete}"/>
+    					<p:selectOneMenu
+    						value="#{record.functionType}"
+    						placeholder="-- Aucune sélection --"
+							converter="#{objectConverter}"
+    					>
+    						<f:selectItem noSelectionOption="true" itemLabel="-- Aucune sélection --" />
+    						<f:selectItems value="#{activityEditPage.functionTypeAutoComplete.value}" var="item" itemValue="#{item}" itemLabel="#{item}"  />
+    					</p:selectOneMenu>
+    				</ui:fragment>
     			</ui:define>
     			
     			

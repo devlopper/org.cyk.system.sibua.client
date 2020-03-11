@@ -89,6 +89,7 @@ public class ActivityListPage extends AbstractPageContainerManagedImpl implement
 			);
 		
 		dataTable.addRecordMenuItemByArgumentsOpenViewInDialogRead();
+		dataTable.addRecordMenuItemByArgumentsOpenViewInDialogUpdate();
 	}
 	
 	@Override

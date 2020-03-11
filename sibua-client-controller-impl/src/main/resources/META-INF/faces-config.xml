@@ -183,6 +183,12 @@
 		</navigation-case>
 		
 		<navigation-case>
+			<from-outcome>administrativeUnitFunctionTypeCreateView</from-outcome>
+			<to-view-id>/private/administrativeunit/functiontype/create.jsf</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>administrativeUnitEditActivitiesView</from-outcome>
 			<to-view-id>/private/administrativeunit/editactivities.jsf</to-view-id>
 			<redirect />

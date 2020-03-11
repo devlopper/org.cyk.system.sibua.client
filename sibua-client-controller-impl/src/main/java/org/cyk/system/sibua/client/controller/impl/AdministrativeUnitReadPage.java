@@ -1,6 +1,7 @@
 package org.cyk.system.sibua.client.controller.impl;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -9,10 +10,16 @@ import javax.inject.Named;
 import org.cyk.system.sibua.client.controller.api.AdministrativeUnitController;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnitActivity;
+import org.cyk.system.sibua.client.controller.entities.AdministrativeUnitFunctionType;
 import org.cyk.system.sibua.server.persistence.api.AdministrativeUnitActivityPersistence;
+import org.cyk.system.sibua.server.persistence.api.AdministrativeUnitFunctionTypePersistence;
+import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.computation.ComparisonOperator;
+import org.cyk.utility.__kernel__.identifier.resource.ParameterName;
 import org.cyk.utility.__kernel__.number.NumberHelper;
 import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.session.SessionHelper;
+import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.Column;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.DataTable;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.LazyDataModel;
@@ -27,12 +34,25 @@ public class AdministrativeUnitReadPage extends AbstractPageContainerManagedImpl
 
 	private AdministrativeUnit administrativeUnit;
 	private DataTable administrativeUnitActivitiesDataTable;
+	private DataTable administrativeUnitFunctionTypesDataTable;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void __listenPostConstruct__() {
 		super.__listenPostConstruct__();
-		administrativeUnit = __inject__(AdministrativeUnitController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier"));
-		administrativeUnitActivitiesDataTable = DataTable.build(DataTable.FIELD_ELEMENT_CLASS,AdministrativeUnitActivity.class,DataTable.FIELD_LAZY,Boolean.TRUE);
+		if(StringHelper.isNotBlank(Faces.getRequestParameter("entityidentifier")))
+			administrativeUnit = __inject__(AdministrativeUnitController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier"));
+		
+		if(administrativeUnit == null)
+			administrativeUnit =CollectionHelper.getFirst((Collection<AdministrativeUnit>) SessionHelper.getAttributeValue(Faces.getRequestParameter(ParameterName.SESSION_IDENTIFIER.getValue())));
+		
+		createAdministrativeUnitActivitiesDataTable();
+		createAdministrativeUnitFunctionTypesDataTable();
+	}
+	
+	private void createAdministrativeUnitActivitiesDataTable() {
+		administrativeUnitActivitiesDataTable = DataTable.build(DataTable.FIELD_ELEMENT_CLASS,AdministrativeUnitActivity.class,DataTable.FIELD_LAZY,Boolean.TRUE
+				,DataTable.FIELD___PARENT_ELEMENT__,administrativeUnit);
 		
 		administrativeUnitActivitiesDataTable.addColumnsAfterRowIndex(Column.build(Column.FIELD_FIELD_NAME,AdministrativeUnitActivity.FIELD_ACTIVITY)
 				,Column.build(Column.FIELD_FIELD_NAME,AdministrativeUnitActivity.FIELD_ADMINISTRATIVE_UNIT_BENEFICIAIRE,Column.FIELD_HEADER_TEXT,"Bénéficiaire")
@@ -61,6 +81,23 @@ public class AdministrativeUnitReadPage extends AbstractPageContainerManagedImpl
 					)
 					return "cyk-background-highlight";
 				return null;
+			}
+		});
+	}
+	
+	private void createAdministrativeUnitFunctionTypesDataTable() {
+		administrativeUnitFunctionTypesDataTable = DataTable.build(DataTable.FIELD_ELEMENT_CLASS,AdministrativeUnitFunctionType.class,DataTable.FIELD_LAZY,Boolean.TRUE
+				,DataTable.FIELD___PARENT_ELEMENT__,administrativeUnit);		
+		administrativeUnitFunctionTypesDataTable.addColumnsAfterRowIndex(Column.build(Column.FIELD_FIELD_NAME,AdministrativeUnitFunctionType.FIELD_FUNCTION_TYPE));
+		administrativeUnitFunctionTypesDataTable.addHeaderToolbarLeftCommandsByArgumentsOpenViewInDialogCreate();
+		administrativeUnitFunctionTypesDataTable.addRecordMenuItemByArgumentsExecuteFunctionDelete();
+		
+		((LazyDataModel<?>)administrativeUnitFunctionTypesDataTable.getValue()).setReadQueryIdentifier(AdministrativeUnitFunctionTypePersistence.READ_BY_ADMINISTRATIVE_UNITS_CODES);
+		((LazyDataModel<?>)administrativeUnitFunctionTypesDataTable.getValue()).setCountQueryIdentifier(AdministrativeUnitFunctionTypePersistence.COUNT_BY_ADMINISTRATIVE_UNITS_CODES);
+		((LazyDataModel<?>)administrativeUnitFunctionTypesDataTable.getValue()).setListener(new LazyDataModel.Listener.AbstractImpl() {
+			@Override
+			public void processFilter(FilterDto filter) {
+				filter.addField("administrativeUnit", List.of(administrativeUnit.getCode()));
 			}
 		});
 	}
