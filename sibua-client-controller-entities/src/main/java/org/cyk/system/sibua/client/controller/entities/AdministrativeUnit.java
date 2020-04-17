@@ -7,12 +7,12 @@ import java.util.List;
 
 import org.cyk.utility.__kernel__.array.ArrayHelper;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
+import org.cyk.utility.__kernel__.object.__static__.controller.AbstractDataIdentifiableSystemStringIdentifiableBusinessStringNamableImpl;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.client.controller.component.annotation.Input;
 import org.cyk.utility.client.controller.component.annotation.InputChoice;
 import org.cyk.utility.client.controller.component.annotation.InputChoiceOne;
 import org.cyk.utility.client.controller.component.annotation.InputChoiceOneCombo;
-import org.cyk.utility.client.controller.data.AbstractDataIdentifiableSystemStringIdentifiableBusinessStringNamableImpl;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,8 +42,7 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 	private List<ActivityDestination> activityDestinations;
 	
 	/* As String */
-	
-	private String asString,sectionAsString,serviceGroupAsString,functionalClassificationAsString,localisationAsString;
+	private String sectionAsString,serviceGroupAsString,functionalClassificationAsString,localisationAsString;
 	
 	public AdministrativeUnit addDestinations(Collection<Destination> destinations) {
 		if(CollectionHelper.isEmpty(destinations))
@@ -146,8 +145,11 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 		if(CollectionHelper.isEmpty(activitiesCodes))
 			return this;
 		for(String activityCode : activitiesCodes) {
-			if(StringHelper.isNotBlank(activityCode))
-				addActivities(new Activity().setCode(activityCode));
+			if(StringHelper.isNotBlank(activityCode)) {
+				Activity activity = new Activity();
+				activity.setCode(activityCode);
+				addActivities(activity);
+			}
 		}
 		return this;
 	}
@@ -203,4 +205,10 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 	public static final String FIELD_ACTIVITY_DESTINATIONS = "activityDestinations";
 	public static final String FIELD_NUMBER_OF_ACTIVITIES = "numberOfActivities";
 	public static final String FIELD_NUMBER_OF_ACTIVITIES_BENEFICIAIRE = "numberOfActivitiesBeneficiaire";
+	
+	/* As String*/
+	public static final String FIELD_SECTION_AS_STRING = "sectionAsString";
+	public static final String FIELD_SERVICE_GROUP_AS_STRING = "serviceGroupAsString";
+	public static final String FIELD_FUNCTIONAL_CLASSIFICATION_AS_STRING = "functionalClassificationAsString";
+	public static final String FIELD_LOCALISATION_AS_STRING = "localisationAsString";
 }

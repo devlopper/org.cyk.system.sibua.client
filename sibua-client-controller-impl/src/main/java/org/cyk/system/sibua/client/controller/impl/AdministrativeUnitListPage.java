@@ -154,7 +154,7 @@ public class AdministrativeUnitListPage extends AbstractPageContainerManagedImpl
 		*/
 		dataTable.setListener(new AbstractDataTable.Listener.AbstractImpl() {
 			@Override
-			public String listenGetStyleClassByRecord(Object record,Integer rowIndex) {
+			public String getStyleClassByRecord(Object record,Integer rowIndex) {
 				if(record instanceof AdministrativeUnit) {
 					if( ((AdministrativeUnit)record).getNumberOfActivities()==0 && ((AdministrativeUnit)record).getNumberOfActivitiesBeneficiaire()==0 )
 						return "cyk-background-highlight";
@@ -163,7 +163,7 @@ public class AdministrativeUnitListPage extends AbstractPageContainerManagedImpl
 			}
 			
 			@Override
-			public String listenGetStyleClassByRecordByColumn(Object record,Integer rowIndex,Column column, Integer columnIndex) {
+			public String getStyleClassByRecordByColumn(Object record,Integer rowIndex,Column column, Integer columnIndex) {
 				return "ui-state-default";
 			}
 		});

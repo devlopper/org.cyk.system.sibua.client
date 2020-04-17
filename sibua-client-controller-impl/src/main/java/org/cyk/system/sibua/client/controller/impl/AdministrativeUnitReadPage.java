@@ -73,7 +73,7 @@ public class AdministrativeUnitReadPage extends AbstractPageContainerManagedImpl
 		
 		administrativeUnitActivitiesDataTable.setListener(new DataTable.Listener.AbstractImpl() {			
 			@Override
-			public String listenGetStyleClassByRecordByColumn(Object record,Integer recordIndex,Column column,Integer columnIndex) {
+			public String getStyleClassByRecordByColumn(Object record,Integer recordIndex,Column column,Integer columnIndex) {
 				if(record == null)
 					return null;
 				AdministrativeUnitActivity administrativeUnitActivity = (AdministrativeUnitActivity) record;

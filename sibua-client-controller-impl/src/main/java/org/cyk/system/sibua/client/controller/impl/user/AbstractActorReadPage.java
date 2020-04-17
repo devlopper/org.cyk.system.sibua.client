@@ -168,7 +168,7 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 		functionsDataTable.setListener(new AbstractDataTable.Listener.AbstractImpl() {
 			
 			@Override
-			public String listenGetStyleClassByRecord(Object record,Integer recordIndex) {
+			public String getStyleClassByRecord(Object record,Integer recordIndex) {
 				/*if(record instanceof Function) {
 					return "cyk-default";
 				}*/					
@@ -176,7 +176,7 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 			}
 			
 			@Override
-			public String listenGetStyleClassByRecordByColumn(Object record,Integer recordIndex,Column column,Integer columnIndex) {
+			public String getStyleClassByRecordByColumn(Object record,Integer recordIndex,Column column,Integer columnIndex) {
 				return null;
 			}
 		});

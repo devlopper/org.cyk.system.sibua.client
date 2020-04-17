@@ -268,9 +268,10 @@ public class AdministrativeUnitLoadPage extends AbstractPageContainerManagedImpl
 				}
 				*/
 			}
-			if(activity == null && StringHelper.isNotBlank(arrayIndex[1]))
-				activity = new Activity().setName(arrayIndex[1]);
-			
+			if(activity == null && StringHelper.isNotBlank(arrayIndex[1])) {
+				activity = new Activity();
+				activity.setName(arrayIndex[1]);
+			}
 			Destination destination = null;
 			if(StringHelper.isBlank(arrayIndex[2]) && CollectionHelper.isNotEmpty(administrativeUnit.getActivityDestinations()))
 				destination = CollectionHelper.getLast(administrativeUnit.getActivityDestinations()).getDestination();

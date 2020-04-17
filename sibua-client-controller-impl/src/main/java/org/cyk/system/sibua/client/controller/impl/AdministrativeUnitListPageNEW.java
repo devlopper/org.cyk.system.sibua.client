@@ -7,7 +7,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
-import org.cyk.system.sibua.server.persistence.api.query.AdministrativeUnitQuerier;
+import org.cyk.system.sibua.server.persistence.api.query.AdministrativeUnitReadingQuerier;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
 import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.AbstractDataTable;
@@ -34,7 +34,7 @@ public class AdministrativeUnitListPageNEW extends AbstractPageContainerManagedI
 		@SuppressWarnings("unchecked")
 		LazyDataModel<AdministrativeUnit> lazyDataModel = (LazyDataModel<AdministrativeUnit>) dataTable.getValue();
 		lazyDataModel.setReaderUsable(Boolean.TRUE);
-		lazyDataModel.setReadQueryIdentifier(AdministrativeUnitQuerier.QUERY_IDENTIFIER_READ_VIEW_02);
+		lazyDataModel.setReadQueryIdentifier(AdministrativeUnitReadingQuerier.QUERY_IDENTIFIER_READ_VIEW_02);
 		
 		if(defaultSection == null) {
 			dataTable.addColumnsAfterRowIndex(Column.build(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_SECTION+"AsString",Column.FIELD_FILTER_BY,AdministrativeUnit.FIELD_SECTION
@@ -74,7 +74,7 @@ public class AdministrativeUnitListPageNEW extends AbstractPageContainerManagedI
 		
 		dataTable.setListener(new AbstractDataTable.Listener.AbstractImpl() {
 			@Override
-			public String listenGetStyleClassByRecord(Object record,Integer rowIndex) {
+			public String getStyleClassByRecord(Object record,Integer rowIndex) {
 				/*if(record instanceof AdministrativeUnit) {
 					if( ((AdministrativeUnit)record).getNumberOfActivities()==0 && ((AdministrativeUnit)record).getNumberOfActivitiesBeneficiaire()==0 )
 						return "cyk-background-highlight";
@@ -83,7 +83,7 @@ public class AdministrativeUnitListPageNEW extends AbstractPageContainerManagedI
 			}
 			
 			@Override
-			public String listenGetStyleClassByRecordByColumn(Object record,Integer rowIndex,Column column, Integer columnIndex) {
+			public String getStyleClassByRecordByColumn(Object record,Integer rowIndex,Column column, Integer columnIndex) {
 				return "ui-state-default";
 			}
 		});

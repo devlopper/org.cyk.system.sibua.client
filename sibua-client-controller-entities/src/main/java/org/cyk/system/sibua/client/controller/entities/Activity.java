@@ -3,8 +3,10 @@ package org.cyk.system.sibua.client.controller.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Transient;
+
 import org.cyk.system.sibua.client.controller.entities.user.FunctionType;
-import org.cyk.utility.client.controller.data.AbstractDataIdentifiableSystemStringIdentifiableBusinessStringNamableImpl;
+import org.cyk.utility.__kernel__.object.__static__.controller.AbstractDataIdentifiableSystemStringIdentifiableBusinessStringNamableImpl;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,15 +34,8 @@ public class Activity extends AbstractDataIdentifiableSystemStringIdentifiableBu
 	private List<CostUnit> costUnits;
 	private Destination destination;
 	
-	@Override
-	public Activity setCode(String code) {
-		return (Activity) super.setCode(code);
-	}
-	
-	@Override
-	public Activity setName(String name) {
-		return (Activity) super.setName(name);
-	}
+	/* As String */	
+	@Transient private String sectionAsString,programAsString,actionAsString,functionTypeAsString,managerAsString,beneficiaryAsString;
 	
 	@Override
 	public String toString() {
@@ -65,5 +60,13 @@ public class Activity extends AbstractDataIdentifiableSystemStringIdentifiableBu
 	public static final String FIELD_NAT_DEP_CODE = "natDepCode";
 	public static final String FIELD_CAT_USB_CODE = "catUsbCode";
 	public static final String FIELD_CAT_ATV_CODE = "catAtvCode";
+	
+	/* As String*/
+	public static final String FIELD_FUNCTION_TYPE_AS_STRING = "functionTypeAsString";
+	public static final String FIELD_SECTION_AS_STRING = "sectionAsString";
+	public static final String FIELD_PROGRAM_AS_STRING = "programAsString";
+	public static final String FIELD_ACTION_AS_STRING = "actionAsString";
+	public static final String FIELD_MANAGER_AS_STRING = "managerAsString";
+	public static final String FIELD_BENEFICIARY_AS_STRING = "beneficiaryAsString";
 	
 }
