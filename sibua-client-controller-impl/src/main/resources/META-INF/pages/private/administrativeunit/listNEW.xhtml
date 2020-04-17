@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{administrativeUnitListPageNEW}">
+    	<ui:define name="centerCenter">	    	
+	    	<ui:decorate template="/collection/datatable/default.xhtml">
+    			<ui:param name="dataTable" value="#{administrativeUnitListPageNEW.dataTable}"/>
+    			  			
+    			<!--
+    			<ui:define name="columnsAfterRowIndexBodies">
+    				<ui:fragment rendered="#{administrativeUnitListPageNEW.defaultSection == null and columnIndex == 0}">
+    					<ui:include src="../outputText_code_name.xhtml">
+							<ui:param name="code" value="#{record.section.code}"/>
+							<ui:param name="name" value="#{record.section.name}"/>
+							<ui:param name="nameRendered" value="false"/>
+						</ui:include>
+    				</ui:fragment>
+    				
+    				<ui:fragment rendered="#{administrativeUnitListPageNEW.defaultSection == null and columnIndex == 1 or (administrativeUnitListPageNEW.defaultSection != null and columnIndex == 0)}">
+    					<ui:include src="../outputText_code_name.xhtml">
+							<ui:param name="code" value="#{record.code}"/>
+							<ui:param name="name" value="#{record.name}"/>
+						</ui:include>
+    				</ui:fragment>
+    				
+    				<ui:fragment rendered="#{administrativeUnitListPageNEW.defaultSection == null and columnIndex == 2 or (administrativeUnitListPageNEW.defaultSection != null and columnIndex == 1)}">
+    					<h:outputText id="nav" value="#{record.numberOfActivities} | #{record.numberOfActivitiesBeneficiaire}"/>
+ 						<p:tooltip for="nav" value="Gestionnaire de #{record.numberOfActivities} | Bénéficiaire de #{record.numberOfActivitiesBeneficiaire}"/>
+    				</ui:fragment>
+    				
+    				<ui:fragment rendered="#{administrativeUnitListPageNEW.defaultSection == null and columnIndex == 3 or (administrativeUnitListPageNEW.defaultSection != null and columnIndex == 2)}">
+    					<ui:include src="../outputText_code_name.xhtml">
+							<ui:param name="code" value="#{record.serviceGroup.code}"/>
+							<ui:param name="name" value="#{record.serviceGroup.name}"/>
+						</ui:include>
+    				</ui:fragment>
+    				
+    				<ui:fragment rendered="#{administrativeUnitListPageNEW.defaultSection == null and columnIndex == 4 or (administrativeUnitListPageNEW.defaultSection != null and columnIndex == 3)}">
+    					<ui:include src="../outputText_code_name.xhtml">
+							<ui:param name="code" value="#{record.functionalClassification.code}"/>
+							<ui:param name="name" value="#{record.functionalClassification.name}"/>
+						</ui:include>
+    				</ui:fragment>
+    				
+    				<ui:fragment rendered="#{administrativeUnitListPageNEW.defaultSection == null and columnIndex == 5 or (administrativeUnitListPageNEW.defaultSection != null and columnIndex == 4)}">
+    					<ui:include src="../outputText_code_name.xhtml">
+							<ui:param name="code" value="#{record.localisation.code}"/>
+							<ui:param name="name" value="#{record.localisation.name}"/>
+						</ui:include>
+    				</ui:fragment>
+				</ui:define> 
+				--> 			
+    		</ui:decorate>
+	    	<ui:include src="../css.xhtml"/>	    		 		
+    	</ui:define>
+    </cyk:page>
+</html>

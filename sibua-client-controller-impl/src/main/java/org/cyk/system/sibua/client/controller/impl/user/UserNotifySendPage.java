@@ -14,7 +14,7 @@ import org.cyk.system.sibua.client.controller.entities.user.User;
 import org.cyk.system.sibua.client.controller.entities.user.UserFunction;
 import org.cyk.system.sibua.server.persistence.api.user.UserFunctionPersistence;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.omnifaces.util.Faces;
@@ -37,7 +37,7 @@ public class UserNotifySendPage extends AbstractPageContainerManagedImpl impleme
 		}else {
 			user = __inject__(UserController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier"));
 			user.setUserFunctions((List<UserFunction>) __inject__(UserFunctionController.class).read(new Properties().setQueryIdentifier(UserFunctionPersistence.READ_BY_USERS_IDENTIFIERS)
-					.setFilters(new FilterDto().addField("user", List.of(user.getIdentifier())))));
+					.setFilters(new Filter.Dto().addField("user", List.of(user.getIdentifier())))));
 			message = "Votre fiche d'identification a bien été transmise.\r\n" + 
 					"    			Veuillez l'imprimer , la signée et la faire parvenir à ";
 			

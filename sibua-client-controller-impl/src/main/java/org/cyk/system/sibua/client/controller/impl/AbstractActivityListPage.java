@@ -21,7 +21,7 @@ import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
 import org.cyk.utility.__kernel__.map.MapHelper;
 import org.cyk.utility.__kernel__.object.ReadListener;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
@@ -97,7 +97,7 @@ public abstract class AbstractActivityListPage extends AbstractPageContainerMana
 
 			@Override
 			public List<Activity> load(int first, int pageSize, String sortField, SortOrder sortOrder,Map<String, Object> filters) {
-				FilterDto filter = new FilterDto();
+				Filter.Dto filter = new Filter.Dto();
 				filter.addField("activity", MapHelper.readByKey(filters, "activity"));				
 				filter.addField(Activity.FIELD_ADMINISTRATIVE_UNIT, MapHelper.readByKey(filters, Activity.FIELD_ADMINISTRATIVE_UNIT));
 				filter.addField(Activity.FIELD_ADMINISTRATIVE_UNIT_BENEFICIAIRE, MapHelper.readByKey(filters, Activity.FIELD_ADMINISTRATIVE_UNIT_BENEFICIAIRE));
@@ -203,7 +203,7 @@ public abstract class AbstractActivityListPage extends AbstractPageContainerMana
 			return;
 		activityCostUnits = __inject__(ActivityCostUnitController.class).read(new Properties()
 				.setQueryIdentifier(ActivityCostUnitPersistence.READ_BY_ACTIVITIES_CODES)
-				.setFilters(new FilterDto().addField(ActivityCostUnit.FIELD_ACTIVITY, List.of(activity.getCode()))						
+				.setFilters(new Filter.Dto().addField(ActivityCostUnit.FIELD_ACTIVITY, List.of(activity.getCode()))						
 				)
 			);
 		Ajax.oncomplete("PF('dialog').show();");

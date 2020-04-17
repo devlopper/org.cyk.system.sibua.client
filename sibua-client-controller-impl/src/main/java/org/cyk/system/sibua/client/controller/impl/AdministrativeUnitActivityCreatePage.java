@@ -25,7 +25,7 @@ import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
 import org.cyk.utility.client.controller.component.command.Commandable;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.web.ComponentHelper;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -48,7 +48,7 @@ public class AdministrativeUnitActivityCreatePage extends AbstractPageContainerM
 		super.__listenPostConstruct__();		
 		Collection<Activity> activities = defaultSection == null ? null : __inject__(ActivityController.class).read(new Properties()
 				.setQueryIdentifier(ActivityPersistence.READ_WHERE_ADMINISTRATIVE_UNIT_DOES_NOT_EXIST_BY_FILTERS)
-				.setFilters(new FilterDto().addField(Activity.FIELD_SECTION, defaultSection == null ? null : List.of(defaultSection.getCode())))
+				.setFilters(new Filter.Dto().addField(Activity.FIELD_SECTION, defaultSection == null ? null : List.of(defaultSection.getCode())))
 				.setFields("identifier,code,name,action")
 				.setIsPageable(Boolean.FALSE)
 				);
@@ -108,7 +108,7 @@ public class AdministrativeUnitActivityCreatePage extends AbstractPageContainerM
 		if(defaultSection == null)
 			return __inject__(AdministrativeUnitController.class).readByString(string);
 		return __inject__(AdministrativeUnitController.class).read(new Properties().setQueryIdentifier(AdministrativeUnitPersistence.READ_BY_FILTERS)
-				.setFilters(new FilterDto().addField(AdministrativeUnit.FIELD_SECTION, defaultSection == null ? null : List.of(defaultSection.getCode()))
+				.setFilters(new Filter.Dto().addField(AdministrativeUnit.FIELD_SECTION, defaultSection == null ? null : List.of(defaultSection.getCode()))
 						.addField(AdministrativeUnit.FIELD_NAME, string))
 				.setFields("identifier,code,name")
 				);

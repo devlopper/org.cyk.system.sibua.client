@@ -2,28 +2,18 @@ package org.cyk.system.sibua.client.controller.impl;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import org.cyk.system.sibua.client.controller.api.ActivityController;
-import org.cyk.system.sibua.client.controller.api.AdministrativeUnitController;
-import org.cyk.system.sibua.client.controller.entities.Activity;
 import org.cyk.system.sibua.client.controller.entities.AdministrativeUnit;
-import org.cyk.system.sibua.server.persistence.api.ActivityPersistence;
-import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
-import org.cyk.utility.__kernel__.properties.Properties;
-import org.cyk.utility.client.controller.web.jsf.primefaces.model.AbstractAction;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.AbstractDataTable;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.Column;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.DataTable;
-import org.cyk.utility.client.controller.web.jsf.primefaces.model.command.CommandButton;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.LazyDataModel;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -40,12 +30,27 @@ public class AdministrativeUnitListPage extends AbstractPageContainerManagedImpl
 	protected void __listenPostConstruct__() {
 		super.__listenPostConstruct__();
 		dataTable = DataTable.build(DataTable.FIELD_LAZY,Boolean.TRUE,DataTable.FIELD_ELEMENT_CLASS,AdministrativeUnit.class
-				,DataTable.FIELD_SELECTION_MODE,"multiple",DataTable.ConfiguratorImpl.FIELD_ENTITY_FIELDS_NAMES,List.of(AdministrativeUnit.FIELD_IDENTIFIER,AdministrativeUnit.FIELD_CODE
+				,DataTable.ConfiguratorImpl.FIELD_ENTITY_FIELDS_NAMES,List.of(AdministrativeUnit.FIELD_IDENTIFIER,AdministrativeUnit.FIELD_CODE
 				,AdministrativeUnit.FIELD_NAME,AdministrativeUnit.FIELD_SECTION,AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION,AdministrativeUnit.FIELD_SERVICE_GROUP
 				,AdministrativeUnit.FIELD_LOCALISATION,AdministrativeUnit.FIELD_NUMBER_OF_ACTIVITIES,AdministrativeUnit.FIELD_NUMBER_OF_ACTIVITIES_BENEFICIAIRE));
 		
 		if(defaultSection == null)
 			dataTable.addColumnsAfterRowIndex(Column.build(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_SECTION,Column.ConfiguratorImpl.FIELD_FILTERABLE,Boolean.TRUE));
+		else {
+			@SuppressWarnings("unchecked")
+			LazyDataModel<AdministrativeUnit> lazyDataModel = (LazyDataModel<AdministrativeUnit>) dataTable.getValue();
+			lazyDataModel.setListener(new LazyDataModel.Listener.AbstractImpl<AdministrativeUnit>() {
+				@Override
+				public Filter.Dto instantiateFilter(LazyDataModel<AdministrativeUnit> lazyDataModel) {
+					Filter.Dto filter = super.instantiateFilter(lazyDataModel);
+					if(filter == null)
+						filter = new Filter.Dto();
+					if(defaultSection != null)
+						filter.addField(AdministrativeUnit.FIELD_SECTION, defaultSection.getCode());
+					return filter;
+				}
+			});
+		}
 		
 		dataTable.addColumnsAfterRowIndex(
 				Column.build(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_NAME,Column.FIELD_HEADER_TEXT
@@ -58,7 +63,7 @@ public class AdministrativeUnitListPage extends AbstractPageContainerManagedImpl
 				);
 		
 		dataTable.addHeaderToolbarLeftCommandsByArgumentsOpenViewInDialogCreate();
-		
+		/*
 		dataTable.addHeaderToolbarLeftCommands(
 				CommandButton.build(CommandButton.FIELD_VALUE,"Supprimer",CommandButton.ConfiguratorImpl.FIELD_COLLECTION,dataTable
 						,CommandButton.FIELD_LISTENER,new AbstractAction.Listener.AbstractImpl() {
@@ -146,8 +151,8 @@ public class AdministrativeUnitListPage extends AbstractPageContainerManagedImpl
 				dataTable.setSelection(null);
 			}
 		});
-		
-		dataTable.setListener(new AbstractDataTable.Listener() {
+		*/
+		dataTable.setListener(new AbstractDataTable.Listener.AbstractImpl() {
 			@Override
 			public String listenGetStyleClassByRecord(Object record,Integer rowIndex) {
 				if(record instanceof AdministrativeUnit) {

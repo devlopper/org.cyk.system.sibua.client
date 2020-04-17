@@ -15,7 +15,7 @@ import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.client.controller.web.jsf.primefaces.AbstractPageContainerManagedImpl;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.SelectionOne;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.omnifaces.util.Faces;
 
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class AdministrativeUnitListActivitiesPage extends AbstractPageContainerM
 						administrativeUnits = null;
 					}else {					
 						administrativeUnits = __inject__(AdministrativeUnitController.class)
-								.read(new Properties().setFilters(new FilterDto().addField(AdministrativeUnit.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+								.read(new Properties().setFilters(new Filter.Dto().addField(AdministrativeUnit.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
 										.setFields(AdministrativeUnit.FIELD_CODE+","+AdministrativeUnit.FIELD_NAME+","+AdministrativeUnit.FIELD_ACTIVITIES)
 										.setIsPageable(Boolean.FALSE));										
 					}				

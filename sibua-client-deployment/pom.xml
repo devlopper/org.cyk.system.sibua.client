@@ -62,7 +62,10 @@
 		<profile>
 			<id>deployment.common</id>
 			<properties>
+				<!--
 				<cyk.variable.system.name>Module de gestion des unités administratives</cyk.variable.system.name>
+				-->
+				<cyk.variable.system.name>Module de gestion des affectations</cyk.variable.system.name>
 			</properties>
 		</profile>
 		

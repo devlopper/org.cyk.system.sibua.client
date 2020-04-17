@@ -3,7 +3,6 @@ package org.cyk.system.sibua.client.controller.impl;
 import java.io.Serializable;
 import java.security.Principal;
 
-import org.cyk.utility.__kernel__.configuration.ConfigurationHelper;
 import org.cyk.utility.__kernel__.icon.Icon;
 import org.cyk.utility.client.controller.component.menu.MenuBuilder;
 import org.cyk.utility.client.controller.component.menu.MenuItemBuilder;
@@ -18,13 +17,13 @@ public class MenuBuilderMapInstantiatorImpl extends org.cyk.utility.client.contr
 	
 	@Override
 	protected void __instantiateSessionMenuBuilderItems__(Object key, MenuBuilder sessionMenuBuilder, Object request,Principal principal) {
-		Boolean isAdmin = ConfigurationHelper.is("cyk.variable.admin");
+		//Boolean isAdmin = ConfigurationHelper.is("cyk.variable.admin");
 		if(SessionAttributeEnumeration.MENU_BUILDER_MAP.equals(key)) {
 			MenuItemBuilder ua = __inject__(MenuItemBuilder.class).setCommandableName("Unité administrative").setCommandableIcon(Icon.BUILDING);
 			ua.addChild(__inject__(MenuItemBuilder.class).setCommandableName("Liste").setCommandableNavigationIdentifier("administrativeUnitListView").setCommandableIcon(Icon.LIST));
-			ua.addChild(__inject__(MenuItemBuilder.class).setCommandableName("Codification").setCommandableNavigationIdentifier("administrativeUnitCodifyView").setCommandableIcon(Icon.THUMB_TACK));
-			if(isAdmin)
-				ua.addChild(__inject__(MenuItemBuilder.class).setCommandableName("Génération des codes").setCommandableNavigationIdentifier("administrativeUnitGenerateCodeView").setCommandableIcon(Icon.FLASH));
+			//ua.addChild(__inject__(MenuItemBuilder.class).setCommandableName("Codification").setCommandableNavigationIdentifier("administrativeUnitCodifyView").setCommandableIcon(Icon.THUMB_TACK));
+			//if(isAdmin)
+			//	ua.addChild(__inject__(MenuItemBuilder.class).setCommandableName("Génération des codes").setCommandableNavigationIdentifier("administrativeUnitGenerateCodeView").setCommandableIcon(Icon.FLASH));
 			ua.addChild(__inject__(MenuItemBuilder.class).setCommandableName("Section").setCommandableNavigationIdentifier("workspaceConfigureView").setCommandableIcon(Icon.GEAR));
 			sessionMenuBuilder.addItems(ua);
 			

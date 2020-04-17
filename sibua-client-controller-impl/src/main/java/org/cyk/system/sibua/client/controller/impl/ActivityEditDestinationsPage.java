@@ -27,7 +27,7 @@ import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.web.ComponentHelper;
 import org.cyk.utility.client.controller.web.jsf.primefaces.AbstractPageContainerManagedImpl;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.SelectionOne;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.DualListModel;
 
@@ -66,17 +66,17 @@ public class ActivityEditDestinationsPage extends AbstractPageContainerManagedIm
 						destinations.setSource(new ArrayList<>());
 					}else {											
 						program.setChoices( __inject__(ProgramController.class)
-								.read(new Properties().setFilters(new FilterDto().addField(Program.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+								.read(new Properties().setFilters(new Filter.Dto().addField(Program.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
 										.setIsPageable(Boolean.FALSE)));										
 						action.setChoices( __inject__(ActionController.class)
-								.read(new Properties().setFilters(new FilterDto().addField(Action.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+								.read(new Properties().setFilters(new Filter.Dto().addField(Action.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
 										.setIsPageable(Boolean.FALSE)));
 						activity.setChoices(__inject__(ActivityController.class)
-								.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+								.read(new Properties().setFilters(new Filter.Dto().addField(Activity.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
 										.setIsPageable(Boolean.FALSE)));				
 						destinations.setSource((List<Destination>) __inject__(DestinationController.class)
 								.read(new Properties().setQueryIdentifier(DestinationPersistence.READ_WHERE_ACTIVITY_DOES_NOT_EXIST_BY_SECTIONS_CODES)
-										.setFilters(new FilterDto().addField(Destination.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+										.setFilters(new Filter.Dto().addField(Destination.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
 										.setIsPageable(Boolean.FALSE)));
 						if(destinations.getSource() == null)
 							destinations.setSource(new ArrayList<>());
@@ -99,15 +99,15 @@ public class ActivityEditDestinationsPage extends AbstractPageContainerManagedIm
 							
 						}else {
 							activity.setChoices(__inject__(ActivityController.class)
-									.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_SECTION, CollectionHelper.listOf(section.getValue().getCode())))
+									.read(new Properties().setFilters(new Filter.Dto().addField(Activity.FIELD_SECTION, CollectionHelper.listOf(section.getValue().getCode())))
 											.setIsPageable(Boolean.FALSE)));			
 						}						
 					}else {					
 						action.setChoices(__inject__(ActionController.class)
-								.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_PROGRAM, CollectionHelper.listOf(program.getCode())))
+								.read(new Properties().setFilters(new Filter.Dto().addField(Activity.FIELD_PROGRAM, CollectionHelper.listOf(program.getCode())))
 										.setIsPageable(Boolean.FALSE)));						
 						activity.setChoices(__inject__(ActivityController.class)
-								.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_PROGRAM, CollectionHelper.listOf(program.getCode())))
+								.read(new Properties().setFilters(new Filter.Dto().addField(Activity.FIELD_PROGRAM, CollectionHelper.listOf(program.getCode())))
 										.setIsPageable(Boolean.FALSE)));	
 					}
 				}
@@ -123,12 +123,12 @@ public class ActivityEditDestinationsPage extends AbstractPageContainerManagedIm
 							
 						}else {
 							activity.setChoices(__inject__(ActivityController.class)
-									.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_PROGRAM, CollectionHelper.listOf(program.getValue().getCode())))
+									.read(new Properties().setFilters(new Filter.Dto().addField(Activity.FIELD_PROGRAM, CollectionHelper.listOf(program.getValue().getCode())))
 											.setIsPageable(Boolean.FALSE)));
 						}
 					}else {
 						activity.setChoices(__inject__(ActivityController.class)
-								.read(new Properties().setFilters(new FilterDto().addField(Activity.FIELD_ACTION, CollectionHelper.listOf(action.getCode())))
+								.read(new Properties().setFilters(new Filter.Dto().addField(Activity.FIELD_ACTION, CollectionHelper.listOf(action.getCode())))
 										.setIsPageable(Boolean.FALSE)));
 					}
 				}
@@ -140,7 +140,7 @@ public class ActivityEditDestinationsPage extends AbstractPageContainerManagedIm
 				@Override
 				public void processOnSelect(Activity activity) {
 					destinations.setTarget((List<Destination>) __inject__(DestinationController.class)
-							.read(new Properties().setFilters(new FilterDto().addField(Destination.FIELD_ACTIVITY, CollectionHelper.listOf(activity.getCode())))
+							.read(new Properties().setFilters(new Filter.Dto().addField(Destination.FIELD_ACTIVITY, CollectionHelper.listOf(activity.getCode())))
 									.setIsPageable(Boolean.FALSE)));
 					if(destinations.getTarget() == null)
 						destinations.setTarget(new ArrayList<>());

@@ -19,7 +19,7 @@ import org.cyk.utility.__kernel__.identifier.resource.PathAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierHelper;
 import org.cyk.utility.__kernel__.object.Builder;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.user.interface_.message.RenderType;
@@ -68,7 +68,7 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 					.setCountQueryIdentifier(AdministrativeUnitActivityPersistence.COUNT_WHERE_IS_GESTIONNAIRE_OR_BENEFICIAIRE_BY_ADMINISTRATIVE_UNITS_CODES);
 				
 				((org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.LazyDataModel<AdministrativeUnitActivity>) dataTable.getValue())
-					.setFilter(new FilterDto().addField(AdministrativeUnitActivity.FIELD_ADMINISTRATIVE_UNIT, List.of(administrativeUnit.getCode())));
+					.setFilter(new Filter.Dto().addField(AdministrativeUnitActivity.FIELD_ADMINISTRATIVE_UNIT, List.of(administrativeUnit.getCode())));
 				
 				dataTable.addColumnsAfterRowIndex(
 						Builder.build(Column.class, Map.of(Column.FIELD_FIELD_NAME,AdministrativeUnitActivity.FIELD_ACTIVITY,Column.FIELD_WIDTH,"50%"))
@@ -124,8 +124,8 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 
 					@Override
 					public List<AdministrativeUnitActivity> load(int first, int pageSize, String sortField, SortOrder sortOrder,Map<String, Object> filters) {
-						FilterDto filter = null;				
-						filter = new FilterDto();
+						Filter.Dto filter = null;				
+						filter = new Filter.Dto();
 						filter.addField(AdministrativeUnitActivity.FIELD_ADMINISTRATIVE_UNIT, List.of(administrativeUnit.getCode()));
 						List<AdministrativeUnitActivity> list = (List<AdministrativeUnitActivity>) __inject__(AdministrativeUnitActivityController.class)
 								.read(new Properties().setQueryIdentifier(AdministrativeUnitActivityPersistence.READ_WHERE_IS_GESTIONNAIRE_OR_BENEFICIAIRE_BY_ADMINISTRATIVE_UNITS_CODES)

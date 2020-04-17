@@ -28,7 +28,7 @@ import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
 import org.cyk.utility.client.controller.component.command.Commandable;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.web.ComponentHelper;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -63,7 +63,7 @@ public class AdministrativeUnitCodifyPage extends AbstractPageContainerManagedIm
 
 			@Override
 			public List<AdministrativeUnit> load(int first, int pageSize, String sortField, SortOrder sortOrder,Map<String, Object> filters) {
-				FilterDto filter = null;				
+				Filter.Dto filter = null;				
 				if(filters == null)
 					filters = new HashMap<>();
 				/*if(filters.isEmpty()) {
@@ -71,7 +71,7 @@ public class AdministrativeUnitCodifyPage extends AbstractPageContainerManagedIm
 					filters.put(AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION, org.cyk.system.sibua.server.persistence.entities.FunctionalClassification.CODE_NOT_SET);
 				}
 				*/	
-				filter = new FilterDto();
+				filter = new Filter.Dto();
 				/*
 				filter.addField(AdministrativeUnit.FIELD_NAME, filters.get(AdministrativeUnit.FIELD_NAME));
 				String sectionCode = section == null ? (String) filters.get(AdministrativeUnit.FIELD_SECTION) : section.getCode();

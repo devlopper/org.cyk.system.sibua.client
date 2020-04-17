@@ -30,7 +30,7 @@ import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierA
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierHelper;
 import org.cyk.utility.__kernel__.map.MapHelper;
 import org.cyk.utility.__kernel__.object.Builder;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
@@ -70,7 +70,7 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 		super.__listenPostConstruct__();
 		user = __inject__(UserController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier"));
 		Collection<UserFile> userFiles = __inject__(UserFileController.class).read(new Properties().setQueryIdentifier(UserFilePersistence.READ_BY_USERS_IDENTIFIERS)
-				.setFilters(new FilterDto().addField("user", List.of(user.getIdentifier()))));
+				.setFilters(new Filter.Dto().addField("user", List.of(user.getIdentifier()))));
 		if(CollectionHelper.isNotEmpty(userFiles))
 			for(UserFile index : userFiles)
 				if(UserFileType.ADMINISTRATIVE_CERTIFICATE.equals(index.getType()))
@@ -79,7 +79,7 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 					photoUserFile = index;
 		
 		user.setUserFunctions((List<UserFunction>) __inject__(UserFunctionController.class).read(new Properties().setQueryIdentifier(UserFunctionPersistence.READ_BY_USERS_IDENTIFIERS)
-				.setFilters(new FilterDto().addField("user", List.of(user.getIdentifier())))));
+				.setFilters(new Filter.Dto().addField("user", List.of(user.getIdentifier())))));
 		
 		summary = "Notification";
 		if(StringHelper.isBlank(user.getSendingDate())) {
@@ -165,7 +165,7 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 				}.setMinimumSelectionSize(0).setIsSelectionShowable(Boolean.FALSE)))
 			);
 		
-		functionsDataTable.setListener(new AbstractDataTable.Listener() {
+		functionsDataTable.setListener(new AbstractDataTable.Listener.AbstractImpl() {
 			
 			@Override
 			public String listenGetStyleClassByRecord(Object record,Integer recordIndex) {

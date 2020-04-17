@@ -17,7 +17,8 @@ import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.computation.ComparisonOperator;
 import org.cyk.utility.__kernel__.identifier.resource.ParameterName;
 import org.cyk.utility.__kernel__.number.NumberHelper;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter.Dto;
 import org.cyk.utility.__kernel__.session.SessionHelper;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.Column;
@@ -50,6 +51,7 @@ public class AdministrativeUnitReadPage extends AbstractPageContainerManagedImpl
 		createAdministrativeUnitFunctionTypesDataTable();
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void createAdministrativeUnitActivitiesDataTable() {
 		administrativeUnitActivitiesDataTable = DataTable.build(DataTable.FIELD_ELEMENT_CLASS,AdministrativeUnitActivity.class,DataTable.FIELD_LAZY,Boolean.TRUE
 				,DataTable.FIELD___PARENT_ELEMENT__,administrativeUnit);
@@ -62,10 +64,10 @@ public class AdministrativeUnitReadPage extends AbstractPageContainerManagedImpl
 		
 		((LazyDataModel<?>)administrativeUnitActivitiesDataTable.getValue()).setReadQueryIdentifier(AdministrativeUnitActivityPersistence.READ_WHERE_IS_GESTIONNAIRE_OR_BENEFICIAIRE_BY_ADMINISTRATIVE_UNITS_CODES);
 		((LazyDataModel<?>)administrativeUnitActivitiesDataTable.getValue()).setCountQueryIdentifier(AdministrativeUnitActivityPersistence.COUNT_WHERE_IS_GESTIONNAIRE_OR_BENEFICIAIRE_BY_ADMINISTRATIVE_UNITS_CODES);
-		((LazyDataModel<?>)administrativeUnitActivitiesDataTable.getValue()).setListener(new LazyDataModel.Listener.AbstractImpl() {
+		((LazyDataModel<AdministrativeUnit>)administrativeUnitActivitiesDataTable.getValue()).setListener(new LazyDataModel.Listener.AbstractImpl<AdministrativeUnit>() {
 			@Override
-			public void processFilter(FilterDto filter) {
-				filter.addField(AdministrativeUnitActivity.FIELD_ADMINISTRATIVE_UNIT, List.of(administrativeUnit.getCode()));
+			public Filter.Dto instantiateFilter(LazyDataModel<AdministrativeUnit> lazyDataModel) {
+				return super.instantiateFilter(lazyDataModel).addField(AdministrativeUnitActivity.FIELD_ADMINISTRATIVE_UNIT, List.of(administrativeUnit.getCode()));
 			}
 		});
 		
@@ -85,6 +87,7 @@ public class AdministrativeUnitReadPage extends AbstractPageContainerManagedImpl
 		});
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void createAdministrativeUnitFunctionTypesDataTable() {
 		administrativeUnitFunctionTypesDataTable = DataTable.build(DataTable.FIELD_ELEMENT_CLASS,AdministrativeUnitFunctionType.class,DataTable.FIELD_LAZY,Boolean.TRUE
 				,DataTable.FIELD___PARENT_ELEMENT__,administrativeUnit);		
@@ -94,10 +97,10 @@ public class AdministrativeUnitReadPage extends AbstractPageContainerManagedImpl
 		
 		((LazyDataModel<?>)administrativeUnitFunctionTypesDataTable.getValue()).setReadQueryIdentifier(AdministrativeUnitFunctionTypePersistence.READ_BY_ADMINISTRATIVE_UNITS_CODES);
 		((LazyDataModel<?>)administrativeUnitFunctionTypesDataTable.getValue()).setCountQueryIdentifier(AdministrativeUnitFunctionTypePersistence.COUNT_BY_ADMINISTRATIVE_UNITS_CODES);
-		((LazyDataModel<?>)administrativeUnitFunctionTypesDataTable.getValue()).setListener(new LazyDataModel.Listener.AbstractImpl() {
+		((LazyDataModel<AdministrativeUnit>)administrativeUnitFunctionTypesDataTable.getValue()).setListener(new LazyDataModel.Listener.AbstractImpl<AdministrativeUnit>() {
 			@Override
-			public void processFilter(FilterDto filter) {
-				filter.addField("administrativeUnit", List.of(administrativeUnit.getCode()));
+			public Dto instantiateFilter(LazyDataModel<AdministrativeUnit> lazyDataModel) {
+				return super.instantiateFilter(lazyDataModel).addField("administrativeUnit", List.of(administrativeUnit.getCode()));
 			}
 		});
 	}

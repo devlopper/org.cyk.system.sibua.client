@@ -34,7 +34,7 @@ import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.component.window.WindowBuilder;
 import org.cyk.utility.client.controller.web.ComponentHelper;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.SelectionOne;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -70,15 +70,15 @@ public class AdministrativeUnitEditActivitiesPageOLD2 extends AbstractPageContai
 				administrativeUnit.select(__inject__(AdministrativeUnitController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier")));
 			}
 			if(administrativeUnit.getValue() != null)
-				selectedActivities = __inject__(ActivityController.class).read(new Properties().setIsPageable(Boolean.FALSE).setFilters(new FilterDto()
+				selectedActivities = __inject__(ActivityController.class).read(new Properties().setIsPageable(Boolean.FALSE).setFilters(new Filter.Dto()
 					.addField(Activity.FIELD_ADMINISTRATIVE_UNIT_GESTIONNAIRE, administrativeUnit.getValue().getCode())));
 			availableActivities = new LazyDataModel<Activity>() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
 				public List<Activity> load(int first, int pageSize, String sortField, SortOrder sortOrder,Map<String, Object> filters) {
-					FilterDto filter = null;				
-					filter = new FilterDto();
+					Filter.Dto filter = null;				
+					filter = new Filter.Dto();
 					filter.addField(Activity.FIELD_NAME, filters.get(Activity.FIELD_NAME));
 					filter.addField(Activity.FIELD_SECTION, CollectionHelper.listOf(Boolean.TRUE, MapHelper.readByKey(filters, "action.program.section")));
 					filter.addField(Activity.FIELD_PROGRAM, CollectionHelper.listOf(Boolean.TRUE, MapHelper.readByKey(filters, "action.program")));

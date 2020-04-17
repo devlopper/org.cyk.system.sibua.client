@@ -29,7 +29,7 @@ import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.component.window.WindowBuilder;
 import org.cyk.utility.client.controller.web.ComponentHelper;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.SelectionOne;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -73,7 +73,7 @@ public class AdministrativeUnitEditChildrenPage extends AbstractPageContainerMan
 
 			@Override
 			public List<AdministrativeUnit> load(int first, int pageSize, String sortField, SortOrder sortOrder,Map<String, Object> filters) {
-				FilterDto filter = new FilterDto();
+				Filter.Dto filter = new Filter.Dto();
 				Collection<String> selectedAdministrativeUnitsCodes = new ArrayList<String>();
 				filter.addField(AdministrativeUnit.FIELD_NAME, MapHelper.readByKey(filters, AdministrativeUnit.FIELD_NAME));
 				if(administrativeUnit != null && administrativeUnit.getValue() != null) {

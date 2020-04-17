@@ -24,7 +24,7 @@ import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
 import org.cyk.utility.__kernel__.map.MapHelper;
 import org.cyk.utility.__kernel__.object.Builder;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.system.action.SystemActionCustom;
@@ -113,7 +113,7 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 
 			@Override
 			public List<AdministrativeUnit> load(int first, int pageSize, String sortField, SortOrder sortOrder,Map<String, Object> filters) {
-				FilterDto filter = new FilterDto();
+				Filter.Dto filter = new Filter.Dto();
 				filter.addField("administrativeUnit", MapHelper.readByKey(filters, "administrativeUnit"));
 				String sectionCode = (String) MapHelper.readByKey(filters, AdministrativeUnit.FIELD_SECTION);
 				if(StringHelper.isBlank(sectionCode))
@@ -202,16 +202,16 @@ public abstract class AbstractAdministrativeUnitListPage extends AbstractPageCon
 				if(administrativeUnit.getActivities() == null) {
 					List<Activity> activities = (List<Activity>) __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_WHERE_IS_GESTIONNAIRE_OR_BENEFICIAIRE_BY_ADMINISTRATIVE_UNITS_CODES)
 							.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
-							.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT_GESTIONNAIRE_OR_BENEFICIAIRE, List.of(administrativeUnit.getCode())))
+							.setFilters(new Filter.Dto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT_GESTIONNAIRE_OR_BENEFICIAIRE, List.of(administrativeUnit.getCode())))
 							.setIsPageable(Boolean.FALSE));
 					if(CollectionHelper.isNotEmpty(activities)) {
 						List<Activity> gestionnaires = (List<Activity>) __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_BY_FILTERS_LIKE)
 								.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
-								.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE));
+								.setFilters(new Filter.Dto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE));
 						
 						List<Activity> beneficiaires = (List<Activity>) __inject__(ActivityController.class).read(new Properties().setQueryIdentifier(ActivityPersistence.READ_BY_FILTERS_LIKE)
 								.setFields(Activity.FIELD_IDENTIFIER+","+Activity.FIELD_CODE+","+Activity.FIELD_NAME)
-								.setFilters(new FilterDto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT_BENEFICIAIRE, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE));
+								.setFilters(new Filter.Dto().addField(Activity.FIELD_ADMINISTRATIVE_UNIT_BENEFICIAIRE, administrativeUnit.getCode())).setIsPageable(Boolean.FALSE));
 					
 						for(Activity activity : activities) {
 							activity.setIsGestionnaire(CollectionHelper.contains(gestionnaires, activity));

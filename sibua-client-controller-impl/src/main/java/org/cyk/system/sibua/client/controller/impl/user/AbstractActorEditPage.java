@@ -32,7 +32,7 @@ import org.cyk.utility.__kernel__.identifier.resource.QueryAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierAsFunctionParameter;
 import org.cyk.utility.__kernel__.identifier.resource.UniformResourceIdentifierHelper;
 import org.cyk.utility.__kernel__.object.Builder;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.runnable.Runner;
 import org.cyk.utility.__kernel__.string.StringHelper;
@@ -75,7 +75,7 @@ public abstract class AbstractActorEditPage extends AbstractPageContainerManaged
 					,AutoComplete.FIELD_READ_QUERY_IDENTIFIER,FunctionPersistence.READ_WHERE_BUSINESS_IDENTIFIER_OR_NAME_CONTAINS_BY_TYPES_CATEGORIES_CODES
 					,AutoComplete.FIELD_COUNT_QUERY_IDENTIFIER,FunctionPersistence.COUNT_WHERE_BUSINESS_IDENTIFIER_OR_NAME_CONTAINS_BY_TYPES_CATEGORIES_CODES
 					,AutoComplete.FIELD_LISTENER,new AutoComplete.Listener.AbstractImpl() {
-						public void listenComplete(AutoComplete autoComplete,Runner.Arguments arguments, FilterDto filter, String queryString) {
+						public void listenComplete(AutoComplete autoComplete,Runner.Arguments arguments, Filter.Dto filter, String queryString) {
 							filter.addField("categoriesCodes", List.of("1","2","3"));
 							super.listenComplete(autoComplete,arguments,filter,queryString);
 						};
@@ -100,7 +100,7 @@ public abstract class AbstractActorEditPage extends AbstractPageContainerManaged
 			administrativeUnitAutoComplete.setValue(user.getAdministrativeUnit());
 			
 			Collection<UserFunction> userFunctions = __inject__(UserFunctionController.class).read(new Properties().setQueryIdentifier(UserFunctionPersistence.READ_BY_USERS_IDENTIFIERS)
-					.setFilters(new FilterDto().addField("user", List.of(user.getIdentifier()))));
+					.setFilters(new Filter.Dto().addField("user", List.of(user.getIdentifier()))));
 			if(CollectionHelper.isNotEmpty(userFunctions))
 				budgetaryFunctionsAutoComplete.setValue(userFunctions.stream().map(UserFunction::getFunction).collect(Collectors.toList()));
 			

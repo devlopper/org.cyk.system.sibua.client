@@ -9,7 +9,7 @@ import javax.inject.Named;
 import org.cyk.system.sibua.client.controller.api.user.UserController;
 import org.cyk.system.sibua.client.controller.entities.user.User;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.user.interface_.message.Message;
@@ -42,7 +42,7 @@ public class UserOpenPage extends AbstractPageContainerManagedImpl implements Se
 			//user = __inject__(UserController.class).readBySystemIdentifier(accessToken);
 			user = CollectionHelper.getFirst(__inject__(UserController.class).read(new Properties()
 					.setFields("identifier,programs")
-					.setFilters(new FilterDto().addField(User.FIELD_ACCESS_TOKEN, List.of(accessToken)))));
+					.setFilters(new Filter.Dto().addField(User.FIELD_ACCESS_TOKEN, List.of(accessToken)))));
 		} catch (Exception exception) {}
 		if(user == null) {
 			MessageRenderer.getInstance().render(new Message().setSummary("Jeton d'accès inconnu").setSeverity(Severity.ERROR), RenderType.INLINE);

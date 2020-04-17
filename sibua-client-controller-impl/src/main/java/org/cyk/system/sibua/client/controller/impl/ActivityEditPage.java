@@ -16,7 +16,7 @@ import org.cyk.system.sibua.client.controller.entities.user.FunctionType;
 import org.cyk.system.sibua.server.persistence.api.user.FunctionTypePersistence;
 import org.cyk.utility.__kernel__.collection.CollectionHelper;
 import org.cyk.utility.__kernel__.constant.ConstantEmpty;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.session.SessionHelper;
 import org.cyk.utility.__kernel__.string.StringHelper;
@@ -77,7 +77,7 @@ public class ActivityEditPage extends AbstractPageContainerManagedImpl implement
 			Activity activity = CollectionHelper.getFirst(activities);
 			if(activity.getAdministrativeUnit() != null) {
 				functionTypeAutoComplete.setValue(__inject__(FunctionTypeController.class).read(new Properties()
-					.setQueryIdentifier(FunctionTypePersistence.READ_BY_ADMINISTRATIVE_UNITS_CODES).setFilters(new FilterDto()
+					.setQueryIdentifier(FunctionTypePersistence.READ_BY_ADMINISTRATIVE_UNITS_CODES).setFilters(new Filter.Dto()
 							.addField(FunctionType.FIELD_ADMINISTRATIVE_UNIT, List.of(activity.getAdministrativeUnit().getCode())))));
 			}
 		}

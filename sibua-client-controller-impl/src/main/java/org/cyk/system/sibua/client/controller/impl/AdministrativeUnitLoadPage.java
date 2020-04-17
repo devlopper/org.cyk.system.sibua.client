@@ -53,7 +53,7 @@ import org.cyk.utility.client.controller.web.jsf.primefaces.model.SelectionOne;
 import org.cyk.utility.notification.NotificationBuilder;
 import org.cyk.utility.notification.NotificationSeverityError;
 import org.cyk.utility.notification.NotificationSeverityWarning;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
@@ -212,7 +212,7 @@ public class AdministrativeUnitLoadPage extends AbstractPageContainerManagedImpl
 			}
 		numberOfExistingAdministrativeUnits = __inject__(AdministrativeUnitController.class)
 				.count(new Properties().setQueryIdentifier(AdministrativeUnitPersistence.COUNT_BY_SECTIONS_CODES)
-						.setFilters(new FilterDto().addField(AdministrativeUnit.FIELD_SECTION, List.of(section.getValue().getCode())))).intValue();
+						.setFilters(new Filter.Dto().addField(AdministrativeUnit.FIELD_SECTION, List.of(section.getValue().getCode())))).intValue();
 		
 		
 		Integer rowIndex = 1;

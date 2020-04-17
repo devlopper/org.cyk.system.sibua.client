@@ -16,7 +16,7 @@ import org.cyk.utility.__kernel__.properties.Properties;
 import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.client.controller.web.jsf.primefaces.AbstractPageContainerManagedImpl;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.SelectionOne;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.omnifaces.util.Faces;
 
 import lombok.Getter;
@@ -38,7 +38,7 @@ public class SectionReadPage extends AbstractPageContainerManagedImpl implements
 				@Override
 				public void processOnSelect(Section section) {
 					administrativeUnits = __inject__(AdministrativeUnitController.class)
-							.read(new Properties().setFilters(new FilterDto().addField(Program.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
+							.read(new Properties().setFilters(new Filter.Dto().addField(Program.FIELD_SECTION, CollectionHelper.listOf(section.getCode())))
 									.setIsPageable(Boolean.FALSE));
 				}
 			});

@@ -14,7 +14,7 @@
     			<ui:param name="dataTable" value="#{administrativeUnitListPage.dataTable}"/>
     			
     			<ui:define name="columnsAfterRowIndexBodies">
-    				<ui:fragment rendered="#{columnIndex == 0}">
+    				<ui:fragment rendered="#{administrativeUnitListPage.defaultSection == null and columnIndex == 0}">
     					<ui:include src="../outputText_code_name.xhtml">
 							<ui:param name="code" value="#{record.section.code}"/>
 							<ui:param name="name" value="#{record.section.name}"/>
@@ -22,33 +22,33 @@
 						</ui:include>
     				</ui:fragment>
     				
-    				<ui:fragment rendered="#{columnIndex == 1}">
+    				<ui:fragment rendered="#{administrativeUnitListPage.defaultSection == null and columnIndex == 1 or (administrativeUnitListPage.defaultSection != null and columnIndex == 0)}">
     					<ui:include src="../outputText_code_name.xhtml">
 							<ui:param name="code" value="#{record.code}"/>
 							<ui:param name="name" value="#{record.name}"/>
 						</ui:include>
     				</ui:fragment>
     				
-    				<ui:fragment rendered="#{columnIndex == 2}">
+    				<ui:fragment rendered="#{administrativeUnitListPage.defaultSection == null and columnIndex == 2 or (administrativeUnitListPage.defaultSection != null and columnIndex == 1)}">
     					<h:outputText id="nav" value="#{record.numberOfActivities} | #{record.numberOfActivitiesBeneficiaire}"/>
  						<p:tooltip for="nav" value="Gestionnaire de #{record.numberOfActivities} | Bénéficiaire de #{record.numberOfActivitiesBeneficiaire}"/>
     				</ui:fragment>
     				
-    				<ui:fragment rendered="#{columnIndex == 3}">
+    				<ui:fragment rendered="#{administrativeUnitListPage.defaultSection == null and columnIndex == 3 or (administrativeUnitListPage.defaultSection != null and columnIndex == 2)}">
     					<ui:include src="../outputText_code_name.xhtml">
 							<ui:param name="code" value="#{record.serviceGroup.code}"/>
 							<ui:param name="name" value="#{record.serviceGroup.name}"/>
 						</ui:include>
     				</ui:fragment>
     				
-    				<ui:fragment rendered="#{columnIndex == 4}">
+    				<ui:fragment rendered="#{administrativeUnitListPage.defaultSection == null and columnIndex == 4 or (administrativeUnitListPage.defaultSection != null and columnIndex == 3)}">
     					<ui:include src="../outputText_code_name.xhtml">
 							<ui:param name="code" value="#{record.functionalClassification.code}"/>
 							<ui:param name="name" value="#{record.functionalClassification.name}"/>
 						</ui:include>
     				</ui:fragment>
     				
-    				<ui:fragment rendered="#{columnIndex == 5}">
+    				<ui:fragment rendered="#{administrativeUnitListPage.defaultSection == null and columnIndex == 5 or (administrativeUnitListPage.defaultSection != null and columnIndex == 4)}">
     					<ui:include src="../outputText_code_name.xhtml">
 							<ui:param name="code" value="#{record.localisation.code}"/>
 							<ui:param name="name" value="#{record.localisation.name}"/>

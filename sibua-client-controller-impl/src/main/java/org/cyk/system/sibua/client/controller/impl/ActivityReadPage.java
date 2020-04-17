@@ -12,7 +12,7 @@ import org.cyk.system.sibua.client.controller.api.ActivityCostUnitController;
 import org.cyk.system.sibua.client.controller.entities.Activity;
 import org.cyk.system.sibua.client.controller.entities.ActivityCostUnit;
 import org.cyk.system.sibua.server.persistence.api.ActivityCostUnitPersistence;
-import org.cyk.utility.__kernel__.persistence.query.filter.FilterDto;
+import org.cyk.utility.__kernel__.persistence.query.filter.Filter;
 import org.cyk.utility.__kernel__.properties.Properties;
 import org.omnifaces.util.Faces;
 
@@ -32,7 +32,7 @@ public class ActivityReadPage extends AbstractPageContainerManagedImpl implement
 		activity = __inject__(ActivityController.class).readBySystemIdentifier(Faces.getRequestParameter("entityidentifier"));
 		activityCostUnits = __inject__(ActivityCostUnitController.class).read(new Properties()
 				.setQueryIdentifier(ActivityCostUnitPersistence.READ_BY_ACTIVITIES_CODES)
-				.setFilters(new FilterDto().addField(ActivityCostUnit.FIELD_ACTIVITY, List.of(activity.getCode()))						
+				.setFilters(new Filter.Dto().addField(ActivityCostUnit.FIELD_ACTIVITY, List.of(activity.getCode()))						
 				)
 			);
 	}

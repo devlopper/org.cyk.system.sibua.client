@@ -41,6 +41,10 @@ public class AdministrativeUnit extends AbstractDataIdentifiableSystemStringIden
 	private List<Destination> destinations;
 	private List<ActivityDestination> activityDestinations;
 	
+	/* As String */
+	
+	private String asString,sectionAsString,serviceGroupAsString,functionalClassificationAsString,localisationAsString;
+	
 	public AdministrativeUnit addDestinations(Collection<Destination> destinations) {
 		if(CollectionHelper.isEmpty(destinations))
 			return this;
