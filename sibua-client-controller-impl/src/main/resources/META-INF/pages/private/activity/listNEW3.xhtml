@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cyk="http://primefaces.jsf.web.utility.cyk.org">
+	
+    <cyk:page value="#{activityListPageNEW}">
+    	<ui:define name="centerCenter">
+    		<ui:param name="dataTable" value="#{activityListPageNEW.dataTable}"/>
+    		<p:dataTable
+				id="#{dataTable.identifier}" value="#{dataTable.value}" var="record" emptyMessage="#{dataTable.emptyMessage}"
+		   		lazy="#{dataTable.lazy}" rows="#{dataTable.rows}" paginator="#{dataTable.paginator}" rowsPerPageTemplate="#{dataTable.rowsPerPageTemplate}" 
+		   		paginatorAlwaysVisible="#{dataTable.paginatorAlwaysVisible}"
+				paginatorTemplate="#{dataTable.paginatorTemplate}" currentPageReportTemplate="#{dataTable.currentPageReportTemplate}"
+				widgetVar="#{dataTable.widgetVar}" rowIndexVar="rowIndex" filterDelay="#{dataTable.filterDelay}" selection="#{dataTable.selection}"
+				rowStyleClass="#{dataTable.getStyleClassByRecord(record,rowIndex)}" 
+				editable="#{dataTable.editable}" editMode="#{dataTable.editMode}"
+			>
+    			<p:column headerText="#" width="50">
+    				<h:outputText value=""/>
+    			</p:column>
+    			<p:column headerText="Section" width="100">
+    				<h:outputText value="#{dataTable.getCellValueByRecordByColumn(record,rowIndex,dataTable.columnsAfterRowIndex.get(0),0)}" />
+    			</p:column>
+    			<p:column headerText="Activité">
+    				<h:outputText value="#{dataTable.getCellValueByRecordByColumn(record,rowIndex,dataTable.columnsAfterRowIndex.get(1),1)}" />
+    			</p:column>
+    			<p:column headerText="Catégorie" width="100">
+    				<h:outputText value="#{dataTable.getCellValueByRecordByColumn(record,rowIndex,dataTable.columnsAfterRowIndex.get(2),2)}" />
+    			</p:column>
+    			<p:column headerText="N.U.C." width="50">
+    				<h:outputText value="#{dataTable.getCellValueByRecordByColumn(record,rowIndex,dataTable.columnsAfterRowIndex.get(3),3)}" />
+    			</p:column>
+    			<p:column headerText="Programme">
+    				<h:outputText value="#{dataTable.getCellValueByRecordByColumn(record,rowIndex,dataTable.columnsAfterRowIndex.get(4),4)}" />
+    			</p:column>
+    			<p:column headerText="Action">
+    				<h:outputText value="#{dataTable.getCellValueByRecordByColumn(record,rowIndex,dataTable.columnsAfterRowIndex.get(5),5)}" />
+    			</p:column>
+    			<p:column headerText="Bénéficiaire">
+    				<h:outputText value="#{dataTable.getCellValueByRecordByColumn(record,rowIndex,dataTable.columnsAfterRowIndex.get(6),6)}" />
+    			</p:column>
+    			<p:column headerText="Gestionnaire">
+    				<h:outputText value="#{dataTable.getCellValueByRecordByColumn(record,rowIndex,dataTable.columnsAfterRowIndex.get(7),7)}" />
+    			</p:column>
+    			<p:column headerText="Type fonction">
+    				<h:outputText value="#{dataTable.getCellValueByRecordByColumn(record,rowIndex,dataTable.columnsAfterRowIndex.get(8),8)}" />
+    			</p:column>
+    			<p:column headerText="" width="40">
+    				
+    			</p:column>
+    		</p:dataTable>
+    	</ui:define>
+    </cyk:page>
+</html>

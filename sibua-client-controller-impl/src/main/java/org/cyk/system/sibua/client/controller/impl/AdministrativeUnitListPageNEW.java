@@ -56,7 +56,7 @@ public class AdministrativeUnitListPageNEW extends AbstractPageContainerManagedI
 		});
 		
 		dataTable.addColumnsAfterRowIndex(
-				Column.build(Column.FIELD_FIELD_NAME,"asString",Column.FIELD_HEADER_TEXT,"Unité administrative",Column.FIELD_FILTER_BY,"administrativeUnit"
+				Column.build(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_AS_STRING,Column.FIELD_HEADER_TEXT,"Unité administrative",Column.FIELD_FILTER_BY,"administrativeUnit"
 						,Column.FIELD_WIDTH,"60%",Column.ConfiguratorImpl.FIELD_FILTERABLE,Boolean.TRUE)
 				,Column.build(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_NUMBER_OF_ACTIVITIES,Column.FIELD_HEADER_TEXT,"N.A.",Column.FIELD_WIDTH,"70")
 				,Column.build(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_SERVICE_GROUP+"AsString",Column.FIELD_HEADER_TEXT,"Groupe de service"

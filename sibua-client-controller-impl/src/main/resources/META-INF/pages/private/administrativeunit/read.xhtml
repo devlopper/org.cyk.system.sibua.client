@@ -10,13 +10,13 @@
 	
     <cyk:page value="#{administrativeUnitReadPage}">
     	<ui:define name="centerCenter">
-    		<ui:decorate template="/collection/datatable/default.xhtml">
+    		<ui:decorate template="#{primefacesHelper.getModelTemplate(administrativeUnitReadPage.administrativeUnitActivitiesDataTable)}">
     			<ui:param name="dataTable" value="#{administrativeUnitReadPage.administrativeUnitActivitiesDataTable}"/>
     			<ui:define name="header">
     				<!-- Nothing for now -->
     			</ui:define>
     		</ui:decorate>
-    		<ui:decorate template="/collection/datatable/default.xhtml">
+    		<ui:decorate template="#{primefacesHelper.getModelTemplate(administrativeUnitReadPage.administrativeUnitFunctionTypesDataTable)}">
     			<ui:param name="dataTable" value="#{administrativeUnitReadPage.administrativeUnitFunctionTypesDataTable}"/>
     			<ui:define name="headerToolbarRight">
     				<!-- Nothing for now -->
