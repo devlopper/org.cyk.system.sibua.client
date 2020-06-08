@@ -212,7 +212,7 @@ public abstract class AbstractActivityListPage extends AbstractPageContainerMana
 	/**/
 	
 	@Getter @Setter @Accessors(chain=true) @AllArgsConstructor
-	public static class AdministrativeUnitAutoCompleteEntityListener implements AutoComplete.Listener {
+	public static class AdministrativeUnitAutoCompleteEntityListener extends AutoComplete.Listener.AbstractImpl<AdministrativeUnit> {
 		
 		private Section section;
 		private Boolean beneficiaire;

@@ -70,7 +70,7 @@ public class ActivityListPageNEW extends AbstractPageContainerManagedImpl implem
 			,Column.build(Column.FIELD_FIELD_NAME,Activity.FIELD_MANAGER_AS_STRING,Column.FIELD_HEADER_TEXT,"Gestionnaire",Column.ConfiguratorImpl.FIELD_FILTERABLE,Boolean.TRUE)
 			,Column.build(Column.FIELD_FIELD_NAME,Activity.FIELD_FUNCTION_TYPE_AS_STRING,Column.FIELD_HEADER_TEXT,"Type de fonction")			
 		);
-		
+		/*
 		dataTable.addHeaderToolbarLeftCommands(
 				CommandButton.build(CommandButton.FIELD_VALUE,"Modification en masse",CommandButton.FIELD_ICON,"fa fa-edit",CommandButton.ConfiguratorImpl.FIELD_COLLECTION,dataTable
 						,CommandButton.ConfiguratorImpl.FIELD_OPEN_VIEW_IN_DIALOG_ARGUMENTS_GETTER,new AbstractAction.Listener.OpenViewInDialogArgumentsGetter.AbstractImpl() {										
@@ -89,7 +89,7 @@ public class ActivityListPageNEW extends AbstractPageContainerManagedImpl implem
 				}
 			)			
 		);
-		
+		*/
 		dataTable.addRecordMenuItemByArgumentsOpenViewInDialogRead();
 		dataTable.addRecordMenuItemByArgumentsOpenViewInDialogUpdate();
 	}

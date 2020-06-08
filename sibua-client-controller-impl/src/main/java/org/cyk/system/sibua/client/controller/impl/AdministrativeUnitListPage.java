@@ -33,7 +33,7 @@ public class AdministrativeUnitListPage extends AbstractPageContainerManagedImpl
 				,DataTable.ConfiguratorImpl.FIELD_ENTITY_FIELDS_NAMES,List.of(AdministrativeUnit.FIELD_IDENTIFIER,AdministrativeUnit.FIELD_CODE
 				,AdministrativeUnit.FIELD_NAME,AdministrativeUnit.FIELD_SECTION,AdministrativeUnit.FIELD_FUNCTIONAL_CLASSIFICATION,AdministrativeUnit.FIELD_SERVICE_GROUP
 				,AdministrativeUnit.FIELD_LOCALISATION,AdministrativeUnit.FIELD_NUMBER_OF_ACTIVITIES,AdministrativeUnit.FIELD_NUMBER_OF_ACTIVITIES_BENEFICIAIRE));
-		
+		dataTable.setAreColumnsChoosable(Boolean.TRUE);
 		if(defaultSection == null)
 			dataTable.addColumnsAfterRowIndex(Column.build(Column.FIELD_FIELD_NAME,AdministrativeUnit.FIELD_SECTION,Column.ConfiguratorImpl.FIELD_FILTERABLE,Boolean.TRUE));
 		else {

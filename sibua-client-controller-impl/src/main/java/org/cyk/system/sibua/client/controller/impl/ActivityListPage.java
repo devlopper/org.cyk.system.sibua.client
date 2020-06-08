@@ -32,7 +32,7 @@ public class ActivityListPage extends AbstractPageContainerManagedImpl implement
 		dataTable = DataTable.build(DataTable.FIELD_LAZY,Boolean.TRUE,DataTable.FIELD_ELEMENT_CLASS,Activity.class,DataTable.FIELD_SELECTION_MODE,"multiple"
 				,DataTable.ConfiguratorImpl.FIELD_ENTITY_FIELDS_NAMES,List.of(Activity.FIELD_IDENTIFIER,Activity.FIELD_CODE,Activity.FIELD_NAME,Activity.FIELD_ACTION
 						,Activity.FIELD_ADMINISTRATIVE_UNIT,Activity.FIELD_CAT_ATV_CODE,Activity.FIELD_NUMBER_OF_COST_UNITS,Activity.FIELD_FUNCTION_TYPE));
-		
+		dataTable.setAreColumnsChoosable(Boolean.TRUE);
 		if(defaultSection == null)
 			dataTable.addColumnsAfterRowIndex(Column.build(Column.FIELD_FIELD_NAME,Activity.FIELD_SECTION,Column.FIELD_WIDTH,"70",Column.ConfiguratorImpl.FIELD_FILTERABLE,Boolean.TRUE));
 		
@@ -55,8 +55,27 @@ public class ActivityListPage extends AbstractPageContainerManagedImpl implement
 			}
 		},Ajax.FIELD_DISABLED,Boolean.FALSE));
 		*/
+		
+		dataTable.addHeaderToolbarLeftCommandsByArgumentsOpenViewInDialogCreate(CommandButton.FIELD_VALUE, "Modification en masse",CommandButton.FIELD_LISTENER
+				,new CommandButton.Listener.AbstractImpl() {
+			@Override
+			protected String getOutcome(AbstractAction action) {
+				return "activityEditView";
+			}
+			
+			@Override
+			protected Map<String, List<String>> getViewParameters(AbstractAction action) {
+				SessionHelper.setAttributeValue(ActivityEditPage.SESSION_COLLECTION_ATTRIBUTE_NAME, dataTable.getSelection());
+				Map<String, List<String>> parameters = super.getViewParameters(action);
+				if(parameters == null)
+					parameters = new HashMap<String, List<String>>();
+				parameters.put("isonetomany",CollectionHelper.listOf("true"));			
+				return parameters;
+			}				
+		});
+		/*
 		dataTable.addHeaderToolbarLeftCommands(
-				CommandButton.build(CommandButton.FIELD_VALUE,"Modification en masse",CommandButton.FIELD_ICON,"fa fa-edit",CommandButton.ConfiguratorImpl.FIELD_COLLECTION,dataTable
+				CommandButton.build(CommandButton.FIELD_VALUE,"Modification en masse",CommandButton.FIELD_ICON,"fa fa-edit",CommandButton.FIELD___COLLECTION__,dataTable
 						,CommandButton.ConfiguratorImpl.FIELD_OPEN_VIEW_IN_DIALOG_ARGUMENTS_GETTER,new AbstractAction.Listener.OpenViewInDialogArgumentsGetter.AbstractImpl() {										
 					@Override
 					public String getOutcome(Object argument, String outcome) {
@@ -85,9 +104,9 @@ public class ActivityListPage extends AbstractPageContainerManagedImpl implement
 						return parameters;
 					}
 				}
-				)*/
+				)
 			);
-		
+		*/
 		dataTable.addRecordMenuItemByArgumentsOpenViewInDialogRead();
 		dataTable.addRecordMenuItemByArgumentsOpenViewInDialogUpdate();
 	}
@@ -95,6 +114,5 @@ public class ActivityListPage extends AbstractPageContainerManagedImpl implement
 	@Override
 	protected String __getWindowTitleValue__() {
 		return "Liste des activités"+(defaultSection == null ? ConstantEmpty.STRING : " de la section "+defaultSection);
-	}
-	
+	}	
 }

@@ -123,7 +123,7 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 		);
 		sendCommandableBuilder.setIcon(Icon.SEND);
 		sendCommandable = sendCommandableBuilder.execute().getOutput();
-		
+		/*
 		deleteCommandButton = Builder.build(CommandButton.class,Map.of("value","Supprimer")).setIcon(Icon.REMOVE);
 		deleteCommandButton.getConfirm().setDisabled(Boolean.FALSE);
 		deleteCommandButton.setListener(new CommandButton.Listener.AbstractImpl() {
@@ -141,7 +141,7 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 				send();
 			}
 		});
-		
+		*/
 		functionAutoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,Function.class));
 		
 		Map<Object,Object> map = new HashMap<>();
@@ -152,7 +152,7 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 		functionsDataTable.addColumnsAfterRowIndex(Builder.build(Column.class, Map.of(Column.FIELD_FIELD_NAME,Function.FIELD_NAME)));
 		functionsDataTable.setAreColumnsChoosable(Boolean.FALSE);		
 		functionsDataTable.setIsExportable(Boolean.FALSE);
-		
+		/*
 		functionsDataTable.addHeaderToolbarLeftCommands(
 				Builder.build(CommandButton.class,Map.of(CommandButton.FIELD_VALUE,"Ajouter des fonctions budgétaires",CommandButton.FIELD_ICON,"fa fa-plus"
 						,CommandButton.ConfiguratorImpl.FIELD_COLLECTION,functionsDataTable
@@ -164,7 +164,7 @@ public class AbstractActorReadPage extends AbstractPageContainerManagedImpl impl
 					}
 				}.setMinimumSelectionSize(0).setIsSelectionShowable(Boolean.FALSE)))
 			);
-		
+		*/
 		functionsDataTable.setListener(new AbstractDataTable.Listener.AbstractImpl() {
 			
 			@Override

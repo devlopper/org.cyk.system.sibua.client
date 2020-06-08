@@ -83,7 +83,7 @@ public class ActivityEditPage extends AbstractPageContainerManagedImpl implement
 		}
 		
 		recordCommandButton = CommandButton.build(CommandButton.ConfiguratorImpl.FIELD_OBJECT,this,CommandButton.ConfiguratorImpl.FIELD_METHOD_NAME,"record"
-				,CommandButton.FIELD_ICON,"fa fa-floppy-o",CommandButton.ConfiguratorImpl.FIELD_LISTENER_IS_WINDOW_RENDERED_AS_DIALOG,getIsRenderTypeDialog());
+				,CommandButton.FIELD_ICON,"fa fa-floppy-o"/*,CommandButton.ConfiguratorImpl.FIELD_LISTENER_IS_WINDOW_RENDERED_AS_DIALOG,getIsRenderTypeDialog()*/);
 		
 		if(Boolean.TRUE.equals(isOneToMany)) {
 			

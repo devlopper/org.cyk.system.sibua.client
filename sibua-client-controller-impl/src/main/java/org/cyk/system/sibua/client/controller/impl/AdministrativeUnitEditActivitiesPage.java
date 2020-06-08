@@ -25,6 +25,7 @@ import org.cyk.utility.__kernel__.string.StringHelper;
 import org.cyk.utility.__kernel__.user.interface_.message.RenderType;
 import org.cyk.utility.client.controller.component.command.CommandableBuilder;
 import org.cyk.utility.client.controller.component.window.WindowBuilder;
+import org.cyk.utility.client.controller.web.jsf.primefaces.model.AbstractAction;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.ajax.Ajax;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.collection.DataTable;
 import org.cyk.utility.client.controller.web.jsf.primefaces.model.command.CommandButton;
@@ -146,9 +147,9 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 				
 				saveAjax = Builder.build(Ajax.class,Map.of(Ajax.FIELD_EVENT,"save",Ajax.FIELD_LISTENER,new Ajax.Listener.AbstractImpl() {
 					@Override
-					public void listenAction(Object argument) {
-						if(argument instanceof AjaxBehaviorEvent) {
-							Inplace inplace = (Inplace) ((AjaxBehaviorEvent)argument).getSource();
+					public void run(AbstractAction action) {
+						if(action.get__argument__() instanceof AjaxBehaviorEvent) {
+							Inplace inplace = (Inplace) ((AjaxBehaviorEvent)action.get__argument__()).getSource();
 							AdministrativeUnitActivity administrativeUnitActivity = (AdministrativeUnitActivity) inplace.getAttributes().get("administrativeUnitActivity");
 							System.out.println(administrativeUnitActivity.getAdministrativeUnit()+" ::: "+administrativeUnitActivity.getAdministrativeUnitBeneficiaire());
 						}
@@ -167,10 +168,10 @@ public class AdministrativeUnitEditActivitiesPage extends AbstractPageContainerM
 		deleteCommandButton.addUpdates("administrativeUnitActivities");
 		deleteCommandButton.setListener(new CommandButton.Listener.AbstractImpl() {
 			@Override
-			public void listenAction(Object argument) {
-				if(!(argument instanceof AdministrativeUnitActivity))
+			public void run(AbstractAction action) {
+				if(!(action.get__argument__() instanceof AdministrativeUnitActivity))
 					return;
-				AdministrativeUnitActivity administrativeUnitActivity = (AdministrativeUnitActivity) argument;
+				AdministrativeUnitActivity administrativeUnitActivity = (AdministrativeUnitActivity) action.get__argument__();
 				__inject__(AdministrativeUnitActivityController.class).delete(administrativeUnitActivity);
 			}
 		});

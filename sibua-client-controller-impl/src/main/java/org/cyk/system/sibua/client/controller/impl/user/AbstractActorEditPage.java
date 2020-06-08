@@ -74,7 +74,7 @@ public abstract class AbstractActorEditPage extends AbstractPageContainerManaged
 			budgetaryFunctionsAutoComplete = Builder.build(AutoComplete.class,Map.of(AutoComplete.FIELD_ENTITY_CLASS,Function.class,AutoComplete.FIELD_MULTIPLE,Boolean.TRUE
 					,AutoComplete.FIELD_READ_QUERY_IDENTIFIER,FunctionPersistence.READ_WHERE_BUSINESS_IDENTIFIER_OR_NAME_CONTAINS_BY_TYPES_CATEGORIES_CODES
 					,AutoComplete.FIELD_COUNT_QUERY_IDENTIFIER,FunctionPersistence.COUNT_WHERE_BUSINESS_IDENTIFIER_OR_NAME_CONTAINS_BY_TYPES_CATEGORIES_CODES
-					,AutoComplete.FIELD_LISTENER,new AutoComplete.Listener.AbstractImpl() {
+					,AutoComplete.FIELD_LISTENER,new AutoComplete.Listener.AbstractImpl<AdministrativeUnit>() {
 						public void listenComplete(AutoComplete autoComplete,Runner.Arguments arguments, Filter.Dto filter, String queryString) {
 							filter.addField("categoriesCodes", List.of("1","2","3"));
 							super.listenComplete(autoComplete,arguments,filter,queryString);
